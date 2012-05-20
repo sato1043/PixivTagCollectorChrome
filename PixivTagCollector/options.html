@@ -1,0 +1,150 @@
+<!doctype html>
+<!--
+vim: ts=2 sw=2 expandtab fenc=utf8 :
+-->
+<head>
+<meta charset="utf-8" />
+<title>Pixiv Tag Collector Options</title>
+<script type="text/javascript" src="jquery-1.7.2.min.js"></script>
+<script type="text/javascript">
+
+
+function saveOptions(){
+
+  //get all options
+  var options = JSON.parse(localStorage.options);
+
+  //get form values, and then reflect it to the localStrage
+  text = $("#pixivCompleteTags").val();
+  if (text) {
+    text = text.replace(/[ 　]/g, '');
+    text = text.replace(/\n{2,}/g, '\n');
+    text = text.replace(/^\n|\n$/g, '');
+    options.pixivCompleteTags = text;
+  };
+
+  text = $("#pixivPartialTags").val();
+  if (text) {
+    text = text.replace(/[ 　]/g, '');
+    text = text.replace(/\n{2,}/g, '\n');
+    text = text.replace(/^\n|\n$/g, '');
+    options.pixivPartialTags = text;
+  };
+
+  options.pixivHideCompleteTags = $("#pixivHideCompleteTags").is(':checked');
+  options.pixivHidePartialTags  = $("#pixivHidePartialTags" ).is(':checked');
+  options.pixivApplyToAll       = $("#pixivApplyToAll"      ).is(':checked');
+  options.pixivMouseover        = $("#pixivMouseover"       ).is(':checked');
+  options.pixivOpenInNewTab     = $("#pixivOpenInNewTab"    ).is(':checked');
+  //options.pixivReloadPage       = $("#pixivReloadPage"    ).is(':checked');
+
+  localStorage.options = JSON.stringify(options);
+
+  //
+  chrome.extension.getBackgroundPage().updateCollectorHtml();
+  close();
+};
+
+</script>
+</head>
+<body>
+
+<div id="wrapper">
+    <h1>Pixiv Tag Collector Options</h1>
+    <div id="options">
+
+        <!--登録タグ　<span style="color:#FFFCEB">左</span>：完全一致検索用　<span style="color:#FFF5EE">右</span>：部分一致/AND/OR/マイナス検索用'<br>-->
+        登録タグ<br>
+        <table border=0>
+          <tr>
+            <td>左：完全一致検索用<br><textarea id='pixivCompleteTags' cols=60 rows=20 defaul=''></textarea></td>
+            <td>右：部分一致/AND/OR/マイナス検索用<br><textarea id='pixivPartialTags'  cols=60 rows=20 defaul=''></textarea></td>
+          </tr>
+        </table>
+        
+        <br>
+
+        <label for='pixivHideCompleteTags'>・完全一致タグリストを表示しない</label>
+        <input type='checkbox' id='pixivHideCompleteTags'/>
+        <br>
+
+        <label for='pixivHidePartialTags'>・部分一致タグリストを表示しない</label>
+        <input type='checkbox' id='pixivHidePartialTags'/>
+        <br>
+
+        <label for='pixivApplyToAll'>・pixiv内のあらゆるページにタグリストを表示する</label>
+        <input type='checkbox' id='pixivApplyToAll'/>
+        <br>
+
+        <label for='pixivMouseover'>・折りたたみ式にし、マウスオーバーで展開する</label>
+        <input type='checkbox' id='pixivMouseover'/>
+        <br>
+
+        <label for='pixivOpenInNewTab'>・個別イラストページへのリンクは常に新しいタブで開く</label>
+        <input type='checkbox' id='pixivOpenInNewTab'/>
+        <br>
+
+        <!--
+        <label for='pixivReloadPage'>・このダイアログを閉じたとき、ページを再読み込みする（新しい設定をすぐに反映させる）</label>
+        <input type='checkbox' id='pixivReloadPage'/>
+        <br>
+        -->
+
+        <input type="button" id="saveOptions" value="Save" onclick="saveOptions();" />
+    </div>
+</div>
+
+<script type="text/javascript">
+
+//get all options
+var options = JSON.parse(localStorage.options);
+
+if (options.pixivCompleteTags) {
+  $("#pixivCompleteTags").val(options.pixivCompleteTags);
+}
+
+if (options.pixivPartialTags) {
+  $("#pixivPartialTags").val(options.pixivPartialTags);
+}
+
+if (options.pixivHideCompleteTags) {
+  $("#pixivHideCompleteTags").attr('checked','checked');
+} else {
+  $("#pixivHideCompleteTags").removeAttr('checked');
+}
+
+if (options.pixivHidePartialTags) {
+  $("#pixivHidePartialTags").attr('checked','checked');
+} else {
+  $("#pixivHidePartialTags").removeAttr('checked');
+}
+
+if (options.pixivApplyToAll){
+  $("#pixivApplyToAll").attr('checked','checked');
+} else {
+  $("#pixivApplyToAll").removeAttr('checked');
+}
+
+if (options.pixivMouseover) {
+  $("#pixivMouseover").attr('checked','checked');
+} else {
+  $("#pixivMouseover").removeAttr('checked');
+}
+
+if (options.pixivOpenInNewTab) {
+  $("#pixivOpenInNewTab").attr('checked','checked');
+} else {
+  $("#pixivOpenInNewTab").removeAttr('checked');
+}
+
+/*
+if (options.pixivReloadPage) {
+  $("#pixivReloadPage").attr('checked','checked');
+} else {
+  $("#pixivReloadPage").removeAttr('checked');
+}
+*/
+</script>
+
+</body>
+</html>
