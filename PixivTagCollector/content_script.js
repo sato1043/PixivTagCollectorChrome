@@ -100,6 +100,7 @@ chrome.extension.sendRequest({
 function showLogo(node, on) {
 	if (on) return;
 	
+	showWhereClass(node, 'title', 1, on);
 	showWhereId(node, 'logoMap', 1, on);
 	showWhereClass(node, 'link-item', 1, on);
 	showWhereClass(node, 'link-item', 2, on);
