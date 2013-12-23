@@ -3,151 +3,145 @@
 vim: ts=2 sw=2 expandtab fenc=utf8 :
 -->
 <head>
-<meta charset="utf-8" />
-<title>Pixiv Tag Collector Options</title>
-<link rel="stylesheet" type="text/css" href="style.css">
-<script type="text/javascript" src="jquery-1.7.2.min.js"></script>
-<script type="text/javascript" src="options.js"></script>
+	<meta charset="utf-8" />
+	<title>Pixiv Tag Collector 設定</title>
+
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+
+	<!-- jQuery -->
+	<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+	<!-- jQuery plugin -->
+	<!-- jQuery UI(datepicker) -->
+	<script type="text/javascript" src="js/jquery-ui-1.10.3.custom.min.js"></script>
+	<script type="text/javascript" src="js/jquery.ui.datepicker-ja.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/jquery-ui-1.10.3.custom.css">
+	<!-- jquery.timepicker -->
+	<script type="text/javascript" src="js/jquery.timepicker.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/jquery.timepicker.css">
+
+	<script type="text/javascript" src="options.js"></script>
 </head>
 <body>
 
 <div id="wrapper">
-	
-	<h1>Pixiv Tag Collector Options</h1>
-	
-	<div id="options">
-		
-		<h2>※変更した設定を保存するために、このページの一番下の Save を押してください。<br>
-		それと、設定を反映するには、pixivを開いているタブを再読み込みしてください。</h2>
-		
-		<div>
-			<dl>
-			<dt><label for='pixivShowTagList'><input type='checkbox' id='pixivShowTagList' />pixivにタグリストを表示する</label></dt>
-			<dd><label for='pixivApplyToAll'><input type='checkbox' id='pixivApplyToAll' />pixiv内のあらゆるページにタグリストを表示する</label></li>
-			</dl>
-		</div>
-		
-		<h2>登録タグ</h2>
-		<div id="cont-comp">
-			完全一致検索用<br>
-			<textarea id='pixivCompleteTags' defaul=''></textarea><br>
-			<label for='pixivShowCompleteTags'><input type='checkbox' id='pixivShowCompleteTags' />展開表示</label>
-		</div>
-		<div id="cont-part">
-			部分一致/AND/OR/マイナス検索用<br>
-			<textarea id='pixivPartialTags'  cols=60 rows=20 defaul=''></textarea><br>
-			<label for='pixivShowPartialTags'><input type='checkbox' id='pixivShowPartialTags' />展開表示</label>
-		</div>
-		<br>
 
-		<h2>_DEAD LINES_</h2>
+	<h1>Pixiv Tag Collector 設定</h1>
+
+	<div id="options">
+
+		<h2>タグリスト</h2>
+
+		<div>
+			<ul>
+				<li><label for='pixivShowTagList'><input type='checkbox' id='pixivShowTagList' />pixivにタグリストを表示する</label></li>
+				<ul>
+					<li><label for='pixivApplyToAll'><input type='checkbox' id='pixivApplyToAll' />pixiv内のあらゆるページにタグリストを表示する</label></li>
+				</ul>
+			</ul>
+		</div>
+
+		<div id="cont-comp">
+			<p>完全一致検索用</p>
+			<textarea id='pixivCompleteTags' defaul=''></textarea><br>
+			<label for='pixivShowCompleteTags'><input type='checkbox' id='pixivShowCompleteTags' />開いておく</label>
+		</div>
+		<div id="cont-part" class="clearfix">
+			<p>部分一致/AND/OR/マイナス検索用 <a href="http://www.pixiv.net/help.php?c=4&p=8#4-8" target="_blank">→ヘルプを見る</a></p>
+			<textarea id='pixivPartialTags'  cols=60 rows=20 defaul=''></textarea><br>
+			<label for='pixivShowPartialTags'><input type='checkbox' id='pixivShowPartialTags' />開いておく</label>
+		</div>
+
+		<h2>〆切タイマー</h2>
+		<p>イベント原稿や企画の〆切を表示します。</p>
 		<table id="deadLines">
 			<tr>
-				<td>1</td>
-				<td><input type='text' id='pixivDeadLines1Name' size=40 /> ⇒
-				</td>
-				<td>
-					<select id='pixivDeadLines1Y'></select>/<select id='pixivDeadLines1M'></select>/<select id='pixivDeadLines1D'></select>
-					<select id='pixivDeadLines1HH'></select>:<select id='pixivDeadLines1MM'></select>
-				</td>
-			</tr>
-			<tr>
-				<td>2</td>
-				<td><input type='text' id='pixivDeadLines2Name' size=40 /> ⇒
-				</td>
-				<td>
-					<select id='pixivDeadLines2Y'></select>/<select id='pixivDeadLines2M'></select>/<select id='pixivDeadLines2D'></select>
-					<select id='pixivDeadLines2HH'></select>:<select id='pixivDeadLines2MM'></select>
-				</td>
-			</tr>
-			<tr>
-				<td>3</td>
-				<td><input type='text' id='pixivDeadLines3Name' size=40 /> ⇒
-				</td>
-				<td>
-					<select id='pixivDeadLines3Y'></select>/<select id='pixivDeadLines3M'></select>/<select id='pixivDeadLines3D'></select>
-					<select id='pixivDeadLines3HH'></select>:<select id='pixivDeadLines3MM'></select>
-				</td>
-			</tr>
-			<tr>
-				<td></td><td colspan=2><strong>しめきりは3つまで! いのちだいじに</strong></td>
+				<th></th>
+				<th>タイトル</th>
+				<th>日付</th>
+				<th>時刻</th>
+				<th>関連URL(任意)</th>
+				<th></th>
 			</tr>
 		</table>
-		<br>
-		
+
 		<h2>表示設定</h2>
-		<ul id="showhide">
+		<p>pixiv内各パーツの表示・非表示を設定できます。表示したくないものはチェックを外してください。<p>
+		<h3>ヘッダー</h3>
+		<ul class="showhide">
 			<li>
-				<label for='pixivShowLogo'><input type='checkbox' id='pixivShowLogo' />pixivロゴを表示する</label>
+				<label for='pixivShowLogo'><input type='checkbox' id='pixivShowLogo' />pixivロゴ</label>
 			</li>
-			<li><br></li>
+		</ul>
+		<h3>メインページ</h3>
+		<ul class="showhide">
 			<li>
-				<label for='pixivShowMyProfile'><input type='checkbox' id='pixivShowMyProfile' checked />マイプロフィールを表示する</label>
-			</li>
-			<li>
-				<label for='pixivShowMyMenu'><input type='checkbox' id='pixivShowMyMenu' checked />メニューを表示する</label>
-			</li>
-			<li>
-				<label for='pixivShowMyGroup'><input type='checkbox' id='pixivShowMyGroup' checked />マイグループを表示する</label>
+				<label for='pixivShowMyProfile'><input type='checkbox' id='pixivShowMyProfile' checked />マイプロフィール</label>
 			</li>
 			<li>
-				<label for='pixivShowOfficialGroup'><input type='checkbox' id='pixivShowOfficialGroup' checked />公式グループを表示する</label>
+				<label for='pixivShowMyMenu'><input type='checkbox' id='pixivShowMyMenu' checked />メニュー</label>
 			</li>
 			<li>
-				<label for='pixivShowRecommendUser'><input type='checkbox' id='pixivShowRecommendUser' checked />おすすめユーザーを表示する</label>
+				<label for='pixivShowMyGroup'><input type='checkbox' id='pixivShowMyGroup' checked />マイグループ</label>
 			</li>
 			<li>
-				<label for='pixivShowFollowing'><input type='checkbox' id='pixivShowFollowing' checked />フォロー中を表示する</label>
+				<label for='pixivShowOfficialGroup'><input type='checkbox' id='pixivShowOfficialGroup' checked />公式グループ</label>
 			</li>
 			<li>
-				<label for='pixivShowMyPixiv'><input type='checkbox' id='pixivShowMyPixiv' checked />マイピクを表示する</label>
+				<label for='pixivShowFollowing'><input type='checkbox' id='pixivShowFollowing' checked />フォロー中</label>
 			</li>
 			<li>
-				<label for='pixivShowEvents'><input type='checkbox' id='pixivShowEvents' checked />イベントを表示する</label>
-			</li>
-			<li><br></li>
-			<li>
-				<label for='pixivShowNewsTop'><input type='checkbox' id='pixivShowNewsTop' checked />お知らせを表示する</label>
+				<label for='pixivShowMyPixiv'><input type='checkbox' id='pixivShowMyPixiv' checked />マイピク</label>
 			</li>
 			<li>
-				<label for='pixivShowNewIllust'><input type='checkbox' id='pixivShowNewIllust' checked />みんなの新着を表示する</label>
+				<label for='pixivShowRecommendUser'><input type='checkbox' id='pixivShowRecommendUser' checked />おすすめユーザー</label>
 			</li>
 			<li>
-				<label for='pixivShowPopularTags'><input type='checkbox' id='pixivShowPopularTags' checked />注目のタグを表示する</label>
+				<label for='pixivShowEvents'><input type='checkbox' id='pixivShowEvents' checked />イベント</label>
 			</li>
 			<li>
-				<label for='pixivShowUserEvent'><input type='checkbox' id='pixivShowUserEvent' checked />企画目録を表示する</label>
+				<label for='pixivShowNewsTop'><input type='checkbox' id='pixivShowNewsTop' checked />お知らせ</label>
 			</li>
 			<li>
-				<label for='pixivShowBookmarkNews'><input type='checkbox' id='pixivShowBookmarkNews' checked />フォロー新着作品を表示する</label>
+				<label for='pixivShowNewIllust'><input type='checkbox' id='pixivShowNewIllust' checked />みんなの新着</label>
 			</li>
 			<li>
-				<label for='pixivShowMyPixivNews'><input type='checkbox' id='pixivShowMyPixivNews' checked />マイピク新着作品を表示する</label>
-			</li>
-			<li><br></li>
-			<li>
-				<label for='pixivShowDailyRank'><input type='checkbox' id='pixivShowDailyRank' checked />デイリーランキングを表示する</label>
+				<label for='pixivShowPopularTags'><input type='checkbox' id='pixivShowPopularTags' checked />注目のタグ</label>
 			</li>
 			<li>
-				<label for='pixivShowComicRank'><input type='checkbox' id='pixivShowComicRank' checked />コミックランキングを表示する</label>
+				<label for='pixivShowUserEvent'><input type='checkbox' id='pixivShowUserEvent' checked />企画目録</label>
 			</li>
 			<li>
-				<label for='pixivShowOtherRank'><input type='checkbox' id='pixivShowOtherRank' checked />その他ランキングを表示する</label>
+				<label for='pixivShowBookmarkNews'><input type='checkbox' id='pixivShowBookmarkNews' checked />フォロー新着作品</label>
 			</li>
 			<li>
-				<label for='pixivShowMaleRank'><input type='checkbox' id='pixivShowMaleRank' checked />男女別ランキングを表示する</label>
+				<label for='pixivShowMyPixivNews'><input type='checkbox' id='pixivShowMyPixivNews' checked />マイピク新着作品</label>
 			</li>
 			<li>
-				<label for='pixivShowRookieRank'><input type='checkbox' id='pixivShowRookieRank' checked />ルーキーランキングを表示する</label>
+				<label for='pixivShowComicRank'><input type='checkbox' id='pixivShowComicRank' checked />pixivコミック</label>
 			</li>
 			<li>
-				<label for='pixivShowOriginalRank'><input type='checkbox' id='pixivShowOriginalRank' checked />オリジナルランキングを表示する</label>
+				<label for='pixivShowDicRank'><input type='checkbox' id='pixivShowDicRank' checked />ピクシブ百科事典の人気記事</label>
+			</li>
+		</ul>
+		<h3>ランキング</h3>
+		<ul class="showhide">
+			<li>
+				<label for='pixivShowDailyRank'><input type='checkbox' id='pixivShowDailyRank' checked />デイリー</label>
 			</li>
 			<li>
-				<label for='pixivShowDicRank'><input type='checkbox' id='pixivShowDicRank' checked />百科事典ランキングを表示する</label>
+				<label for='pixivShowOtherRank'><input type='checkbox' id='pixivShowOtherRank' checked />過去・地域別</label>
 			</li>
 			<li>
-				<label for='pixivShowNovelRank'><input type='checkbox' id='pixivShowNovelRank' checked />小説デイリーランキングを表示する</label>
+				<label for='pixivShowMaleRank'><input type='checkbox' id='pixivShowMaleRank' checked />男女別</label>
+			</li>
+			<li>
+				<label for='pixivShowRookieRank'><input type='checkbox' id='pixivShowRookieRank' checked />ルーキー</label>
+			</li>
+			<li>
+				<label for='pixivShowOriginalRank'><input type='checkbox' id='pixivShowOriginalRank' checked />オリジナル</label>
+			</li>
+			<li>
+				<label for='pixivShowNovelRank'><input type='checkbox' id='pixivShowNovelRank' checked />小説デイリー</label>
 			</li>
 		</ul>
 		<br>
@@ -164,10 +158,11 @@ vim: ts=2 sw=2 expandtab fenc=utf8 :
 			-->
 		</ul>
 		<br>
-		
-		<button type="button" id="saveOptions">SAVE</button>
-
 	</div>
+</div>
+
+<div id="footer">
+	<button type="button" id="saveOptions">SAVE</button>※設定を反映するには、pixivを開いているタブを再読み込みしてください。
 </div>
 
 </body>

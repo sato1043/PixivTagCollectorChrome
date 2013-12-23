@@ -2,22 +2,26 @@
 // tagCollector がpixiv.netドメイン以下のページの表示毎に実行する処理
 'use strict';
 
+//デッドラインの数
+var DEADLINES_NUM = 3;
+
 // PixivTagCollector用のスタイルシートを加える
 var style = document.createElement('link');
 style.rel = 'stylesheet';
 style.type = 'text/css';
-style.href = chrome.extension.getURL('style_ptc.css');
+style.href = chrome.extension.getURL('css/style_ptc.css');
 (document.head || document.documentElement).appendChild(style);
 
 
-// PixivTagCollectorのタグ一覧表示を Ctrl+Q でトグルできるように。
+//PixivTagCollectorのタグ一覧表示を Ctrl+Q でトグルできるように。
 document.addEventListener("keydown", function (e) {
+	var tl = $('.pixiv_tag_collector');
 	if (e.ctrlKey && e.keyCode == 81) {
-		if ($('.tag_lists').css('display') == 'none') {
-			$('.tag_lists').css('display', 'block');
+		if (tl.is(':hidden')) {
+			tl.show();
 			chrome.extension.sendRequest({ action : "showTagList" }, function (response) {});
 		} else {
-			$('.tag_lists').css('display', 'none');
+			tl.hide();
 			chrome.extension.sendRequest({ action : "hideTagList" }, function (response) {});
 		}
 	}
@@ -53,11 +57,7 @@ chrome.extension.sendRequest({
 	if (response.resultOptions == null)
 		return;
 	
-	if (response.resultOptions.pixivDeadLines1Name != ""
-	 || response.resultOptions.pixivDeadLines2Name != ""
-	 || response.resultOptions.pixivDeadLines3Name != "" ) {
 		addDeadLineList(document, response.resultOptions);
-	}
 	
 	addCollectedPixivTags(document, response.resultOptions);
 	
@@ -220,17 +220,14 @@ function addCollectedPixivTags(node, options) {
 		return;
 	}
 	
-	if ( ! options.pixivApplyToAll)
-		return;
-
-	xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " layout-body ")]';
-	targetNode = document.evaluate(xpath, node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
-	if (targetNode.snapshotLength > 0) {
-		tagLists(node, targetNode, options);
-		return;
+	if ( ! options.pixivApplyToAll){
+		xpath = './/div[contains(concat(" ",normalize-space(@id)," "), " item-container ")]';
+	} else {
+		xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " layout-column-2 ") '+
+		        'or contains(concat(" ",normalize-space(@class)," "), " ui-layout-east ") '+
+		        'or contains(concat(" ",normalize-space(@class)," "), " layout-body ")]';
 	}
 	
-	xpath = './/div[contains(concat(" ",normalize-space(@id)," "), " item-container ")]';
 	targetNode = document.evaluate(xpath, node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
 	if (targetNode.snapshotLength > 0) {
 		tagLists(node, targetNode, options);
@@ -241,41 +238,44 @@ function addCollectedPixivTags(node, options) {
 
 // ふたつのタグリストを表示
 function tagLists(node, targetNode, options) {
-	
-	var complateDiv = complateTags(options);
+
+	var completeDiv = completeTags(options);
 	var partialDiv = partialTags(options);
 	
 	var tagListsDiv = document.createElement('div');
-	tagListsDiv.className = 'tag_lists';
-	tagListsDiv.style.overflow = 'hidden';
+	tagListsDiv.className = 'pixiv_tag_collector';
 	if ( ! options.pixivShowTagList) { tagListsDiv.style.display = 'none'; }
 	
-	tagListsDiv.appendChild(complateDiv);
+	tagListsDiv.appendChild(completeDiv);
 	tagListsDiv.appendChild(partialDiv);
 	
 	targetNode.snapshotItem(0).parentNode
 		.insertBefore(tagListsDiv, targetNode.snapshotItem(0));
 	
-	$('#complateTagsOnOff').click(function(){
-		if ($('#complateTags').css('display') == 'none') {
-			$('#complateTags').css('display', 'inline-block');
-			chrome.extension.sendRequest({　action : "showComplateTags"　}, function (response) {});
-			$('#complateTagsOnOff').html('-たたむ');
+	$('#completeTagsOnOff').click(function(){
+		var tags = $('#completeTags');
+		var onoff = $('#completeTagsOnOff');
+		if (tags.is(':hidden')) {
+			tags.css('display', 'inline');
+			chrome.extension.sendRequest({ action : "showComplateTags" }, function (response) {});
+			onoff.html('-');
 		} else {
-			$('#complateTags').css('display', 'none');
-			chrome.extension.sendRequest({　action : "hideComplateTags"　}, function (response) {});
-			$('#complateTagsOnOff').html('+ひらく');
+			tags.hide();
+			chrome.extension.sendRequest({ action : "hideComplateTags" }, function (response) {});
+			onoff.html('+');
 		}
 	});
 	$('#partialTagsOnOff').click(function(){
-		if ($('#partialTags').css('display') == 'none') {
-			$('#partialTags').css('display', 'inline-block');
-			chrome.extension.sendRequest({　action : "showPartialTags"　}, function (response) {});
-			$('#partialTagsOnOff').html('-たたむ');
+		var tags = $('#partialTags');
+		var onoff = $('#partialTagsOnOff');
+		if (tags.is(':hidden')) {
+			tags.css('display', 'inline');
+			chrome.extension.sendRequest({ action : "showPartialTags" }, function (response) {});
+			$('#partialTagsOnOff').html('-');
 		} else {
-			$('#partialTags').css('display', 'none');
-			chrome.extension.sendRequest({　action : "hidePartialTags"　}, function (response) {});
-			$('#partialTagsOnOff').html('+ひらく');
+			tags.hide();
+			chrome.extension.sendRequest({ action : "hidePartialTags" }, function (response) {});
+			onoff.html('+');
 		}
 	});
 	
@@ -292,22 +292,21 @@ function tagLists(node, targetNode, options) {
 }
 
 // 完全一致検索用のタグリストをDOM作成
-function complateTags(options){
-	
-	var div = document.createElement('div');
+function completeTags(options){
+	var taglist_outer = document.createElement('div');
 	var onoff = document.createElement('div');
-	var span = document.createElement('span');
+	var taglist = document.createElement('div');
 	
-	div.className = 'pixiv_tag_collector complete';
-	div.id        = 'pixiv_tag_collector_complete_tags';
+	taglist_outer.id        = 'pixiv_tag_collector_complete_tags';
+	taglist_outer.className = 'taglist';
 	
-	onoff.id = 'complateTagsOnOff';
+	onoff.id = 'completeTagsOnOff';
 	onoff.className = 'taglistOnOff';
-	onoff.innerText = (options.pixivShowCompleteTags) ? '-たたむ':'+ひらく';
+	onoff.innerText = (options.pixivShowCompleteTags) ? '-':'+';
 	
-	span.id = 'complateTags';
-	span.className = 'taglist';
-	if ( ! options.pixivShowCompleteTags) { span.style.display = 'none'; }
+	taglist.id = 'completeTags';
+
+	if ( ! options.pixivShowCompleteTags) { taglist.style.display = 'none'; }
 	
 	var node = document.createDocumentFragment();
 	for (var i = 0; i < options.pixivCompleteTags.length; i++) {
@@ -317,41 +316,39 @@ function complateTags(options){
 		newA.appendChild(document.createTextNode(options.pixivCompleteTags[i]));
 		node.appendChild(newA);
 	}
-	span.appendChild(node);
+	taglist.appendChild(node);
 	
-	div.appendChild(onoff);
-	div.appendChild(span);
+	taglist_outer.appendChild(onoff);
+	taglist_outer.appendChild(taglist);
 	
-	return div;
+	return taglist_outer;
 }
 
 // 部分一致/AND/OR/マイナス検索用のタグリストをDOM作成
 function partialTags(options){
-	
-	var div = document.createElement('div');
+	var taglist_outer = document.createElement('div');
 	var onoff = document.createElement('div');
-	var span = document.createElement('span');
+	var taglist = document.createElement('div');
 	
-	div.id        = 'pixiv_tag_collector_partial_tags';
-	div.className = 'pixiv_tag_collector partial';
+	taglist_outer.id        = 'pixiv_tag_collector_partial_tags';
+	taglist_outer.className = 'taglist';
 	
 	onoff.id = 'partialTagsOnOff';
 	onoff.className = 'taglistOnOff';
-	onoff.innerText = (options.pixivShowPartialTags) ? '-たたむ':'+ひらく';
+	onoff.innerText = (options.pixivShowPartialTags) ? '-':'+';
 	
-	span.id = 'partialTags';
-	span.className = 'taglist';
-	if ( ! options.pixivShowPartialTags) { span.style.display = 'none'; }
+	taglist.id = 'partialTags';
+
+	if ( ! options.pixivShowPartialTags) { taglist.style.display = 'none'; }
 	
 	var pattern = /(-{2,})+(\d{1,})$/;
 	var node = document.createDocumentFragment();
 	
 	for (var i = 0; i < options.pixivPartialTags.length; i++) {
-		
 		var word = options.pixivPartialTags[i];
 		
 		var newA = document.createElement('a');
-		newA.title = word.replace(pattern, ''); // TODO: ?
+		newA.title = word; // title属性付与(マウスオンで省略前の検索キーワードが見える)
 		newA.href = 'http://www.pixiv.net/search.php?s_mode=s_tag&word='
 				+ encodeURIComponent(word)
 					.replace(/%20/g, '+')
@@ -370,17 +367,16 @@ function partialTags(options){
 		}
 		node.appendChild(newA);
 	}
-	span.appendChild(node);
+	taglist.appendChild(node);
 	
-	div.appendChild(onoff);
-	div.appendChild(span);
+	taglist_outer.appendChild(onoff);
+	taglist_outer.appendChild(taglist);
 	
-	return div;
+	return taglist_outer;
 }
 
 // デッドラインを表示する
 function addDeadLineList(node, options) {
-	
 	var xpath = (node == document)
 		? './/*[@id="search-result"]'
 		: './/li[contains(concat(" ",normalize-space(@class)," "), " image ")]'
@@ -391,54 +387,78 @@ function addDeadLineList(node, options) {
 		return;
 	}
 	
-	if ( ! options.pixivApplyToAll)
-		return;
-
-	xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " layout-body ")]';
-	targetNode = document.evaluate(xpath, node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
-	if (targetNode.snapshotLength > 0) {
-		deadLines(node, targetNode, options);
-		return;
+	if ( ! options.pixivApplyToAll){
+		xpath = './/div[contains(concat(" ",normalize-space(@id)," "), " item-container ")]';
+	} else {
+		xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " layout-body ") or'+
+		        ' contains(concat(" ",normalize-space(@class)," "), " ui-layout-east ") or'+
+		        ' contains(concat(" ",normalize-space(@class)," "), " layout-column-2 ")]';
 	}
 	
-	xpath = './/div[contains(concat(" ",normalize-space(@id)," "), " item-container ")]';
 	targetNode = document.evaluate(xpath, node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
 	if (targetNode.snapshotLength > 0) {
 		deadLines(node, targetNode, options);
 		return;
 	}
-
 }
 
+// デッドラインリストをDOM作成
 function deadLines(node, targetNode, options) {
+	if(options['pixivDeadLineName'+[0]] === '')
+		return;
 	
 	var node = document.createDocumentFragment();
-	for (var i = 1; i <= 3; i++) {
-		if (options['pixivDeadLines'+i+'Name'] !== ""){
-		}else{
-			continue;
+
+	var deadLines = document.createElement('ul');
+	deadLines.id        = 'pixiv_tag_collector_deadline_list';
+	deadLines.className = 'pixiv_tag_collector';
+
+	for (var i = 0; i < DEADLINES_NUM; i++) {
+		if(options['pixivDeadLineName'+[i]] === '') {
+			break;
 		}
-		var deadLine = document.createElement('div');
-		deadLine.className = 'pixiv_tag_collector deadline';
+
+		var now = new Date(); //現在の日時を取得
+		var dl  = new Date(options['pixivDeadLineDate'+[i]] + ', ' + options['pixivDeadLineTime'+[i]]); //〆切をセット
+		var diff = dl - now;
+		var times = 24 * 60 * 60 * 1000;
+		var day   = Math.floor(diff / times);
+		var hour  = Math.floor(diff % times / (60 * 60 * 1000));
+		var min   = Math.floor(diff % times / (60 * 1000)) % 60;
+		var notice = '';
+
+		var deadLine = document.createElement('li');
 		deadLine.id        = 'pixiv_tag_collector_deadline'+i;
+		deadLine.className = 'deadline';
+
+		if(diff > 0) {
+			notice += 'あと';
+			if(hour == 0 && day == 0) {
+				notice += min + '分です。';
+			} else if(day == 0) {
+				notice += hour + '時間' + min + '分です。';
+			} else {
+				notice += day + '日と' + hour + '時間' + min + '分です。';
+			}
+		} else {
+			notice += '〆切を過ぎました。';
+		}
+		if(diff < times * 7) {
+			deadLine.className = 'deadline deadline-yabai';
+		}
+
+		var title = options['pixivDeadLineName'+[i]];
+		if(options['pixivDeadLineUrl'+[i]] !== ""){
+			title = '<a href="' + options['pixivDeadLineUrl'+[i]] + '">' + title + '</a>';
+		}
 		deadLine.innerHTML
-			= '<STRONG>'+options['pixivDeadLines'+i+'Name'] + '</STRONG> の締め切りは「 <STRONG>'
-			+ ("0"+options['pixivDeadLines'+i+'Y' ]).slice(-2) + '/'
-			+ ("0"+options['pixivDeadLines'+i+'M' ]).slice(-2) + '/'
-			+ ("0"+options['pixivDeadLines'+i+'D' ]).slice(-2) + '　'
-			+ ("0"+options['pixivDeadLines'+i+'HH']).slice(-2) + ':'
-			+ ("0"+options['pixivDeadLines'+i+'MM']).slice(-2) 
-			+ '</STRONG> 」です。';
-		node.appendChild(deadLine);
+			= title + ' の〆切は <span class="deadline-date">'
+			+ options['pixivDeadLineDate'+[i]] + ' ' + options['pixivDeadLineTime'+[i]]
+			+ '</span> です。' + notice;
+		deadLines.appendChild(deadLine);
 	}
-	
-	var div = document.createElement('div');
-	div.id        = 'pixiv_tag_collector_deadline_list';
-	div.className = 'tag_lists';
-	div.style.overflow = 'hidden';
-	div.appendChild(node);
 	targetNode.snapshotItem(0).parentNode
-		.insertBefore(div, targetNode.snapshotItem(0));
+		.insertBefore(deadLines, targetNode.snapshotItem(0));
 }
 
 

@@ -40,6 +40,11 @@ if (!localStorage.options) {
 		, pixivShowOriginalRank : true
 		, pixivShowNovelRank    : true
 		
+		, pixivDeadLineName     : []
+		, pixivDeadLineDate     : []
+		, pixivDeadLineTime     : []
+		, pixivDeadLineUrl      : []
+
 		, pixivOpenInNewTab     : false
 		, pixivReloadPage       : false
 

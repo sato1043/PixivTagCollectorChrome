@@ -1,81 +1,13 @@
 'use strict';
 
+//デッドラインの数
+var DEADLINES_NUM = 3;
+
 // ロード時動作
 $(document).ready(function(){
-	showOptions();
-});
-
-// DEAD LINEの日時を表示するINPUTのIDを導くための定数
-var idNm = new Array('1Name','2Name','3Name');
-var idY  = new Array('1Y','2Y','3Y');
-var idM  = new Array('1M','2M','3M');
-var idD  = new Array('1D','2D','3D');
-var idHH = new Array('1HH','2HH','3HH');
-var idMM = new Array('1MM','2MM','3MM');
-
-// 日時入力関係のユーティリティ
-function setupDayList(idY,idM,idD){
-	var oldValue = $('#pixivDeadLines'+idD).val();
-	$('#pixivDeadLines'+idD).empty();
-	$('#pixivDeadLines'+idD).append($('<option value=""></option>'));
-
-	var year = $('#pixivDeadLines'+idY+' option:selected').val();
-	var month = $('#pixivDeadLines'+idM+' option:selected').val();
-	var date = new Date(year, month, 0);
-	var lastday = date.getDate();
-	for (var i = 1; i <= lastday; ++i) {
-		$('#pixivDeadLines'+idD).append(
-			$('<option value='+i+'>'+i+'</option>'));
-	}
-	$('#pixivDeadLines'+idD).val(oldValue);
-}
-function setupYearList(idY,idM,idD){
-	$('#pixivDeadLines'+idY).empty();
-	$('#pixivDeadLines'+idY).append($('<option value=""></option>'));
-	for (var i = 13; i <= 20; ++i) {
-		$('#pixivDeadLines'+idY).append(
-			$('<option value='+i+'>'+i+'</option>'));
-	}
-	$('#pixivDeadLines'+idY).change(function(){setupDayList(idY,idM,idD);});
-}
-function setupMonthList(idY,idM,idD){
-	$('#pixivDeadLines'+idM).empty();
-	$('#pixivDeadLines'+idM).append($('<option value=""></option>'));
-	for (var i = 1; i <= 12; ++i) {
-		$('#pixivDeadLines'+idM).append(
-			$('<option value='+i+'>'+i+'</option>'));
-	}
-	$('#pixivDeadLines'+idM).change(function(){setupDayList(idY,idM,idD);});
-}
-function setupTimeList(idH,idM){
-	$('#pixivDeadLines'+idH).empty();
-	$('#pixivDeadLines'+idH).append($('<option value=""></option>'));
-	$('#pixivDeadLines'+idM).empty();
-	$('#pixivDeadLines'+idM).append($('<option value=""></option>'));
-	for (var i = 0; i <= 23; ++i) {
-		$('#pixivDeadLines'+idH).append(
-			$('<option value='+i+'>'+i+'</option>'));
-	}
-	for (var i = 0; i <= 59; ++i) {
-		$('#pixivDeadLines'+idM).append(
-			$('<option value='+i+'>'+i+'</option>'));
-	}
-}
-
-// オプションを表示する
-function showOptions(){
-	
-	//デッドラインの日時の初期値を設定
-	for (var i = 0; i < 3; ++i ){
-		setupYearList (idY[i],idM[i],idD[i]);
-		setupMonthList(idY[i],idM[i],idD[i]);
-		setupDayList  (idY[i],idM[i],idD[i]);
-		setupTimeList (idHH[i],idMM[i]);
-	}
-
-	// テキストエリアのフォーカスON/OFFでCSSクラスをON/OFFするように設定
-	$('textarea, input').focus(function(){ $(this).addClass   ('selected'); });
-	$('textarea, input').blur (function(){ $(this).removeClass('selected'); });
+	// テキストエリアのフォーカスON/OFFでCSSクラスをON/OFFするように設定 //CSSで指定済みのためコメントアウト
+//	$('textarea, input').focus(function(){ $(this).addClass   ('selected'); });
+//	$('textarea, input').blur (function(){ $(this).removeClass('selected'); });
 	
 	// タグを表示するチェック中だけ、すべてのページに表示の編集ができるようにした。
 	$('#pixivShowTagList').click(function(){
@@ -86,9 +18,39 @@ function showOptions(){
 		}
 	});
 	
+	//〆切入力フォームを生成
+	for(var i = 0; i < DEADLINES_NUM; i++){
+		$('table#deadLines').append(
+				  '<tr>\n'
+				+ '<td>' + (i+1) + '</td>\n'
+				+ '<td><input type="text" id="pixivDeadLineName' + i + '" class="deadline-name"/></td>\n'
+				+ '<td><input type="text" id="pixivDeadLineDate' + i + '" class="datepicker"/></td>\n'
+				+ '<td><input type="text" id="pixivDeadLineTime' + i + '" class="timepicker"/></td>\n'
+				+ '<td><input type="text" id="pixivDeadLineUrl' + i + '" class="deadline-url"/></td>\n'
+				+ '<td><button type="button" class="deadline-clear">削除</button></td>\n'
+				+ '</tr>\n');
+	}
+	//日付時刻入力補助をセット
+	$('.datepicker').datepicker();
+	$('.datepicker').datepicker("option", 'minDate', new Date()); //今日より前は設定できないようにする
+	$('.timepicker').timepicker();
+	$('.timepicker').timepicker({
+		'timeFormat': 'H:i', //フォーマット(PHPと同じ)
+		'step': 60 //何分おきにするか
+		});
+	//デッドラインをクリアするボタン
+	$('.deadline-clear').click(function(){
+		$(this).closest('tr').find('input[type="text"]').val('');
+	});
+	
 	// SAVEボタン押下で saveOptions を呼び出すように設定
 	$('#saveOptions').click(function(){ saveOptions(); });
 
+	showOptions();
+});
+
+// オプションを表示する
+function showOptions(){
 	//保存済み設定を取得
 	var options = JSON.parse(localStorage.options);
 	
@@ -115,13 +77,13 @@ function showOptions(){
 		$("#pixivShowTagList").removeAttr('checked');
 		$('#pixivApplyToAll').attr("disabled", "disabled");
 	}
-
+	
 	if (options.pixivShowLogo){
 		$("#pixivShowLogo").attr('checked','checked');
 	} else {
 		$("#pixivShowLogo").removeAttr('checked');
 	}
-
+	
 	if (options.pixivShowMyProfile) {
 		$("#pixivShowMyProfile").attr('checked','checked');
 	} else {
@@ -234,7 +196,6 @@ function showOptions(){
 	} else {
 		$("#pixivShowNovelRank").removeAttr('checked');
 	}
-
 	
 	if (options.pixivApplyToAll){
 		$("#pixivApplyToAll").attr('checked','checked');
@@ -253,22 +214,19 @@ function showOptions(){
 		$("#pixivReloadPage").removeAttr('checked');
 	}
 	*/
-	for (var i = 0; i < 3; ++i ){
-		$('#pixivDeadLines'+idNm[i]).val(options['pixivDeadLines'+idNm[i]]);
-		$('#pixivDeadLines'+idY [i]).val(options['pixivDeadLines'+idY [i]]);
-		$('#pixivDeadLines'+idM [i]).val(options['pixivDeadLines'+idM [i]]);
-		$('#pixivDeadLines'+idD [i]).val(options['pixivDeadLines'+idD [i]]);
-		$('#pixivDeadLines'+idHH[i]).val(options['pixivDeadLines'+idHH[i]]);
-		$('#pixivDeadLines'+idMM[i]).val(options['pixivDeadLines'+idMM[i]]);
+	for (var i = 0; i < DEADLINES_NUM; ++i ){
+		$('#pixivDeadLineName'+i).val(options['pixivDeadLineName'+[i]]);
+		$('#pixivDeadLineDate'+i).val(options['pixivDeadLineDate'+[i]]);
+		$('#pixivDeadLineTime'+i).val(options['pixivDeadLineTime'+[i]]);
+		$('#pixivDeadLineUrl'+i).val(options['pixivDeadLineUrl'+[i]]);
 	}
 }
 
 // オプションを保存する
 function saveOptions(){
-	
 	var options = {};
 	var text = '';
-
+	
 	// 保存する値を準備
 	text = $("#pixivCompleteTags").val();
 	options.pixivCompleteTags = new Array();
@@ -322,63 +280,49 @@ function saveOptions(){
 	options.pixivOpenInNewTab		= $("#pixivOpenInNewTab").is(':checked');
 	//options.pixivReloadPage		= $("#pixivReloadPage").is(':checked');
 	
-	for (var i = 0; i < 3; ++i ){
+	for (var i = 0; i < DEADLINES_NUM; ++i ){
 		// まず値をすべて得ておいて、それからその日時について消去or登録をする
-		options['pixivDeadLines'+idNm[i]] = $('#pixivDeadLines'+idNm[i]).val();
-		options['pixivDeadLines'+idY [i]] = $('#pixivDeadLines'+idY [i]).val();
-		options['pixivDeadLines'+idM [i]] = $('#pixivDeadLines'+idM [i]).val();
-		options['pixivDeadLines'+idD [i]] = $('#pixivDeadLines'+idD [i]).val();
-		options['pixivDeadLines'+idHH[i]] = $('#pixivDeadLines'+idHH[i]).val();
-		options['pixivDeadLines'+idMM[i]] = $('#pixivDeadLines'+idMM[i]).val();
-		
+		options['pixivDeadLineName'+[i]] = $('#pixivDeadLineName' + i).val();
+		options['pixivDeadLineDate'+[i]] = $('#pixivDeadLineDate' + i).val();
+		options['pixivDeadLineTime'+[i]] = $('#pixivDeadLineTime' + i).val();
+		options['pixivDeadLineUrl' +[i]] = $('#pixivDeadLineUrl'  + i).val();
+
 		// ・名前が入っていないDEAD LINEについて、内容を消去する
-		if (options['pixivDeadLines'+idNm[i]] === ""){
+		if (options['pixivDeadLineName'+[i]] === ""){
 			// 日時のどこかが入っていたら、本当に消していいのか尋ねる
-			if (options['pixivDeadLines'+idNm[i]] !== ""
-			 || options['pixivDeadLines'+idY [i]] !== ""
-			 || options['pixivDeadLines'+idM [i]] !== ""
-			 || options['pixivDeadLines'+idD [i]] !== ""
-			 || options['pixivDeadLines'+idHH[i]] !== ""
-			 || options['pixivDeadLines'+idMM[i]] !== "" ){
-				if (window.confirm((i+1)+'番目のDEAD LINEは日時のどこかだけ入力されています。\n'
-					+'名前のないDEAD LINEは消去されますが、続けますか？')){
-				} else {
-					return; // Cancel
+			if(options['pixivDeadLineDate'+[i]] !== "" || options['pixivDeadLineTime'+[i]] !== "") {
+				if (window.confirm((i+1)+'番目の〆切は名前が入力されていません。\n'
+						+'名前のない〆切は保存されませんが、続けてよろしいですか?')){
+				} else { // Cancel
+					return;
 				}
 			}
 			// DEAD LINEが消去される
-			options['pixivDeadLines'+idY [i]] = "";
-			options['pixivDeadLines'+idM [i]] = "";
-			options['pixivDeadLines'+idD [i]] = "";
-			options['pixivDeadLines'+idHH[i]] = "";
-			options['pixivDeadLines'+idMM[i]] = "";
+			options['pixivDeadLineDate'+[i]] = "";
+			options['pixivDeadLineTime'+[i]] = "";
+			options['pixivDeadLineUrl' +[i]] = "";
 		}
-		// ・名前が入っているDEAD LINEについて、内容を登録する
+		// 名前が入っているDEAD LINEについて、内容を登録する
 		else {
 			// 日時のどこかがかけていたらエラー扱い
-			if (options['pixivDeadLines'+idY [i]] === ""
-			 || options['pixivDeadLines'+idM [i]] === ""
-			 || options['pixivDeadLines'+idD [i]] === ""
-			 || options['pixivDeadLines'+idHH[i]] === ""
-			 || options['pixivDeadLines'+idMM[i]] === "" ){
-				window.alert((i+1)+'番目のDEAD LINE 「'
-					+options['pixivDeadLines'+idNm[i]]
-					+'」 は日時のどこかが欠けていて内容が無効です。修正願います。');
-				$('#pixivDeadLines'+idNm[i]).focus();
-				return; // Cancel
+			if(options['pixivDeadLineDate'+[i]] === "" || options['pixivDeadLineTime'+[i]] === ""){
+				if(window.alert((i+1)+'番目のDEAD LINE 「'
+						+options['pixivDeadLineName'+[i]]
+						+'」 は日時が正しく設定されていません。')){
+				} else { // Cancel
+					return;
+				}
+				// DEAD LINEが保存される
+				options['pixivDeadLineDate'+[i]] = $('#pixivDeadLineDate' + i).val();
+				options['pixivDeadLineTime'+[i]] = $('#pixivDeadLineTime' + i).val();
+				options['pixivDeadLineUrl' +[i]] = $('#pixivDeadLineUrl'  + i).val();
 			}
-			// DEAD LINEが保存される
-			options['pixivDeadLines'+idY [i]] = $('#pixivDeadLines'+idY [i]).val();
-			options['pixivDeadLines'+idM [i]] = $('#pixivDeadLines'+idM [i]).val();
-			options['pixivDeadLines'+idD [i]] = $('#pixivDeadLines'+idD [i]).val();
-			options['pixivDeadLines'+idHH[i]] = $('#pixivDeadLines'+idHH[i]).val();
-			options['pixivDeadLines'+idMM[i]] = $('#pixivDeadLines'+idMM[i]).val();
 		}
 	}
-
+	
 	// localstorageに設定を保存
 	localStorage.options = JSON.stringify(options);
-
+	
 	//設定タブを閉じる
 	close();
 }

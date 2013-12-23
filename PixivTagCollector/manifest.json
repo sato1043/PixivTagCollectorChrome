@@ -8,8 +8,8 @@
 	"version" : "0.4",
 
 	"icons": {
-		"48": "Tag48x48.png",
-		"128": "Tag128x128.png"
+		"48": "img/Tag48x48.png",
+		"128": "img/Tag128x128.png"
 	},
 
 	"permissions" : [
@@ -20,12 +20,12 @@
 
 	"browser_action" : {
 		"default_title" : "Pixiv Tag Collector",
-		"default_icon" : "Tag48x48.png",
+		"default_icon" : "img/Tag48x48.png",
 		"default_popup":"popup.html"
 	},
 
 	"background" : {
-		  "scripts": [ "jquery-1.7.2.min.js", "background.js" ]
+		  "scripts": [ "js/jquery-1.7.2.min.js", "background.js" ]
 	},
 
 	"options_page" : "options.html",
@@ -33,12 +33,12 @@
 	"content_scripts": [
 		  {
 		      "matches": [ "http://www.pixiv.net/*" ],
-		      "js": ["jquery-1.7.2.min.js", "content_script.js"]
+		      "js": ["js/jquery-1.7.2.min.js", "content_script.js"]
 		  }
 	],
 
 	"web_accessible_resources": [
-		"Tag48x48.png",
-		"style_ptc.css"
+		"img/Tag48x48.png",
+		"css/style_ptc.css"
 	]
 }

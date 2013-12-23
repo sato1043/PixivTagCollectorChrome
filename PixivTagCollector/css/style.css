@@ -1,0 +1,202 @@
+@charset "UTF-8";
+
+
+/* 共通
+ ---------------------------------------------*/
+body {
+	margin: 0;
+	padding: 0;
+}
+#wrapper {
+	margin: 10px auto;
+	padding: 0px 0px 40px 0px;
+	width: 960px;
+	position: relative;
+}
+h1 {
+	font-size: 18pt;
+}
+h2 {
+	margin: 23px 0px 5px 0px;
+	font-size: 13pt;
+	padding-bottom: 3px;
+	border-bottom: 2px solid #ddd;
+}
+h3 {
+	margin: 0;
+	font-size: 11pt;
+	border-bottom: 1px dotted #ddd;
+}
+p {
+	margin: 5px 0;
+	font-size: 0.9em;
+}
+a {
+/*	margin: 0 12px 0 0;*/
+	padding: 2px;
+	white-space: nowrap;
+	color: #258fb8;
+	text-decoration: none;
+}
+a:hover {
+	background: #258fb8;
+	color: #fff;
+	border-radius: 3px;
+}
+ul {
+	margin: 5px 0;
+	padding-left: 0;
+	list-style: none;
+	line-height: 1.5em;
+}
+
+
+/* options.html
+ ---------------------------------------------*/
+#footer {
+	position: fixed;
+	width: 100%;
+	padding: 10px;
+	bottom: 0;
+	border-top: 1px solid #ddd;
+	background: #fff;
+	z-index: 10;
+}
+#cont-comp,
+#cont-part {
+	margin: 0;
+	padding: 5px 10px 5px 0px;
+	display: inline-block;
+}
+#cont-comp {
+	width: 25%;
+}
+#cont-part {
+	width: 72%;
+}
+ul ul {
+	padding-left: 20px;
+}
+ul.showhide li {
+	display: inline-block;
+	margin-right: 10px;
+}
+textarea {
+	margin: 3px 0px;
+	padding: 5px;
+	width: 97%;
+	height: 15em;
+	border-radius: 5px;
+	border: 2px solid #ddd;
+	line-height: 1.5em;
+}
+input[type="text"] {
+	margin: 0 2px;
+	padding: 5px;
+	height: 1.3em;
+	line-height: 1.3em;
+	border-radius: 5px;
+	border: 2px solid #ddd;
+}
+textarea:focus,
+input:focus {
+	background: #fffee0;
+	outline: none;
+}
+button {
+	padding: 8px 25px;
+	background: #ddd;
+	border: none;
+	border-radius: 5px;
+	box-shadow: 0 4px #aaa;
+	font-weight: bold;
+	letter-spacing: 2px;
+	position: relative;
+
+}
+button:hover {
+	box-shadow: 0 5px #aaa;
+	top: -1px;
+}
+button:active {
+	box-shadow: 0 3px #aaa;
+	top: 1px;
+}
+input[type="checkbox"] {
+	margin-right: 5px;
+}
+button, label, input[type="checkbox"] {
+	cursor: pointer;
+}
+table#deadLines {
+	margin: 0;
+	padding: 0;
+	min-width: 50em;
+	border-collapse: collapse;
+}
+table#deadLines tr {
+	border-bottom: 1px solid #AAAAAA;
+}
+table#deadLines th {
+	padding: 3px;
+	border-top: 1px solid #AAAAAA;
+	background: #CCCCCC;
+}
+table#deadLines td {
+	padding: 5px;
+	text-align: center;
+}
+
+.deadline-name {
+	width: 15em;
+}
+.datepicker {
+	width: 6em;
+}
+.timepicker {
+	width: 3em;
+}
+.datepicker,
+.timepicker  {
+	text-align: center;
+}
+.deadline-url {
+	width: 30em;
+}
+.deadline-clear {
+	padding: 5px 8px;
+}
+
+
+/* popup.html
+ ---------------------------------------------*/
+#wrapper-popup {
+	margin: 0;
+	padding: 1px;
+	min-width: 200px;
+}
+.popup-shortcut {
+	width: 100%;
+	text-align: center;
+}
+.popup-shortcut li {
+	width: 100%
+}
+.popup-shortcut a {
+	padding: 2px;
+	width: 100%;
+	display: block;
+	text-decoration: none;
+	color: #258fb8;
+	border-radius: 0px;
+}
+.popup-shortcut a:hover {
+	background: #258fb8;
+	color: #fff;
+}
+
+.aa {
+	font-size: 10pt;
+	font-family: monospace;
+	line-height: 1.1em;
+}
