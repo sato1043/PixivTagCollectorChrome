@@ -229,7 +229,7 @@ function saveOptions(){
 	
 	// 保存する値を準備
 	text = $("#pixivCompleteTags").val();
-	options.pixivCompleteTags = new Array();
+	options.pixivCompleteTags = [];
 	if (text) {
 		text = text.replace(/[ 　]/g, '');
 		text = text.replace(/\n{2,}/g, '\n');
@@ -237,7 +237,7 @@ function saveOptions(){
 		options.pixivCompleteTags = text.split('\n');
 	}
 	text = $("#pixivPartialTags").val();
-	options.pixivPartialTags = new Array();
+	options.pixivPartialTags = [];
 	if (text) {
 		text = text.replace(/[ 　]/g, ' ');
 		text = text.replace(/\n{2,}/g, '\n');
@@ -252,7 +252,7 @@ function saveOptions(){
 	options.pixivShowLogo			= $("#pixivShowLogo").is(':checked');
 	
 	options.pixivShowMyProfile		= $("#pixivShowMyProfile").is(':checked');
-	options.pixivShowMyMenu 		= $("#pixivShowMyMenu").is(':checked');
+	options.pixivShowMyMenu		= $("#pixivShowMyMenu").is(':checked');
 	options.pixivShowMyGroup		= $("#pixivShowMyGroup").is(':checked');
 	options.pixivShowOfficialGroup	= $("#pixivShowOfficialGroup").is(':checked');
 	options.pixivShowRecommendUser	= $("#pixivShowRecommendUser").is(':checked');

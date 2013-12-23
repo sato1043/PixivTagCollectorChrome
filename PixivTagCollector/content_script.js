@@ -37,12 +37,12 @@ document.body.addEventListener('AutoPagerize_DOMNodeInserted', function (e) {
 		action : "getOptions"
 	}, function (response) {
 		
-		if (response.resultOptions == null)
+		if (response.resultOptions === null)
 			return;
 		
 		addCollectedPixivTags(e.target, response.resultOptions);
 		
-		if (options.pixivOpenInNewTab)
+		if (response.resultOptions.pixivOpenInNewTab)
 			forceMemberIllustPageOpenInNewTab(e.target);
 	});
 }, false);
@@ -54,7 +54,7 @@ chrome.extension.sendRequest({
 	action : "getOptions"
 }, function (response) {
 	
-	if (response.resultOptions == null)
+	if (response.resultOptions === null)
 		return;
 	
 		addDeadLineList(document, response.resultOptions);
@@ -117,15 +117,15 @@ function showLogo(node, on) {
 		targetNode.snapshotItem(0).style.right = 'auto';
 		targetNode.snapshotItem(0).style.left = '600px';
 	}
-	var xpath = '//*[contains(concat(" ",normalize-space(@class)," "), " navigation-list ")]';
-	var targetNode = document.evaluate(xpath, node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
+	xpath = '//*[contains(concat(" ",normalize-space(@class)," "), " navigation-list ")]';
+	targetNode = document.evaluate(xpath, node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
 	if (targetNode.snapshotLength > 0) {
 		targetNode.snapshotItem(0).style.bottom = 'auto';
 		targetNode.snapshotItem(0).style.right = 'auto';
 		//targetNode.snapshotItem(0).style.z-index = '10';
 	}
-	var xpath = '//*[contains(concat(" ",normalize-space(@class)," "), " layout-wrapper ")]';
-	var targetNode = document.evaluate(xpath, node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
+	xpath = '//*[contains(concat(" ",normalize-space(@class)," "), " layout-wrapper ")]';
+	targetNode = document.evaluate(xpath, node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
 	if (targetNode.snapshotLength > 0) {
 		targetNode.snapshotItem(0).style.height = '30px';
 	}
@@ -407,11 +407,9 @@ function deadLines(node, targetNode, options) {
 	if(options['pixivDeadLineName'+[0]] === '')
 		return;
 	
-	var node = document.createDocumentFragment();
-
-	var deadLines = document.createElement('ul');
-	deadLines.id        = 'pixiv_tag_collector_deadline_list';
-	deadLines.className = 'pixiv_tag_collector';
+	var deadLines_outer = document.createElement('ul');
+	deadLines_outer.id        = 'pixiv_tag_collector_deadline_list';
+	deadLines_outer.className = 'pixiv_tag_collector';
 
 	for (var i = 0; i < DEADLINES_NUM; i++) {
 		if(options['pixivDeadLineName'+[i]] === '') {
@@ -433,9 +431,9 @@ function deadLines(node, targetNode, options) {
 
 		if(diff > 0) {
 			notice += 'あと';
-			if(hour == 0 && day == 0) {
+			if(hour === 0 && day === 0) {
 				notice += min + '分です。';
-			} else if(day == 0) {
+			} else if(day === 0) {
 				notice += hour + '時間' + min + '分です。';
 			} else {
 				notice += day + '日と' + hour + '時間' + min + '分です。';
@@ -455,10 +453,10 @@ function deadLines(node, targetNode, options) {
 			= title + ' の〆切は <span class="deadline-date">'
 			+ options['pixivDeadLineDate'+[i]] + ' ' + options['pixivDeadLineTime'+[i]]
 			+ '</span> です。' + notice;
-		deadLines.appendChild(deadLine);
+		deadLines_outer.appendChild(deadLine);
 	}
 	targetNode.snapshotItem(0).parentNode
-		.insertBefore(deadLines, targetNode.snapshotItem(0));
+		.insertBefore(deadLines_outer, targetNode.snapshotItem(0));
 }
 
 
