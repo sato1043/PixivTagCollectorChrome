@@ -233,6 +233,70 @@ function addCollectedPixivTags(node, options) {
 		tagLists(node, targetNode, options);
 		return;
 	}
+
+	// マイページ用
+	xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " contents-east ")]';
+	targetNode = document.evaluate(xpath, node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
+	if (targetNode.snapshotLength > 0) {
+		tagLists(node, targetNode, options);
+		return;
+	}
+	
+	// 作品投稿用
+	xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " layout-body ")]';
+	targetNode = document.evaluate(xpath, node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
+	if (targetNode.snapshotLength > 0) {
+		tagLists(node, targetNode, options);
+		return;
+	}
+	
+	// 作品管理用
+	xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " layout-column-2 ")]';
+	targetNode = document.evaluate(xpath, node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
+	if (targetNode.snapshotLength > 0) {
+		tagLists(node, targetNode, options);
+		return;
+	}
+	
+	// ブックマークページ用
+	xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " action-unit ")]';
+	targetNode = document.evaluate(xpath, node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
+	if (targetNode.snapshotLength > 0) {
+		tagLists(node, targetNode, options);
+		return;
+	}
+	
+	// フィード(スタック?)用
+	xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " stacc_east_area ")]';
+	targetNode = document.evaluate(xpath, node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
+	if (targetNode.snapshotLength > 0) {
+		tagLists(node, targetNode, options);
+		return;
+	}
+	
+	// 小説用
+	xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " contents-main ")]';
+	targetNode = document.evaluate(xpath, node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
+	if (targetNode.snapshotLength > 0) {
+		tagLists(node, targetNode, options);
+		return;
+	}
+	
+	// イベント一覧ページ用
+	xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " two_column ")]';
+	targetNode = document.evaluate(xpath, node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
+	if (targetNode.snapshotLength > 0) {
+		tagLists(node, targetNode, options);
+		return;
+	}
+	
+	// イベント管理用
+	xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " one_column ")]';
+	targetNode = document.evaluate(xpath, node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
+	if (targetNode.snapshotLength > 0) {
+		tagLists(node, targetNode, options);
+		return;
+	}
 	
 }
 
