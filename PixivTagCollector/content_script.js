@@ -469,20 +469,23 @@ function addDeadLineList(node, options) {
 
 // デッドラインリストをDOM作成
 function deadLines(node, targetNode, options) {
-	if(options['pixivDeadLineName'+[0]] === '')
+	if(options.pixivDeadLineName[0] === ''
+	 && options.pixivDeadLineName[1] === ''
+	 && options.pixivDeadLineName[2] === '') {
 		return;
+	}
 	
 	var deadLines_outer = document.createElement('ul');
 	deadLines_outer.id        = 'pixiv_tag_collector_deadline_list';
 	deadLines_outer.className = 'pixiv_tag_collector';
 
 	for (var i = 0; i < DEADLINES_NUM; i++) {
-		if(options['pixivDeadLineName'+[i]] === '') {
-			break;
+		if(options.pixivDeadLineName[i] === '') {
+			continue;
 		}
 
 		var now = new Date(); //現在の日時を取得
-		var dl  = new Date(options['pixivDeadLineDate'+[i]] + ', ' + options['pixivDeadLineTime'+[i]]); //〆切をセット
+		var dl  = new Date(options.pixivDeadLineDate[i] + ', ' + options.pixivDeadLineTime[i]); //〆切をセット
 		var diff = dl - now;
 		var times = 24 * 60 * 60 * 1000;
 		var day   = Math.floor(diff / times);
@@ -510,13 +513,13 @@ function deadLines(node, targetNode, options) {
 			deadLine.className = 'deadline deadline-yabai';
 		}
 
-		var title = options['pixivDeadLineName'+[i]];
-		if(options['pixivDeadLineUrl'+[i]] !== ""){
-			title = '<a href="' + options['pixivDeadLineUrl'+[i]] + '">' + title + '</a>';
+		var title = options.pixivDeadLineName[i];
+		if(options.pixivDeadLineUrl[i] !== ""){
+			title = '<a href="' + options.pixivDeadLineUrl[i] + '">' + title + '</a>';
 		}
 		deadLine.innerHTML
 			= title + ' の〆切は <span class="deadline-date">'
-			+ options['pixivDeadLineDate'+[i]] + ' ' + options['pixivDeadLineTime'+[i]]
+			+ options.pixivDeadLineDate[i] + ' ' + options.pixivDeadLineTime[i]
 			+ '</span> です。' + notice;
 		deadLines_outer.appendChild(deadLine);
 	}
