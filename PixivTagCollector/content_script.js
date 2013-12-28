@@ -54,42 +54,43 @@ chrome.extension.sendRequest({
 	action : "getOptions"
 }, function (response) {
 	
-	if (response.resultOptions === null)
+	var o = response.resultOptions;
+	if (o === null)
 		return;
 	
-		addDeadLineList(document, response.resultOptions);
+	addDeadLineList(document, o);
 	
-	addCollectedPixivTags(document, response.resultOptions);
+	addCollectedPixivTags(document, o);
 	
-	showLogo(document, response.resultOptions.pixivShowLogo);
+	showLogo(document, o.pixivShowLogo);
 	
-	showMyProfile(document, response.resultOptions.pixivShowMyProfile);
-	showMyMenu(document, response.resultOptions.pixivShowMyMenu);
-	showMyGroup(document, response.resultOptions.pixivShowMyGroup);
-	showOfficialGroup(document, response.resultOptions.pixivShowOfficialGroup);
-	showRecommendUser(document, response.resultOptions.pixivShowRecommendUser);
-	showFollowing(document, response.resultOptions.pixivShowFollowing);
-	showMyPixiv(document, response.resultOptions.pixivShowMyPixiv);
-	showEvents(document, response.resultOptions.pixivShowEvents);
+	showMyProfile(document, o.pixivShowMyProfile);
+	showMyMenu(document, o.pixivShowMyMenu);
+	showMyGroup(document, o.pixivShowMyGroup);
+	showOfficialGroup(document, o.pixivShowOfficialGroup);
+	showRecommendUser(document, o.pixivShowRecommendUser);
+	showFollowing(document, o.pixivShowFollowing);
+	showMyPixiv(document, o.pixivShowMyPixiv);
+	showEvents(document, o.pixivShowEvents);
 	
-	showNewsTop(document, response.resultOptions.pixivShowNewsTop);
-	showNewIllust(document, response.resultOptions.pixivShowNewIllust);
-	showPopularTags(document, response.resultOptions.pixivShowPopularTags);
-	showUserEvent(document, response.resultOptions.pixivShowUserEvent);
-	showBookmarkNews(document, response.resultOptions.pixivShowBookmarkNews);
-	showMyPixivNews(document, response.resultOptions.pixivShowMyPixivNews);
+	showNewsTop(document, o.pixivShowNewsTop);
+	showNewIllust(document, o.pixivShowNewIllust);
+	showPopularTags(document, o.pixivShowPopularTags);
+	showUserEvent(document, o.pixivShowUserEvent);
+	showBookmarkNews(document, o.pixivShowBookmarkNews);
+	showMyPixivNews(document, o.pixivShowMyPixivNews);
 	
-	showDailyRank(document, response.resultOptions.pixivShowDailyRank);
-	showComicRank(document, response.resultOptions.pixivShowComicRank);
-	showOtherRank(document, response.resultOptions.pixivShowOtherRank);
-	showMaleRank(document, response.resultOptions.pixivShowMaleRank);
-	showFemaleRank(document, response.resultOptions.pixivShowMaleRank);
-	showRookieRank(document, response.resultOptions.pixivShowRookieRank);
-	showDicRank(document, response.resultOptions.pixivShowDicRank);
-	showOriginalRank(document, response.resultOptions.pixivShowOriginalRank);
-	showNovelRank(document, response.resultOptions.pixivShowNovelRank);
+	showDailyRank(document, o.pixivShowDailyRank);
+	showComicRank(document, o.pixivShowComicRank);
+	showOtherRank(document, o.pixivShowOtherRank);
+	showMaleRank(document, o.pixivShowMaleRank);
+	showFemaleRank(document, o.pixivShowMaleRank);
+	showRookieRank(document, o.pixivShowRookieRank);
+	showDicRank(document, o.pixivShowDicRank);
+	showOriginalRank(document, o.pixivShowOriginalRank);
+	showNovelRank(document, o.pixivShowNovelRank);
 	
-	if (response.resultOptions.pixivOpenInNewTab)
+	if (o.pixivOpenInNewTab)
 		forceMemberIllustPageOpenInNewTab(document);
 });
 
