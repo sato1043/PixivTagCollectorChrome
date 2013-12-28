@@ -59,48 +59,30 @@ if (!localStorage.options) {
 //   オプションには検索対象のタグの一覧等が保存されていて、
 //   content_scriptはオプションを元に処理を行う。
 //
-// "showComplateTags"
-//   完全一致タグ一覧を表示する
-// "hideComplateTags"
-//   完全一致タグ一覧を隠す
+// "showComplateTags" 完全一致タグ一覧を表示する
+// "hideComplateTags" 完全一致タグ一覧を隠す
 //
-// "showPartialTags"
-//   部分一致タグ一覧を表示する
-// "hidePartialTags"
-//   部分一致タグ一覧を隠す
+// "showPartialTags" 部分一致タグ一覧を表示する
+// "hidePartialTags" 部分一致タグ一覧を隠す
+//
+// "showTagList" タグ一覧を表示する
+// "hideTagList" タグ一覧を隠す
 //
 chrome.extension.onRequest.addListener(
 	function (request, sender, sendResponse) {
 	var options = JSON.parse(localStorage.options);
-	if (request.action == "getOptions") {
-		sendResponse({
-			resultOptions : options
-		});
-	} else if (request.action == "showComplateTags") {
-		options.pixivShowCompleteTags = true;
-		localStorage.options = JSON.stringify(options);
-		sendResponse({});
-	} else if (request.action == "hideComplateTags") {
-		options.pixivShowCompleteTags = false;
-		localStorage.options = JSON.stringify(options);
-		sendResponse({});
-	} else if (request.action == "showPartialTags") {
-		options.pixivShowPartialTags = true;
-		localStorage.options = JSON.stringify(options);
-		sendResponse({});
-	} else if (request.action == "hidePartialTags") {
-		options.pixivShowPartialTags = false;
-		localStorage.options = JSON.stringify(options);
-		sendResponse({});
-	} else if (request.action == "showTagList") {
-		options.pixivShowTagList = true;
-		localStorage.options = JSON.stringify(options);
-		sendResponse({});
-	} else if (request.action == "hideTagList") {
-		options.pixivShowTagList = false;
-		localStorage.options = JSON.stringify(options);
-		sendResponse({});
-	} else {
-		sendResponse({}); // 不明なリクエストに対しては空のレスポンスを返しておく
+	var response = {};
+	switch(request.action){
+		case "getOptions":
+			response = { resultOptions : options }; 
+			break;
+		case "showComplateTags": options.pixivShowCompleteTags = true ; break;
+		case "hideComplateTags": options.pixivShowCompleteTags = false; break;
+		case "showPartialTags" : options.pixivShowPartialTags  = true ; break;
+		case "hidePartialTags" : options.pixivShowPartialTags  = false; break;
+		case "showTagList"     : options.pixivShowTagList      = true ; break;
+		case "hideTagList"     : options.pixivShowTagList      = false; break;
 	}
+	localStorage.options = JSON.stringify(options);
+	sendResponse(response);
 });
