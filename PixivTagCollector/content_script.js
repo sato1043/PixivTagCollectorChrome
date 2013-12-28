@@ -209,101 +209,81 @@ function showAreaTitleParent(node, href, siblingIndex, on)
 	}
 }
 
+// ページ中から追加場所を見つけてDOMを追加する
+function addToPixivPages(node, options, func) {
+	var xpath = null;
+	var m = (document.URL).match(/pixiv\.net\/(.*)\.php/);
+	if (m === null) {
+		if ((document.URL).match(/pixiv\.net\/novel\//)) m = ['','novel/']; // 小説
+		else if ((document.URL).match(/pixiv\.net\/stacc\//)) m = ['','stacc/']; // フィード(スタック)
+		else m = ['',''];
+	}
+	//alert(m[1]);//Debug
+	switch(m[1]) {
+		case 'search':
+		case 'ranking':
+		case 'novel/tags':
+			xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " layout-body ")]';
+			break;
+		case 'member': // プロフィール
+			xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " _unit ")]';
+			break;
+		case 'mypage': // マイページ
+			xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " contents-east ")]';
+			break;
+		case 'content_upload': // イラストの投稿
+		case 'manga_upload': // マンガの投稿
+		case 'novel/upload': // 小説の投稿
+		case 'print/service': // 印刷所に入稿
+			xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " layout-body ")]';
+			break;
+		case 'member_illust': // 作品管理
+			xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " _unit ")]';
+			break;
+		case 'novel/member': // 小説の作品管理
+			xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " _unit ")]';
+			break;
+		case 'bookmark': // ブックマークページ
+			xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " action-unit ")]';
+			break;
+		case 'novel/bookmark': // 小説のブックマーク
+			xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " _unit ")]';
+			break;
+		case 'event': // イベント一覧
+			xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " two_column ")]';
+			break;
+		case 'profile_event': // イベント管理
+			xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " one_column ")]';
+			break;
+		case 'novel/': // 小説(トップ)
+			xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " contents-main ")]';
+			break;
+		case 'stacc/': // フィード(スタック)
+			xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " stacc_east_area ")]';
+			break;
+		case 'market/search': // マーケット
+			xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " _unit-search-booth ")]';
+			break;
+		case 'cate_r18':
+			xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " ui-layout-east ")]';
+			break;
+		default: // URLが不明なとき
+			xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " layout-body ")]';
+	}
+	var targetNode = document.evaluate(xpath, node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
+	if (targetNode.snapshotLength > 0) {
+		func(node, options, targetNode);
+	}
+}
+
 
 // ページ中から追加場所を見つけてリストを追加する
 function addCollectedPixivTags(node, options) {
-	var xpath = (node == document)
-		? './/*[@id="search-result"]'
-		: './/li[contains(concat(" ",normalize-space(@class)," "), " image ")]'
-		;
-	var targetNode = document.evaluate(xpath, node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
-	if (targetNode.snapshotLength > 0) {
-		tagLists(node, targetNode, options);
-		return;
-	}
-	
-	if ( ! options.pixivApplyToAll){
-		xpath = './/div[contains(concat(" ",normalize-space(@id)," "), " item-container ")]';
-	} else {
-		xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " layout-column-2 ") '+
-		        'or contains(concat(" ",normalize-space(@class)," "), " ui-layout-east ") '+
-		        'or contains(concat(" ",normalize-space(@class)," "), " layout-body ")]';
-	}
-	
-	targetNode = document.evaluate(xpath, node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
-	if (targetNode.snapshotLength > 0) {
-		tagLists(node, targetNode, options);
-		return;
-	}
-
-	// マイページ用
-	xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " contents-east ")]';
-	targetNode = document.evaluate(xpath, node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
-	if (targetNode.snapshotLength > 0) {
-		tagLists(node, targetNode, options);
-		return;
-	}
-	
-	// 作品投稿用
-	xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " layout-body ")]';
-	targetNode = document.evaluate(xpath, node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
-	if (targetNode.snapshotLength > 0) {
-		tagLists(node, targetNode, options);
-		return;
-	}
-	
-	// 作品管理用
-	xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " layout-column-2 ")]';
-	targetNode = document.evaluate(xpath, node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
-	if (targetNode.snapshotLength > 0) {
-		tagLists(node, targetNode, options);
-		return;
-	}
-	
-	// ブックマークページ用
-	xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " action-unit ")]';
-	targetNode = document.evaluate(xpath, node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
-	if (targetNode.snapshotLength > 0) {
-		tagLists(node, targetNode, options);
-		return;
-	}
-	
-	// フィード(スタック?)用
-	xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " stacc_east_area ")]';
-	targetNode = document.evaluate(xpath, node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
-	if (targetNode.snapshotLength > 0) {
-		tagLists(node, targetNode, options);
-		return;
-	}
-	
-	// 小説用
-	xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " contents-main ")]';
-	targetNode = document.evaluate(xpath, node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
-	if (targetNode.snapshotLength > 0) {
-		tagLists(node, targetNode, options);
-		return;
-	}
-	
-	// イベント一覧ページ用
-	xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " two_column ")]';
-	targetNode = document.evaluate(xpath, node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
-	if (targetNode.snapshotLength > 0) {
-		tagLists(node, targetNode, options);
-		return;
-	}
-	
-	// イベント管理用
-	xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " one_column ")]';
-	targetNode = document.evaluate(xpath, node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
-	if (targetNode.snapshotLength > 0) {
-		tagLists(node, targetNode, options);
-		return;
-	}
-	
+	addToPixivPages(node,options,tagLists);
 }
 
 // ふたつのタグリストを表示
-function tagLists(node, targetNode, options) {
+function tagLists(node, options, targetNode) {
 
 	var completeDiv = completeTags(options);
 	var partialDiv = partialTags(options);
@@ -443,33 +423,11 @@ function partialTags(options){
 
 // デッドラインを表示する
 function addDeadLineList(node, options) {
-	var xpath = (node == document)
-		? './/*[@id="search-result"]'
-		: './/li[contains(concat(" ",normalize-space(@class)," "), " image ")]'
-		;
-	var targetNode = document.evaluate(xpath, node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
-	if (targetNode.snapshotLength > 0) {
-		deadLines(node, targetNode, options);
-		return;
-	}
-	
-	if ( ! options.pixivApplyToAll){
-		xpath = './/div[contains(concat(" ",normalize-space(@id)," "), " item-container ")]';
-	} else {
-		xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " layout-body ") or'+
-		        ' contains(concat(" ",normalize-space(@class)," "), " ui-layout-east ") or'+
-		        ' contains(concat(" ",normalize-space(@class)," "), " layout-column-2 ")]';
-	}
-	
-	targetNode = document.evaluate(xpath, node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
-	if (targetNode.snapshotLength > 0) {
-		deadLines(node, targetNode, options);
-		return;
-	}
+	addToPixivPages(node,options,deadLines);
 }
 
 // デッドラインリストをDOM作成
-function deadLines(node, targetNode, options) {
+function deadLines(node, options, targetNode) {
 	if(options.pixivDeadLineName[0] === ''
 	 && options.pixivDeadLineName[1] === ''
 	 && options.pixivDeadLineName[2] === '') {
