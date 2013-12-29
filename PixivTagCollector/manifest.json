@@ -1,35 +1,44 @@
 // vim: ts=2 sw=2 expandtab fenc=utf8 :
 {
-    "name" : "Pixiv Tag Collector",
-    "description" : "pivivのタグ巡回を快適にするChrome拡張です。",
+	"manifest_version": 2,
 
-    "version" : "0.3",
+	"name" : "Pixiv Tag Collector",
+	"description" : "pivivのタグ巡回を快適にするChrome拡張です。",
 
-    "icons": {
-        "48": "Tag48x48.png",
-        "128": "Tag128x128.png"
-    },
+	"version" : "0.6",
 
-    "permissions" : [
-        "tabs",
-        "http://www.pixiv.net/*"
-    ],
+	"icons": {
+		"48": "img/Tag48x48.png",
+		"128": "img/Tag128x128.png"
+	},
 
-    "browser_action" : {
-        "default_title" : "Pixiv Tag Collector",
-        "default_icon" : "Tag48x48.png"
-    },
+	"permissions" : [
+		"tabs",
+		"storage",
+		"http://www.pixiv.net/*"
+	],
 
-    "background" : {
-        "scripts": [ "jquery-1.7.2.min.js", "background.js" ]
-    },
+	"browser_action" : {
+		"default_title" : "Pixiv Tag Collector",
+		"default_icon" : "img/Tag48x48.png",
+		"default_popup":"popup.html"
+	},
 
-    "options_page" : "options.html",
+	"background" : {
+		  "scripts": [ "js/jquery-1.7.2.min.js", "background.js" ]
+	},
 
-    "content_scripts": [
-        {
-            "matches": [ "http://www.pixiv.net/*" ],
-            "js": ["jquery-1.7.2.min.js", "content_script.js"]
-        }
-    ]
+	"options_page" : "options.html",
+
+	"content_scripts": [
+		  {
+		      "matches": [ "http://www.pixiv.net/*" ],
+		      "js": ["js/jquery-1.7.2.min.js", "content_script.js"]
+		  }
+	],
+
+	"web_accessible_resources": [
+		"img/Tag48x48.png",
+		"css/style_ptc.css"
+	]
 }

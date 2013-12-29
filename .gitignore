@@ -3,3 +3,4 @@
 *.bak
 \#*\#
 PixivTagCollector.pem
+node_modules
