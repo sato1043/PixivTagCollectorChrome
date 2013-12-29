@@ -28,75 +28,73 @@ document.addEventListener("keydown", function (e) {
 }, true);
 
 
-// AutoPagerize対応(してるのか？)
-document.addEventListener('GM_AutoPagerizeNextPageLoaded', function (e) {
-	unsafeWindow.pixiv.scrollView.add('.ui-scroll-view', e.target);
-}, false);
+// AutoPagerize対応
 document.body.addEventListener('AutoPagerize_DOMNodeInserted', function (e) {
+	collectPixivTags(e.target);
+}, false);
+// AutoPatchwork対応
+document.body.addEventListener('AutoPatchWork.DOMNodeInserted', function (e) {
+	collectPixivTags(e.target);
+}, false);
+
+
+// 画面にタグ一覧を追加する（これがメインの処理）
+collectPixivTags(document);
+
+// このスクリプトの処理はここで終わり。以降メソッド
+
+
+
+
+// 画面にタグ一覧を追加する（これがメインの処理）
+// background.jsにオプションを問い合わせて、返答があれば追加する
+function collectPixivTags(node) {
+	
 	chrome.extension.sendRequest({
 		action : "getOptions"
 	}, function (response) {
 		
-		if (response.resultOptions === null)
+		var o = response.resultOptions;
+		if (o === null)
 			return;
 		
-		addCollectedPixivTags(e.target, response.resultOptions);
+		addDeadLineList(node, o);
+		addCollectedPixivTags(node, o);
 		
-		if (response.resultOptions.pixivOpenInNewTab)
-			forceMemberIllustPageOpenInNewTab(e.target);
+		showLogo(node, o.pixivShowLogo);
+		
+		showMyProfile(node, o.pixivShowMyProfile);
+		showMyMenu(node, o.pixivShowMyMenu);
+		showMyGroup(node, o.pixivShowMyGroup);
+		showOfficialGroup(node, o.pixivShowOfficialGroup);
+		showRecommendUser(node, o.pixivShowRecommendUser);
+		showFollowing(node, o.pixivShowFollowing);
+		showMyPixiv(node, o.pixivShowMyPixiv);
+		showEvents(node, o.pixivShowEvents);
+		
+		showNewsTop(node, o.pixivShowNewsTop);
+		showNewIllust(node, o.pixivShowNewIllust);
+		showPopularTags(node, o.pixivShowPopularTags);
+		showUserEvent(node, o.pixivShowUserEvent);
+		showBookmarkNews(node, o.pixivShowBookmarkNews);
+		showMyPixivNews(node, o.pixivShowMyPixivNews);
+		
+		showDailyRank(node, o.pixivShowDailyRank);
+		showComicRank(node, o.pixivShowComicRank);
+		showOtherRank(node, o.pixivShowOtherRank);
+		showMaleRank(node, o.pixivShowMaleRank);
+		showFemaleRank(node, o.pixivShowMaleRank);
+		showRookieRank(node, o.pixivShowRookieRank);
+		showDicRank(node, o.pixivShowDicRank);
+		showOriginalRank(node, o.pixivShowOriginalRank);
+		showNovelRank(node, o.pixivShowNovelRank);
+		
+		if (o.pixivOpenInNewTab)
+			forceMemberIllustPageOpenInNewTab(node);
 	});
-}, false);
+}
 
 
-// 画面にタグ一覧を追加する（ここがメインの処理）
-// background.jsにオプションを問い合わせて、返答があれば追加する
-chrome.extension.sendRequest({
-	action : "getOptions"
-}, function (response) {
-	
-	var o = response.resultOptions;
-	if (o === null)
-		return;
-	
-	addDeadLineList(document, o);
-	
-	addCollectedPixivTags(document, o);
-	
-	showLogo(document, o.pixivShowLogo);
-	
-	showMyProfile(document, o.pixivShowMyProfile);
-	showMyMenu(document, o.pixivShowMyMenu);
-	showMyGroup(document, o.pixivShowMyGroup);
-	showOfficialGroup(document, o.pixivShowOfficialGroup);
-	showRecommendUser(document, o.pixivShowRecommendUser);
-	showFollowing(document, o.pixivShowFollowing);
-	showMyPixiv(document, o.pixivShowMyPixiv);
-	showEvents(document, o.pixivShowEvents);
-	
-	showNewsTop(document, o.pixivShowNewsTop);
-	showNewIllust(document, o.pixivShowNewIllust);
-	showPopularTags(document, o.pixivShowPopularTags);
-	showUserEvent(document, o.pixivShowUserEvent);
-	showBookmarkNews(document, o.pixivShowBookmarkNews);
-	showMyPixivNews(document, o.pixivShowMyPixivNews);
-	
-	showDailyRank(document, o.pixivShowDailyRank);
-	showComicRank(document, o.pixivShowComicRank);
-	showOtherRank(document, o.pixivShowOtherRank);
-	showMaleRank(document, o.pixivShowMaleRank);
-	showFemaleRank(document, o.pixivShowMaleRank);
-	showRookieRank(document, o.pixivShowRookieRank);
-	showDicRank(document, o.pixivShowDicRank);
-	showOriginalRank(document, o.pixivShowOriginalRank);
-	showNovelRank(document, o.pixivShowNovelRank);
-	
-	if (o.pixivOpenInNewTab)
-		forceMemberIllustPageOpenInNewTab(document);
-});
-
-
-// 以降ユーティリティメソッド
-	
 // pixivロゴを表示する
 function showLogo(node, on) {
 	if (on) return;
@@ -223,7 +221,10 @@ function addToPixivPages(node, options, func) {
 		case 'search':
 		case 'ranking':
 		case 'novel/tags':
-			xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " layout-body ")]';
+			xpath = (node == document)
+				? './/div[contains(concat(" ",normalize-space(@class)," "), " layout-body ")]'
+				: './/li[contains(concat(" ",normalize-space(@class)," "), " image-item ")]'
+				;
 			break;
 		case 'member': // プロフィール
 			xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " _unit ")]';
