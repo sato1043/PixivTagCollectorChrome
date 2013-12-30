@@ -13,6 +13,8 @@ if (!localStorage.options) {
 		, pixivShowCompleteTags : true
 		, pixivShowPartialTags  : true
 
+		, pixivSearchNGWords    : []
+
 		, pixivShowLogo         : true
 		
 		, pixivShowMyProfile    : true
