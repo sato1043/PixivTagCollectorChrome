@@ -102,10 +102,6 @@ Chromeを起動して、メニューから[ツール]-[機能拡張]を開き、
     - create a git repository
     - modify our file layout
 
-* 2012/05/20 - 0.3
-    - create a git repository
-    - modify our file layout
-
 * 2012/05/19 - 0.2
     - works `mouseover'
     - works `open in a new tab'
