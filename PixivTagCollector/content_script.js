@@ -60,6 +60,7 @@ function collectPixivTags(node) {
 		
 		addDeadLineList(node, o);
 		addCollectedPixivTags(node, o);
+		applySearchNGWords(node,o);
 		
 		showLogo(node, o.pixivShowLogo);
 		
@@ -485,6 +486,31 @@ function deadLines(node, options, targetNode) {
 	}
 	targetNode.snapshotItem(0).parentNode
 		.insertBefore(deadLines_outer, targetNode.snapshotItem(0));
+}
+
+// 検索結果からNGワードを探して画像を非表示
+// ページ中から追加場所を見つけてリストを追加する
+function applySearchNGWords(node, options) {
+	var m = (document.URL).match(/pixiv\.net\/(.*)\.php/);
+	if (m === null || m[1] !== 'search') return;
+	var xpath = './/*[contains(concat(" ",normalize-space(@class)," "), " image-item ")]';
+	var targetNode = document.evaluate(xpath, node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
+	var i;
+	for (i = 0; i < targetNode.snapshotLength; ++i) {
+		var text = targetNode.snapshotItem(i).textContent;
+		var w;
+		for (w = 0; w < options.pixivSearchNGWords.length; ++w) {
+			if (text.match(options.pixivSearchNGWords[w])){
+				String.prototype.replaceAll = function (org, dest){  
+				  return this.split(org).join(dest);  
+				}
+				targetNode.snapshotItem(i).innerHTML = 
+					targetNode.snapshotItem(i).innerHTML.replaceAll(options.pixivSearchNGWords[w],'***');
+				targetNode.snapshotItem(i).firstChild.firstChild.style.display = 'none';
+				break;
+			}
+		}
+	}
 }
 
 

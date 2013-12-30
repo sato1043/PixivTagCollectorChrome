@@ -54,7 +54,7 @@ Windows Installer (.msi) 64-bitを使用してインストールします。
 前提の node.js がインストールできたら、 Grunt 自体と
 Grunt を Chrome から使うためのプラグインをインストールします。
 
-エクスプローラでプロジェクトルート下 tools　を開いて、「npm-install.cmd」をダブルクリック。
+エクスプローラでプロジェクトルート下 build　を開いて、「npm-install.cmd」をダブルクリック。
 
 コマンドプロンプトが開いて、DLとインストールのログが表示され始めます。
 package.json がその node.js の設定ファイルで、
@@ -78,12 +78,12 @@ Chromeで、 [右クリック]-[要素を検証]をクリック。Gruntタブが
 
 ■ grunt-devtools を実行
 
-エクスプローラでプロジェクトルート下 tools　を開いて、
+エクスプローラでプロジェクトルート下 build　を開いて、
 「run-grunt-devtools.cmd」をダブルクリック。
 コマンドプロンプトが開いたままになり、準備が出来たとメッセージされます。
 
 -----
-C:\xxx\PixivTagCollectorChrome\tools>call grunt-devtools
+C:\xxx\PixivTagCollectorChrome\build>call grunt-devtools
 Running "devtools" task
 Warning: Native modules not compiled.  XOR performance will be degraded.
 Warning: Native modules not compiled.  UTF-8 validation disabled.

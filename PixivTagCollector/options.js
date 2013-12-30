@@ -216,6 +216,10 @@ function showOptions(){
 		$('#pixivDeadLineTime'+i).val(options.pixivDeadLineTime[i]);
 		$('#pixivDeadLineUrl'+i).val(options.pixivDeadLineUrl[i]);
 	}
+	
+	if (options.pixivSearchNGWords) {
+		$("#pixivSearchNGWords").val(options.pixivSearchNGWords.join('\n'));
+	}
 }
 
 // オプションを保存する
@@ -248,7 +252,7 @@ function saveOptions(){
 	options.pixivShowLogo			= $("#pixivShowLogo").is(':checked');
 	
 	options.pixivShowMyProfile		= $("#pixivShowMyProfile").is(':checked');
-	options.pixivShowMyMenu		= $("#pixivShowMyMenu").is(':checked');
+	options.pixivShowMyMenu			= $("#pixivShowMyMenu").is(':checked');
 	options.pixivShowMyGroup		= $("#pixivShowMyGroup").is(':checked');
 	options.pixivShowOfficialGroup	= $("#pixivShowOfficialGroup").is(':checked');
 	options.pixivShowRecommendUser	= $("#pixivShowRecommendUser").is(':checked');
@@ -319,6 +323,15 @@ function saveOptions(){
 				options.pixivDeadLineUrl[i] = $('#pixivDeadLineUrl'  + i).val();
 			}
 		}
+	}
+	
+	text = $("#pixivSearchNGWords").val();
+	options.pixivSearchNGWords = [];
+	if (text) {
+		text = text.replace(/[ 　]/g, ' ');
+		text = text.replace(/\n{2,}/g, '\n');
+		text = text.replace(/^\n|\n$/g, '');
+		options.pixivSearchNGWords = text.split('\n');
 	}
 	
 	// localstorageに設定を保存
