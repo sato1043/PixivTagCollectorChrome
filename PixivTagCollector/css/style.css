@@ -13,20 +13,6 @@ body {
 	width: 960px;
 	position: relative;
 }
-h1 {
-	font-size: 18pt;
-}
-h2 {
-	margin: 23px 0px 5px 0px;
-	font-size: 13pt;
-	padding-bottom: 3px;
-	border-bottom: 2px solid #ddd;
-}
-h3 {
-	margin: 0;
-	font-size: 11pt;
-	border-bottom: 1px dotted #ddd;
-}
 p {
 	margin: 5px 0;
 	font-size: 0.9em;
@@ -50,9 +36,25 @@ ul {
 	line-height: 1.5em;
 }
 
-
 /* options.html
  ---------------------------------------------*/
+#navigation {
+	padding: 5px 20px;
+	width: 100%;
+	position: fixed;
+	text-align: center;
+	background: #fff;
+	margin-top: 0px;
+	top: 0px;
+	border-bottom: 1px solid #ddd;
+	z-index: 9999;
+}
+#navigation li {
+	display: inline-block;
+}
+#navigation li:not(:last-child) {
+	margin-right: 10px;
+}
 #footer {
 	position: fixed;
 	width: 100%;
@@ -61,6 +63,21 @@ ul {
 	border-top: 1px solid #ddd;
 	background: #fff;
 	z-index: 10;
+}
+h1 {
+	font-size: 18pt;
+	margin-top: 50px;
+}
+h2 {
+	margin: 80px 0px 5px 0px;
+	font-size: 13pt;
+	padding-bottom: 3px;
+	border-bottom: 2px solid #ddd;
+}
+h3 {
+	margin: 0;
+	font-size: 11pt;
+	border-bottom: 1px dotted #ddd;
 }
 #cont-comp,
 #cont-part {
@@ -168,7 +185,7 @@ table#deadLines td {
 }
 
 #ng-words {
-	width: 25%;
+	width: ;
 }
 
 
