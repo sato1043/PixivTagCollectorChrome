@@ -130,6 +130,11 @@ function showLogo(node, on) {
 	if (targetNode.snapshotLength > 0) {
 		targetNode.snapshotItem(0).style.height = '30px';
 	}
+	xpath = '//*[@id="header-banner"]';
+	targetNode = document.evaluate(xpath, node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
+	if (targetNode.snapshotLength > 0) {
+		targetNode.snapshotItem(0).style.position = 'static';
+	}
 }
 
 function showMyProfile(node, on) { showWhereClass(node, 'my-profile-unit', 1, on); }// マイプロフィールを表示する
