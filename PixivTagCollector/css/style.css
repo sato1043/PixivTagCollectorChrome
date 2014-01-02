@@ -9,23 +9,9 @@ body {
 }
 #wrapper {
 	margin: 10px auto;
-	padding: 0px 0px 40px 0px;
+	padding: 0px 0px 120px 0px;
 	width: 960px;
 	position: relative;
-}
-h1 {
-	font-size: 18pt;
-}
-h2 {
-	margin: 23px 0px 5px 0px;
-	font-size: 13pt;
-	padding-bottom: 3px;
-	border-bottom: 2px solid #ddd;
-}
-h3 {
-	margin: 0;
-	font-size: 11pt;
-	border-bottom: 1px dotted #ddd;
 }
 p {
 	margin: 5px 0;
@@ -50,9 +36,30 @@ ul {
 	line-height: 1.5em;
 }
 
-
 /* options.html
  ---------------------------------------------*/
+#navigation {
+	padding: 5px 20px;
+	width: 100%;
+	position: fixed;
+	text-align: center;
+	background: #fff;
+	margin-top: 0px;
+	top: 0px;
+	border-bottom: 1px solid #ddd;
+	z-index: 9999;
+}
+#navigation ul {
+  margin-right: 30px;
+  width: auto;
+	display: inline-block;
+}
+#navigation li {
+	display: inline-block;
+}
+#navigation li:not(:last-child) {
+	margin-right: 10px;
+}
 #footer {
 	position: fixed;
 	width: 100%;
@@ -61,6 +68,24 @@ ul {
 	border-top: 1px solid #ddd;
 	background: #fff;
 	z-index: 10;
+}
+h1 {
+	font-size: 18pt;
+	margin-top: 50px;
+}
+h2 {
+	margin: 0px 0px 5px 0px;
+	font-size: 13pt;
+	padding-bottom: 3px;
+	border-bottom: 2px solid #ddd;
+}
+h2:not(:first-child){
+	margin-top: 80px;
+}
+h3 {
+	margin: 0;
+	font-size: 11pt;
+	border-bottom: 1px dotted #ddd;
 }
 #cont-comp,
 #cont-part {
@@ -85,7 +110,7 @@ textarea {
 	margin: 3px 0px;
 	padding: 5px;
 	width: 97%;
-	height: 15em;
+	height: 20em;
 	border-radius: 5px;
 	border: 2px solid #ddd;
 	line-height: 1.5em;
@@ -104,7 +129,7 @@ input:focus {
 	outline: none;
 }
 button {
-	padding: 8px 25px;
+	padding: 6px 18px;
 	background: #ddd;
 	border: none;
 	border-radius: 5px;
@@ -112,7 +137,7 @@ button {
 	font-weight: bold;
 	letter-spacing: 2px;
 	position: relative;
-
+	outline: none;
 }
 button:hover {
 	box-shadow: 0 5px #aaa;
@@ -131,6 +156,7 @@ button, label, input[type="checkbox"] {
 table#deadLines {
 	margin: 0;
 	padding: 0;
+	width: 100%;
 	min-width: 50em;
 	border-collapse: collapse;
 }
@@ -143,10 +169,9 @@ table#deadLines th {
 	background: #CCCCCC;
 }
 table#deadLines td {
-	padding: 5px;
+	padding: 8px 5px;
 	text-align: center;
 }
-
 .deadline-name {
 	width: 15em;
 }
@@ -168,7 +193,7 @@ table#deadLines td {
 }
 
 #ng-words {
-	width: 25%;
+	width: ;
 }
 
 

@@ -2,9 +2,6 @@
 // tagCollector がpixiv.netドメイン以下のページの表示毎に実行する処理
 'use strict';
 
-//デッドラインの数
-var DEADLINES_NUM = 3;
-
 // PixivTagCollector用のスタイルシートを加える
 var style = document.createElement('link');
 style.rel = 'stylesheet';
@@ -49,21 +46,21 @@ collectPixivTags(document);
 // 画面にタグ一覧を追加する（これがメインの処理）
 // background.jsにオプションを問い合わせて、返答があれば追加する
 function collectPixivTags(node) {
-	
+
 	chrome.extension.sendRequest({
 		action : "getOptions"
 	}, function (response) {
-		
+
 		var o = response.resultOptions;
 		if (o === null)
 			return;
-		
+
 		addDeadLineList(node, o);
 		addCollectedPixivTags(node, o);
 		applySearchNGWords(node,o);
-		
+
 		showLogo(node, o.pixivShowLogo);
-		
+
 		showMyProfile(node, o.pixivShowMyProfile);
 		showMyMenu(node, o.pixivShowMyMenu);
 		showMyGroup(node, o.pixivShowMyGroup);
@@ -72,14 +69,14 @@ function collectPixivTags(node) {
 		showFollowing(node, o.pixivShowFollowing);
 		showMyPixiv(node, o.pixivShowMyPixiv);
 		showEvents(node, o.pixivShowEvents);
-		
+
 		showNewsTop(node, o.pixivShowNewsTop);
 		showNewIllust(node, o.pixivShowNewIllust);
 		showPopularTags(node, o.pixivShowPopularTags);
 		showUserEvent(node, o.pixivShowUserEvent);
 		showBookmarkNews(node, o.pixivShowBookmarkNews);
 		showMyPixivNews(node, o.pixivShowMyPixivNews);
-		
+
 		showDailyRank(node, o.pixivShowDailyRank);
 		showComicRank(node, o.pixivShowComicRank);
 		showOtherRank(node, o.pixivShowOtherRank);
@@ -89,7 +86,7 @@ function collectPixivTags(node) {
 		showDicRank(node, o.pixivShowDicRank);
 		showOriginalRank(node, o.pixivShowOriginalRank);
 		showNovelRank(node, o.pixivShowNovelRank);
-		
+
 		if (o.pixivOpenInNewTab)
 			forceMemberIllustPageOpenInNewTab(node);
 	});
@@ -99,7 +96,7 @@ function collectPixivTags(node) {
 // pixivロゴを表示する
 function showLogo(node, on) {
 	if (on) return;
-	
+
 	showWhereClass(node, 'title', 1, on);
 	showWhereId(node, 'logoMap', 1, on);
 	showWhereClass(node, 'link-item', 1, on);
@@ -108,9 +105,9 @@ function showLogo(node, on) {
 	showWhereClass(node, 'ui-selectbox-container', 1, true);
 	showWhereClass(node, 'category-list', 1, on);
 	//showWhereClass(node, 'notifications', 1, on);
-	
+
 	//*[@class="layout-wrapper"/div[3]
-	
+
 	var xpath = '//*[contains(concat(" ",normalize-space(@class)," "), " ui-search ")]';
 	var targetNode = document.evaluate(xpath, node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
 	if (targetNode.snapshotLength > 0) {
@@ -167,7 +164,7 @@ function showNovelRank   (node, on) { showWhereClass(node, 'daily-novel', 1, on)
 function showWhereClass(node, where, siblingIndex, on)
 {
 	if (on) return;
-	
+
 	var xpath = '//*[contains(concat(" ",normalize-space(@class)," "), " '+where+' ")]['+siblingIndex+']';
 	var targetNode = document.evaluate(xpath, node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
 	if (targetNode.snapshotLength > 0) {
@@ -177,7 +174,7 @@ function showWhereClass(node, where, siblingIndex, on)
 function showWhereClassParent(node, where, siblingIndex, on)
 {
 	if (on) return;
-	
+
 	var xpath = '//*[contains(concat(" ",normalize-space(@class)," "), " '+where+' ")]['+siblingIndex+']';
 	var targetNode = document.evaluate(xpath, node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
 	if (targetNode.snapshotLength > 0) {
@@ -187,7 +184,7 @@ function showWhereClassParent(node, where, siblingIndex, on)
 function showWhereId(node, where, siblingIndex, on)
 {
 	if (on) return;
-	
+
 	var xpath = '//*[@id="'+where+'"]['+siblingIndex+']';
 	var targetNode = document.evaluate(xpath, node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
 	if (targetNode.snapshotLength > 0) {
@@ -205,7 +202,7 @@ function showWhereHasLinkContainer(node, href, on)
 function showAreaTitleParent(node, href, siblingIndex, on)
 {
 	if (on) return;
-	
+
 	var xpath = '//*[@class="area_title"]/a[@href="'+href+'"]['+siblingIndex+']';
 	var targetNode = document.evaluate(xpath, node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
 	if (targetNode.snapshotLength > 0) {
@@ -294,17 +291,17 @@ function tagLists(node, options, targetNode) {
 
 	var completeDiv = completeTags(options);
 	var partialDiv = partialTags(options);
-	
+
 	var tagListsDiv = document.createElement('div');
 	tagListsDiv.className = 'pixiv_tag_collector';
 	if ( ! options.pixivShowTagList) { tagListsDiv.style.display = 'none'; }
-	
+
 	tagListsDiv.appendChild(completeDiv);
 	tagListsDiv.appendChild(partialDiv);
-	
+
 	targetNode.snapshotItem(0).parentNode
 		.insertBefore(tagListsDiv, targetNode.snapshotItem(0));
-	
+
 	$('#completeTagsOnOff').click(function(){
 		var tags = $('#completeTags');
 		var onoff = $('#completeTagsOnOff');
@@ -331,7 +328,7 @@ function tagLists(node, options, targetNode) {
 			onoff.html('+');
 		}
 	});
-	
+
 	/*
 	$reg = $('<a/>',{
 	'href': 'javascript:void(0)',
@@ -341,7 +338,7 @@ function tagLists(node, options, targetNode) {
 	$reg.clone().bind('click', function(){GM_config.open();}).appendTo('div.complete:last > span');
 	$reg.clone().bind('click', function(){GM_config.open();}).appendTo('div.partial:last > span');
 	 */
-	
+
 }
 
 // 完全一致検索用のタグリストをDOM作成
@@ -349,18 +346,18 @@ function completeTags(options){
 	var taglist_outer = document.createElement('div');
 	var onoff = document.createElement('div');
 	var taglist = document.createElement('div');
-	
+
 	taglist_outer.id        = 'pixiv_tag_collector_complete_tags';
 	taglist_outer.className = 'taglist';
-	
+
 	onoff.id = 'completeTagsOnOff';
 	onoff.className = 'taglistOnOff';
 	onoff.innerText = (options.pixivShowCompleteTags) ? '-':'+';
-	
+
 	taglist.id = 'completeTags';
 
 	if ( ! options.pixivShowCompleteTags) { taglist.style.display = 'none'; }
-	
+
 	var node = document.createDocumentFragment();
 	for (var i = 0; i < options.pixivCompleteTags.length; i++) {
 		var newA = document.createElement('a');
@@ -370,10 +367,10 @@ function completeTags(options){
 		node.appendChild(newA);
 	}
 	taglist.appendChild(node);
-	
+
 	taglist_outer.appendChild(onoff);
 	taglist_outer.appendChild(taglist);
-	
+
 	return taglist_outer;
 }
 
@@ -382,24 +379,24 @@ function partialTags(options){
 	var taglist_outer = document.createElement('div');
 	var onoff = document.createElement('div');
 	var taglist = document.createElement('div');
-	
+
 	taglist_outer.id        = 'pixiv_tag_collector_partial_tags';
 	taglist_outer.className = 'taglist';
-	
+
 	onoff.id = 'partialTagsOnOff';
 	onoff.className = 'taglistOnOff';
 	onoff.innerText = (options.pixivShowPartialTags) ? '-':'+';
-	
+
 	taglist.id = 'partialTags';
 
 	if ( ! options.pixivShowPartialTags) { taglist.style.display = 'none'; }
-	
+
 	var pattern = /(-{2,})+(\d{1,})$/;
 	var node = document.createDocumentFragment();
-	
+
 	for (var i = 0; i < options.pixivPartialTags.length; i++) {
 		var word = options.pixivPartialTags[i];
-		
+
 		var newA = document.createElement('a');
 		newA.title = word; // title属性付与(マウスオンで省略前の検索キーワードが見える)
 		newA.href = 'http://www.pixiv.net/search.php?s_mode=s_tag&word='
@@ -408,7 +405,7 @@ function partialTags(options){
 					.replace(pattern, '')
 					.replace(/[+-]$/, '')
 				+ '&s_mode=s_tag';
-		
+
 		if (word.match(pattern)) {
 			var partword
 				= RegExp.$2 < (word.length - RegExp.lastMatch.length + 1)
@@ -421,10 +418,10 @@ function partialTags(options){
 		node.appendChild(newA);
 	}
 	taglist.appendChild(node);
-	
+
 	taglist_outer.appendChild(onoff);
 	taglist_outer.appendChild(taglist);
-	
+
 	return taglist_outer;
 }
 
@@ -435,17 +432,12 @@ function addDeadLineList(node, options) {
 
 // デッドラインリストをDOM作成
 function deadLines(node, options, targetNode) {
-	if(options.pixivDeadLineName[0] === ''
-	 && options.pixivDeadLineName[1] === ''
-	 && options.pixivDeadLineName[2] === '') {
-		return;
-	}
-	
+
 	var deadLines_outer = document.createElement('ul');
 	deadLines_outer.id        = 'pixiv_tag_collector_deadline_list';
 	deadLines_outer.className = 'pixiv_tag_collector';
 
-	for (var i = 0; i < DEADLINES_NUM; i++) {
+	for (var i = 0; i < options.pixivDeadLineName.length; i++) {
 		if(options.pixivDeadLineName[i] === '') {
 			continue;
 		}
@@ -506,10 +498,10 @@ function applySearchNGWords(node, options) {
 		var w;
 		for (w = 0; w < options.pixivSearchNGWords.length; ++w) {
 			if (text.match(options.pixivSearchNGWords[w])){
-				String.prototype.replaceAll = function (org, dest){  
-				  return this.split(org).join(dest);  
-				}
-				targetNode.snapshotItem(i).innerHTML = 
+				String.prototype.replaceAll = function (org, dest){
+          return this.split(org).join(dest);
+        }
+				targetNode.snapshotItem(i).innerHTML =
 					targetNode.snapshotItem(i).innerHTML.replaceAll(options.pixivSearchNGWords[w],'***');
 				targetNode.snapshotItem(i).firstChild.firstChild.style.display = 'none';
 				break;
