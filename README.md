@@ -1,7 +1,7 @@
 pixivTagCollectorChrome
 =======================
 
-pixiv Tag Collector for Chrome extentions Version 1.0
+pixiv Tag Collector for Chrome extentions Version 1.0alpha
 
 Authers:
   sato1043 and monsier-oui
@@ -84,6 +84,9 @@ Chromeを起動して、メニューから[ツール]-[機能拡張]を開き、
 
 
 ## 履歴
+* 2014/01/02 - 0.7.1 (aka. 1.0alpha)
+    - タグがクリックできない場合があったので修正
+
 * 2013/12/30 - 0.7 (aka. 1.0alpha)
     - 検索結果のNGワード機能追加
 
