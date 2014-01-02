@@ -36,6 +36,17 @@ vim: ts=2 sw=2 expandtab fenc=utf8 :
   <button type="button" id="saveOptions" title="※設定を反映するには、pixivを開いているタブを&#10;再読み込みしてください。">SAVE</button>
 </div>
 
+<div id="navigation">
+  <ul>
+  	<li><a href="#taglist">タグリスト</a></li>
+  	<li><a href="#ngword">検索結果NGワード</a></li>
+  	<li><a href="#deadline">〆切タイマー</a></li>
+  	<li><a href="#visibility">表示設定</a></li>
+  	<li><a href="#other-option">その他</a></li>
+  </ul>
+  <button type="button" id="saveOptions" title="※設定を反映するには、pixivを開いているタブを&#10;再読み込みしてください。">SAVE</button>
+</div>
+
 <div id="wrapper">
 
 	<h1>Pixiv Tag Collector 設定</h1>
@@ -69,7 +80,7 @@ vim: ts=2 sw=2 expandtab fenc=utf8 :
 		<div id="ng-words">
 			<textarea id="pixivSearchNGWords"></textarea><br>
 		</div>
-
+		
 		<h2 id="deadline">〆切タイマー</h2>
 		<p>イベント原稿や企画の〆切を表示します。</p>
 		<table id="deadLines">
@@ -179,10 +190,6 @@ vim: ts=2 sw=2 expandtab fenc=utf8 :
 		<br>
 	</div>
 </div>
-<!--
-<div id="footer">
-	<button type="button" id="saveOptions">SAVE</button>※設定を反映するには、pixivを開いているタブを再読み込みしてください。
-</div>
--->
+
 </body>
 </html>

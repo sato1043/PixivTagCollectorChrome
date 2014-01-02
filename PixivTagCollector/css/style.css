@@ -60,15 +60,6 @@ ul {
 #navigation li:not(:last-child) {
 	margin-right: 10px;
 }
-#footer {
-	position: fixed;
-	width: 100%;
-	padding: 10px;
-	bottom: 0;
-	border-top: 1px solid #ddd;
-	background: #fff;
-	z-index: 10;
-}
 h1 {
 	font-size: 18pt;
 	margin-top: 50px;
