@@ -5,7 +5,7 @@
 	"name" : "Pixiv Tag Collector",
 	"description" : "pivivのタグ巡回を快適にするChrome拡張です。",
 
-	"version" : "0.7.1",
+	"version" : "0.7.2",
 
 	"icons": {
 		"48": "img/Tag48x48.png",

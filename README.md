@@ -13,6 +13,10 @@ pixiv Tag Collector Chrome拡張版のリリースをご案内します。
 pixivの普段使いの検索リンクをクリックしやすい位置に常に表示します。
 このChrome拡張はあなたが見るpixivの見た目を多少書き換えます。
 
+## ダウンロード
+* pixivTagCollector.crx ... Chrome拡張。これだけです。
+https://github.com/sato1043/PixivTagCollectorChrome/raw/master/PixivTagCollector.crx
+
 
 ## できること
 * pixivの普段使いの検索リンク＝タグをクリックしやすい位置に常に表示
@@ -26,10 +30,6 @@ pixivの普段使いの検索リンクをクリックしやすい位置に常に
 
 ただし、このChrome拡張はオリジナルの作者様とは関わりがありませんので、
 このChrome拡張へのお問い合わせは私(sato1043@gmail.com)にお願い致します。
-
-
-## 配布物
-* pixivTagCollector.crx ... Chrome拡張。これだけです。
 
 
 ## インストール
@@ -84,6 +84,7 @@ Chromeを起動して、メニューから[ツール]-[機能拡張]を開き、
 
 
 ## 履歴
+* 2014/01/03 - 0.7.2 (aka. 1.0alpha)
 * 2014/01/02 - 0.7.1 (aka. 1.0alpha)
     - タグがクリックできない場合があったので修正
 
