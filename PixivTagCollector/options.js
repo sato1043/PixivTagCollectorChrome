@@ -14,10 +14,10 @@ $(document).ready(function(){
 		}
 	});
 
-	//〆切入力フォームを生成
+	// 〆切入力フォームを生成
 	for(var i = 0; i < DEADLINES_NUM; i++){
 		$('table#deadLines').append(
-					'<tr>\n'
+				  '<tr>\n'
 				+ '<td>' + (i+1) + '</td>\n'
 				+ '<td><input type="text" id="pixivDeadLineName' + i + '" class="deadline-name"/></td>\n'
 				+ '<td><input type="text" id="pixivDeadLineDate' + i + '" class="datepicker"/></td>\n'
@@ -26,7 +26,7 @@ $(document).ready(function(){
 				+ '<td><button type="button" class="deadline-clear">削除</button></td>\n'
 				+ '</tr>\n');
 	}
-	//日付時刻入力補助をセット
+	// 日付時刻入力補助をセット
 	$('.datepicker').datepicker();
 	$('.datepicker').datepicker("option", 'minDate', new Date()); //今日より前は設定できないようにする
 	$('.timepicker').timepicker();
@@ -34,12 +34,12 @@ $(document).ready(function(){
 		'timeFormat': 'H:i', //フォーマット(PHPと同じ)
 		'step': 60 //何分おきにするか
 		});
-	//デッドラインをクリアするボタン
+	// デッドラインをクリアするボタン
 	$('.deadline-clear').click(function(){
 		$(this).closest('tr').find('input[type="text"]').val('');
 	});
 
-	//ナビゲーションリンクをクリックしてスクロールする
+	// ナビゲーションリンクをクリックしてスクロールする
 	$('#navigation a[href^="#"]').click(function(event) {
 		var id = $(this).attr("href");
 		var offset = 60;
@@ -57,7 +57,7 @@ $(document).ready(function(){
 
 // オプションを表示する
 function showOptions(){
-	//保存済み設定を取得
+	// 保存済み設定を取得
 	var options = JSON.parse(localStorage.options);
 
 	// 画面の初期表示を設定
@@ -302,7 +302,7 @@ function saveOptions(){
 		options.pixivDeadLineTime[i] = $('#pixivDeadLineTime' + i).val();
 		options.pixivDeadLineUrl[i] = $('#pixivDeadLineUrl'  + i).val();
 
-		// ・名前が入っていないDEAD LINEについて、内容を消去する
+		// 名前が入っていないDEAD LINEについて、内容を消去する
 		if (options.pixivDeadLineName[i] === ""){
 			// 日時のどこかが入っていたら、本当に消していいのか尋ねる
 			if(options.pixivDeadLineDate[i] !== "" || options.pixivDeadLineTime[i] !== "") {
@@ -347,6 +347,6 @@ function saveOptions(){
 	// localstorageに設定を保存
 	localStorage.options = JSON.stringify(options);
 
-	//設定タブを閉じる
+	// 設定タブを閉じる
 	close();
 }
