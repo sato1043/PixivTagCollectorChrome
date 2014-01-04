@@ -6,28 +6,19 @@
 body {
 	margin: 0;
 	padding: 0;
-}
-#wrapper {
-	margin: 10px auto;
-	padding: 0px 0px 120px 0px;
-	width: 960px;
-	position: relative;
+	background: #eee;
+	color: #333;
 }
 p {
 	margin: 5px 0;
 	font-size: 0.9em;
 }
 a {
-/*	margin: 0 12px 0 0;*/
-	padding: 2px;
-	white-space: nowrap;
 	color: #258fb8;
 	text-decoration: none;
 }
 a:hover {
-	background: #258fb8;
-	color: #fff;
-	border-radius: 3px;
+	text-decoration: underline;
 }
 ul {
 	margin: 5px 0;
@@ -38,8 +29,16 @@ ul {
 
 /* options.html
  ---------------------------------------------*/
+#wrapper {
+	margin: 0px auto;
+	padding: 10px 20px 120px 20px;
+	width: 840px;
+	position: relative;
+	top: 0;
+	background: #fff;
+}
 #navigation {
-	padding: 5px 20px;
+	padding: 0px;
 	width: 100%;
 	position: fixed;
 	text-align: center;
@@ -50,8 +49,10 @@ ul {
 	z-index: 9999;
 }
 #navigation ul {
-  margin-right: 30px;
+  margin: 0;
+  height: 40px;
   width: auto;
+  line-height: 40px;
 	display: inline-block;
 }
 #navigation li {
@@ -60,21 +61,64 @@ ul {
 #navigation li:not(:last-child) {
 	margin-right: 10px;
 }
+#navigation li a {
+	margin: 0;
+	padding: 0 15px;
+	border-radius: 0;
+	color: inherit;
+	display: block;
+}
+#navigation li a:hover {
+	background: #eee;
+}
+#saveOptions {
+	margin-left: 30px;
+}
 h1 {
 	font-size: 18pt;
-	margin-top: 50px;
+	margin: 50px 20px 20px 20px;
+	text-align: center;
 }
 h2 {
-	margin: 80px 0px 5px 0px;
-	font-size: 13pt;
-	padding-bottom: 3px;
-	border-bottom: 2px solid #ddd;
+	position: relative;
+	margin: 0 -30px 20px -30px;
+	padding: 10px 30px;
+	background: #69afca;
+	color: #fff;
+	font-size: 16pt;
 }
-h2:not(:first-child){
+h2:before {
+	content: " ";
+	position: absolute;
+	top: 100%;
+	left: 0;
+	width: 0;
+	height: 0;
+	border-width: 0 10px 10px 0;
+	border-style: solid;
+	border-color: transparent;
+	border-right-color: #498faa;
+}
+h2:after {
+	content: " ";
+	position: absolute;
+	top: 100%;
+	right: 0;
+	width: 0;
+	height: 0;
+	border-width: 10px 10px 0 0;
+	border-style: solid;
+	border-color: transparent;
+	border-top-color: #498faa;
+}
+
+h2:not(:first-child) {
 	margin-top: 80px;
 }
 h3 {
-	margin: 0;
+	margin-left: -20px;
+	padding-left: 20px;
+	width: 860px;
 	font-size: 11pt;
 	border-bottom: 1px dotted #ddd;
 }
@@ -120,23 +164,18 @@ input:focus {
 	outline: none;
 }
 button {
-	padding: 6px 18px;
-	background: #ddd;
+	padding: 8px 25px;
+	color: #fff;
+	background: #0096db;
 	border: none;
 	border-radius: 5px;
-	box-shadow: 0 4px #aaa;
 	font-weight: bold;
 	letter-spacing: 2px;
 	position: relative;
 	outline: none;
 }
 button:hover {
-	box-shadow: 0 5px #aaa;
-	top: -1px;
-}
-button:active {
-	box-shadow: 0 3px #aaa;
-	top: 1px;
+	background: #20a6fb;
 }
 input[type="checkbox"] {
 	margin-right: 5px;
@@ -145,18 +184,18 @@ button, label, input[type="checkbox"] {
 	cursor: pointer;
 }
 table#deadLines {
-	margin: 0;
+	margin: 10px 0 0 -20px;
 	padding: 0;
-	width: 100%;
+	width: 880px;
 	min-width: 50em;
 	border-collapse: collapse;
 }
 table#deadLines tr {
-	border-bottom: 1px solid #AAAAAA;
+	border-bottom: 1px solid #bbb;
 }
 table#deadLines th {
 	padding: 3px;
-	border-top: 1px solid #AAAAAA;
+	border-top: 1px solid #bbb;
 	background: #CCCCCC;
 }
 table#deadLines td {
@@ -177,26 +216,25 @@ table#deadLines td {
 	text-align: center;
 }
 .deadline-url {
-	width: 30em;
+	width: 25em;
 }
 .deadline-clear {
 	padding: 5px 8px;
+	background: #bbb;
+	font-weight: normal;
+}
+.deadline-clear:hover {
+  background: #ff4040;
 }
 
 #ng-words {
 	width: ;
 }
 
-
 /* popup.html
  ---------------------------------------------*/
-#wrapper-popup {
-	margin: 0;
-	padding: 1px;
-	min-width: 200px;
-}
 .popup-shortcut {
-	width: 100%;
+	width: 13.5em;
 	text-align: center;
 }
 .popup-shortcut li {
