@@ -89,10 +89,8 @@ function collectPixivTags(node) {
 
 		if (o.pixivOpenInNewTab)
 			forceMemberIllustPageOpenInNewTab(node);
-		if (o.pixivBookmarkLink){
+		if (o.pixivBookmarkLink)
 			forceBookmarkDetailLink(node);
-		}
-			
 	});
 }
 
@@ -528,7 +526,7 @@ function forceMemberIllustPageOpenInNewTab(node) {
 		for (var i = 0; i < memberIllustPageAnchors.snapshotLength; i++) {
 			memberIllustPageAnchors.snapshotItem(i).target = "_blank";
 		}
-	}
+	}	
 }
 
 
