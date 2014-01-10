@@ -13,23 +13,25 @@ pixiv Tag Collector Chrome拡張版のリリースをご案内します。
 pixivの普段使いの検索リンクをクリックしやすい位置に常に表示します。
 このChrome拡張はあなたが見るpixivの見た目を多少書き換えます。
 
-## ダウンロード
-* pixivTagCollector.crx ... Chrome拡張。これだけです。
-https://github.com/sato1043/PixivTagCollectorChrome/raw/master/PixivTagCollector.crx
-
 
 ## できること
-* pixivの普段使いの検索リンク＝タグをクリックしやすい位置に常に表示
-* 企画の〆切り日時と残り時間を３つまで、目につくように常に表示
-* マイページの自分があんまり使わない一覧など表示切り替え
+* pixivでよく検索するタグや検索キーワード(and/or/マイナス検索)をクリックしやすい位置に常に表示
+* 〆切り日時と残り時間を３つまで設定し、目につくように常に表示(いわゆるデッドラインタイマーです)
+* マイページの自分があんまり使わないパーツを表示/非表示切り替え
 * 検索結果をクリックしたときに別ウィンドウに開くように指定
-* 検索結果にNGワードを設定し、画像非表示
+* 検索結果にNGワードを設定し、サムネイルを非表示
 
-このスクリプトのオリジナルはpivivのタグ巡回を快適にするGreasemonkyスクリプトです。
+この拡張のオリジナルはGreasemonkeyスクリプトの pixiv tag collector for Greasemonkey です。  
+(オリジナル版: http://wazly.blog87.fc2.com/blog-entry-199.html )  
 これが使えなくて Chrome が不便だった方にどうぞ。
 
 ただし、このChrome拡張はオリジナルの作者様とは関わりがありませんので、
 このChrome拡張へのお問い合わせは私(sato1043@gmail.com)にお願い致します。
+
+
+## ダウンロード
+* pixivTagCollector.crx ... Chrome拡張。これだけです。
+https://github.com/sato1043/PixivTagCollectorChrome/raw/master/PixivTagCollector.crx
 
 
 ## インストール
@@ -45,7 +47,7 @@ pixivTagCollector行の右端にあるゴミ箱アイコンをクリックして
 
 
 ## アップデート
-まず、以前のバージョンのオプションをどこかにコピペしてバックアップしてみてください。
+まず、以前のバージョンのオプションをどこかにコピペしてバックアップしておいてください。
 それと、現状のバージョン番号を控えておいて下さい。
 
 Chromeを起動して、メニューから[ツール]-[機能拡張]を開き、

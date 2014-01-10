@@ -5,16 +5,16 @@ var DEADLINES_NUM = 3;
 
 // ロード時動作
 $(document).ready(function(){
-	// タグを表示するチェック中だけ、すべてのページに表示の編集ができるようにした。
+	// タグを表示するチェック中だけ、すべてのページにチェックを入れられるようにした。
 	$('#pixivShowTagList').click(function(){
 		if ($("#pixivShowTagList").is(':checked')){
-			$('#pixivApplyToAll').removeAttr("disabled");
+			$('#pixivApplyToAll').prop('disabled', false);
 		} else {
-			$('#pixivApplyToAll').attr("disabled", "disabled");
+			$('#pixivApplyToAll').prop('checked', false).prop('disabled', true);
 		}
 	});
-	
-	//〆切入力フォームを生成
+
+	// 〆切入力フォームを生成
 	for(var i = 0; i < DEADLINES_NUM; i++){
 		$('table#deadLines').append(
 				  '<tr>\n'
@@ -26,7 +26,7 @@ $(document).ready(function(){
 				+ '<td><button type="button" class="deadline-clear">削除</button></td>\n'
 				+ '</tr>\n');
 	}
-	//日付時刻入力補助をセット
+	// 日付時刻入力補助をセット
 	$('.datepicker').datepicker();
 	$('.datepicker').datepicker("option", 'minDate', new Date()); //今日より前は設定できないようにする
 	$('.timepicker').timepicker();
@@ -34,11 +34,21 @@ $(document).ready(function(){
 		'timeFormat': 'H:i', //フォーマット(PHPと同じ)
 		'step': 60 //何分おきにするか
 		});
-	//デッドラインをクリアするボタン
+	// デッドラインをクリアするボタン
 	$('.deadline-clear').click(function(){
 		$(this).closest('tr').find('input[type="text"]').val('');
 	});
-	
+
+	// ナビゲーションリンクをクリックしてスクロールする
+	$('#navigation a[href^="#"]').click(function(event) {
+		var id = $(this).attr("href");
+		var offset = 60;
+		var target = $(id).offset().top - offset;
+		$('html, body').animate({scrollTop:target}, 300);
+		event.preventDefault();
+		return false;
+	});
+
 	// SAVEボタン押下で saveOptions を呼び出すように設定
 	$('#saveOptions').click(function(){ saveOptions(); });
 
@@ -47,9 +57,9 @@ $(document).ready(function(){
 
 // オプションを表示する
 function showOptions(){
-	//保存済み設定を取得
+	// 保存済み設定を取得
 	var options = JSON.parse(localStorage.options);
-	
+
 	// 画面の初期表示を設定
 	if (options.pixivCompleteTags) {
 		$("#pixivCompleteTags").val(options.pixivCompleteTags.join('\n'));
@@ -58,156 +68,156 @@ function showOptions(){
 		$("#pixivPartialTags").val(options.pixivPartialTags.join('\n'));
 	}
 	if (options.pixivShowCompleteTags) {
-		$("#pixivShowCompleteTags").attr('checked','checked');
+		$("#pixivShowCompleteTags").prop('checked', true);
 	} else {
-		$("#pixivShowCompleteTags").removeAttr('checked');
+		$("#pixivShowCompleteTags").prop('checked', false);
 	}
 	if (options.pixivShowPartialTags) {
-		$("#pixivShowPartialTags").attr('checked','checked');
+		$("#pixivShowPartialTags").prop('checked', true);
 	} else {
-		$("#pixivShowPartialTags").removeAttr('checked');
+		$("#pixivShowPartialTags").prop('checked', false);
 	}
 	if (options.pixivShowTagList) {
-		$("#pixivShowTagList").attr('checked','checked');
+		$("#pixivShowTagList").prop('checked', true);
 	} else {
-		$("#pixivShowTagList").removeAttr('checked');
+		$("#pixivShowTagList").prop('checked', false);
 		$('#pixivApplyToAll').attr("disabled", "disabled");
 	}
-	
+
 	if (options.pixivShowLogo){
-		$("#pixivShowLogo").attr('checked','checked');
+		$("#pixivShowLogo").prop('checked', true);
 	} else {
-		$("#pixivShowLogo").removeAttr('checked');
+		$("#pixivShowLogo").prop('checked', false);
 	}
-	
+
 	if (options.pixivShowMyProfile) {
-		$("#pixivShowMyProfile").attr('checked','checked');
+		$("#pixivShowMyProfile").prop('checked', true);
 	} else {
-		$("#pixivShowMyProfile").removeAttr('checked');
+		$("#pixivShowMyProfile").prop('checked', false);
 	}
 	if (options.pixivShowMyMenu) {
-		$("#pixivShowMyMenu").attr('checked','checked');
+		$("#pixivShowMyMenu").prop('checked', true);
 	} else {
-		$("#pixivShowMyMenu").removeAttr('checked');
+		$("#pixivShowMyMenu").prop('checked', false);
 	}
 	if (options.pixivShowMyGroup) {
-		$("#pixivShowMyGroup").attr('checked','checked');
+		$("#pixivShowMyGroup").prop('checked', true);
 	} else {
-		$("#pixivShowMyGroup").removeAttr('checked');
+		$("#pixivShowMyGroup").prop('checked', false);
 	}
 	if (options.pixivShowOfficialGroup) {
-		$("#pixivShowOfficialGroup").attr('checked','checked');
+		$("#pixivShowOfficialGroup").prop('checked', true);
 	} else {
-		$("#pixivShowOfficialGroup").removeAttr('checked');
+		$("#pixivShowOfficialGroup").prop('checked', false);
 	}
 	if (options.pixivShowRecommendUser) {
-		$("#pixivShowRecommendUser").attr('checked','checked');
+		$("#pixivShowRecommendUser").prop('checked', true);
 	} else {
-		$("#pixivShowRecommendUser").removeAttr('checked');
+		$("#pixivShowRecommendUser").prop('checked', false);
 	}
 	if (options.pixivShowFollowing) {
-		$("#pixivShowFollowing").attr('checked','checked');
+		$("#pixivShowFollowing").prop('checked', true);
 	} else {
-		$("#pixivShowFollowing").removeAttr('checked');
+		$("#pixivShowFollowing").prop('checked', false);
 	}
 	if (options.pixivShowMyPixiv) {
-		$("#pixivShowMyPixiv").attr('checked','checked');
+		$("#pixivShowMyPixiv").prop('checked', true);
 	} else {
-		$("#pixivShowMyPixiv").removeAttr('checked');
+		$("#pixivShowMyPixiv").prop('checked', false);
 	}
 	if (options.pixivShowEvents) {
-		$("#pixivShowEvents").attr('checked','checked');
+		$("#pixivShowEvents").prop('checked', true);
 	} else {
-		$("#pixivShowEvents").removeAttr('checked');
+		$("#pixivShowEvents").prop('checked', false);
 	}
-	
+
 	if (options.pixivShowNewIllust) {
-		$("#pixivShowNewIllust").attr('checked','checked');
+		$("#pixivShowNewIllust").prop('checked', true);
 	} else {
-		$("#pixivShowNewIllust").removeAttr('checked');
+		$("#pixivShowNewIllust").prop('checked', false);
 	}
 	if (options.pixivShowPopularTags) {
-		$("#pixivShowPopularTags").attr('checked','checked');
+		$("#pixivShowPopularTags").prop('checked', true);
 	} else {
-		$("#pixivShowPopularTags").removeAttr('checked');
+		$("#pixivShowPopularTags").prop('checked', false);
 	}
 	if (options.pixivShowUserEvent) {
-		$("#pixivShowUserEvent").attr('checked','checked');
+		$("#pixivShowUserEvent").prop('checked', true);
 	} else {
-		$("#pixivShowUserEvent").removeAttr('checked');
+		$("#pixivShowUserEvent").prop('checked', false);
 	}
 	if (options.pixivShowBookmarkNews) {
-		$("#pixivShowBookmarkNews").attr('checked','checked');
+		$("#pixivShowBookmarkNews").prop('checked', true);
 	} else {
-		$("#pixivShowBookmarkNews").removeAttr('checked');
+		$("#pixivShowBookmarkNews").prop('checked', false);
 	}
 	if (options.pixivShowMyPixivNews) {
-		$("#pixivShowMyPixivNews").attr('checked','checked');
+		$("#pixivShowMyPixivNews").prop('checked', true);
 	} else {
-		$("#pixivShowMyPixivNews").removeAttr('checked');
+		$("#pixivShowMyPixivNews").prop('checked', false);
 	}
-	
+
 	if (options.pixivShowNewsTop) {
-		$("#pixivShowNewsTop").attr('checked','checked');
+		$("#pixivShowNewsTop").prop('checked', true);
 	} else {
-		$("#pixivShowNewsTop").removeAttr('checked');
+		$("#pixivShowNewsTop").prop('checked', false);
 	}
 	if (options.pixivShowDailyRank) {
-		$("#pixivShowDailyRank").attr('checked','checked');
+		$("#pixivShowDailyRank").prop('checked', true);
 	} else {
-		$("#pixivShowDailyRank").removeAttr('checked');
+		$("#pixivShowDailyRank").prop('checked', false);
 	}
 	if (options.pixivShowComicRank) {
-		$("#pixivShowComicRank").attr('checked','checked');
+		$("#pixivShowComicRank").prop('checked', true);
 	} else {
-		$("#pixivShowComicRank").removeAttr('checked');
+		$("#pixivShowComicRank").prop('checked', false);
 	}
 	if (options.pixivShowOtherRank) {
-		$("#pixivShowOtherRank").attr('checked','checked');
+		$("#pixivShowOtherRank").prop('checked', true);
 	} else {
-		$("#pixivShowOtherRank").removeAttr('checked');
+		$("#pixivShowOtherRank").prop('checked', false);
 	}
 	if (options.pixivShowMaleRank) {
-		$("#pixivShowMaleRank").attr('checked','checked');
+		$("#pixivShowMaleRank").prop('checked', true);
 	} else {
-		$("#pixivShowMaleRank").removeAttr('checked');
+		$("#pixivShowMaleRank").prop('checked', false);
 	}
 	if (options.pixivShowRookieRank) {
-		$("#pixivShowRookieRank").attr('checked','checked');
+		$("#pixivShowRookieRank").prop('checked', true);
 	} else {
-		$("#pixivShowRookieRank").removeAttr('checked');
+		$("#pixivShowRookieRank").prop('checked', false);
 	}
 	if (options.pixivShowDicRank) {
-		$("#pixivShowDicRank").attr('checked','checked');
+		$("#pixivShowDicRank").prop('checked', true);
 	} else {
-		$("#pixivShowDicRank").removeAttr('checked');
+		$("#pixivShowDicRank").prop('checked', false);
 	}
 	if (options.pixivShowOriginalRank) {
-		$("#pixivShowOriginalRank").attr('checked','checked');
+		$("#pixivShowOriginalRank").prop('checked', true);
 	} else {
-		$("#pixivShowOriginalRank").removeAttr('checked');
+		$("#pixivShowOriginalRank").prop('checked', false);
 	}
 	if (options.pixivShowNovelRank) {
-		$("#pixivShowNovelRank").attr('checked','checked');
+		$("#pixivShowNovelRank").prop('checked', true);
 	} else {
-		$("#pixivShowNovelRank").removeAttr('checked');
+		$("#pixivShowNovelRank").prop('checked', false);
 	}
-	
+
 	if (options.pixivApplyToAll){
-		$("#pixivApplyToAll").attr('checked','checked');
+		$("#pixivApplyToAll").prop('checked', true);
 	} else {
-		$("#pixivApplyToAll").removeAttr('checked');
+		$("#pixivApplyToAll").prop('checked', false);
 	}
 	if (options.pixivOpenInNewTab) {
-		$("#pixivOpenInNewTab").attr('checked','checked');
+		$("#pixivOpenInNewTab").prop('checked', true);
 	} else {
-		$("#pixivOpenInNewTab").removeAttr('checked');
+		$("#pixivOpenInNewTab").prop('checked', false);
 	}
 	/*
 	if (options.pixivReloadPage) {
-		$("#pixivReloadPage").attr('checked','checked');
+		$("#pixivReloadPage").prop('checked', true);
 	} else {
-		$("#pixivReloadPage").removeAttr('checked');
+		$("#pixivReloadPage").prop('checked', false);
 	}
 	*/
 	for (var i = 0; i < DEADLINES_NUM; ++i ){
@@ -216,7 +226,7 @@ function showOptions(){
 		$('#pixivDeadLineTime'+i).val(options.pixivDeadLineTime[i]);
 		$('#pixivDeadLineUrl'+i).val(options.pixivDeadLineUrl[i]);
 	}
-	
+
 	if (options.pixivSearchNGWords) {
 		$("#pixivSearchNGWords").val(options.pixivSearchNGWords.join('\n'));
 	}
@@ -226,7 +236,7 @@ function showOptions(){
 function saveOptions(){
 	var options = {};
 	var text = '';
-	
+
 	// 保存する値を準備
 	text = $("#pixivCompleteTags").val();
 	options.pixivCompleteTags = [];
@@ -248,9 +258,9 @@ function saveOptions(){
 	options.pixivShowPartialTags	= $("#pixivShowPartialTags").is(':checked');
 	options.pixivShowTagList	    = $("#pixivShowTagList").is(':checked');
 	options.pixivApplyToAll			= $("#pixivApplyToAll").is(':checked');
-	
+
 	options.pixivShowLogo			= $("#pixivShowLogo").is(':checked');
-	
+
 	options.pixivShowMyProfile		= $("#pixivShowMyProfile").is(':checked');
 	options.pixivShowMyMenu			= $("#pixivShowMyMenu").is(':checked');
 	options.pixivShowMyGroup		= $("#pixivShowMyGroup").is(':checked');
@@ -265,7 +275,7 @@ function saveOptions(){
 	options.pixivShowUserEvent		= $("#pixivShowUserEvent").is(':checked');
 	options.pixivShowBookmarkNews	= $("#pixivShowBookmarkNews").is(':checked');
 	options.pixivShowMyPixivNews	= $("#pixivShowMyPixivNews").is(':checked');
-	
+
 	options.pixivShowNewsTop		= $("#pixivShowNewsTop").is(':checked');
 	options.pixivShowDailyRank		= $("#pixivShowDailyRank").is(':checked');
 	options.pixivShowComicRank		= $("#pixivShowComicRank").is(':checked');
@@ -275,16 +285,16 @@ function saveOptions(){
 	options.pixivShowDicRank		= $("#pixivShowDicRank").is(':checked');
 	options.pixivShowOriginalRank	= $("#pixivShowOriginalRank").is(':checked');
 	options.pixivShowNovelRank		= $("#pixivShowNovelRank").is(':checked');
-	
+
 	options.pixivListHide			= $("#pixivListHide").is(':checked');
 	options.pixivOpenInNewTab		= $("#pixivOpenInNewTab").is(':checked');
 	//options.pixivReloadPage		= $("#pixivReloadPage").is(':checked');
-	
+
 	options.pixivDeadLineName = [];
 	options.pixivDeadLineDate = [];
 	options.pixivDeadLineTime = [];
 	options.pixivDeadLineUrl = [];
-	
+
 	for (var i = 0; i < DEADLINES_NUM; ++i ){
 		// まず値をすべて得ておいて、それからその日時について消去or登録をする
 		options.pixivDeadLineName[i] = $('#pixivDeadLineName' + i).val();
@@ -292,7 +302,7 @@ function saveOptions(){
 		options.pixivDeadLineTime[i] = $('#pixivDeadLineTime' + i).val();
 		options.pixivDeadLineUrl[i] = $('#pixivDeadLineUrl'  + i).val();
 
-		// ・名前が入っていないDEAD LINEについて、内容を消去する
+		// 名前が入っていないDEAD LINEについて、内容を消去する
 		if (options.pixivDeadLineName[i] === ""){
 			// 日時のどこかが入っていたら、本当に消していいのか尋ねる
 			if(options.pixivDeadLineDate[i] !== "" || options.pixivDeadLineTime[i] !== "") {
@@ -324,7 +334,7 @@ function saveOptions(){
 			}
 		}
 	}
-	
+
 	text = $("#pixivSearchNGWords").val();
 	options.pixivSearchNGWords = [];
 	if (text) {
@@ -333,10 +343,10 @@ function saveOptions(){
 		text = text.replace(/^\n|\n$/g, '');
 		options.pixivSearchNGWords = text.split('\n');
 	}
-	
+
 	// localstorageに設定を保存
 	localStorage.options = JSON.stringify(options);
-	
-	//設定タブを閉じる
+
+	// 設定タブを閉じる
 	close();
 }
