@@ -213,6 +213,11 @@ function showOptions(){
 	} else {
 		$("#pixivOpenInNewTab").prop('checked', false);
 	}
+	if (options.pixivBookmarkLink) {
+		$("#pixivBookmarkLink").prop('checked', true);
+	} else {
+		$("#pixivBookmarkLink").prop('checked', false);
+	}
 	/*
 	if (options.pixivReloadPage) {
 		$("#pixivReloadPage").prop('checked', true);
@@ -288,6 +293,7 @@ function saveOptions(){
 
 	options.pixivListHide			= $("#pixivListHide").is(':checked');
 	options.pixivOpenInNewTab		= $("#pixivOpenInNewTab").is(':checked');
+	options.pixivBookmarkLink		= $("#pixivBookmarkLink").is(':checked');
 	//options.pixivReloadPage		= $("#pixivReloadPage").is(':checked');
 
 	options.pixivDeadLineName = [];

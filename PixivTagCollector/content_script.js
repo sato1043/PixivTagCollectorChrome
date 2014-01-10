@@ -89,6 +89,10 @@ function collectPixivTags(node) {
 
 		if (o.pixivOpenInNewTab)
 			forceMemberIllustPageOpenInNewTab(node);
+		if (o.pixivBookmarkLink){
+			forceBookmarkDetailLink(node);
+		}
+			
 	});
 }
 
@@ -524,6 +528,18 @@ function forceMemberIllustPageOpenInNewTab(node) {
 		for (var i = 0; i < memberIllustPageAnchors.snapshotLength; i++) {
 			memberIllustPageAnchors.snapshotItem(i).target = "_blank";
 		}
+	}
+}
+
+
+// ブックマーク詳細ページのブックマークしているユーザのリンク先をそのユーザの作品一覧に変更する
+function forceBookmarkDetailLink(node) {
+	var m = location.href.indexOf('bookmark_detail');
+	if (m != -1) {
+			$('.bookmark-item').find('a.user').each(function(){
+				var a = $(this).attr('href');
+				$(this).attr({href: a.replace(/\/bookmark/, "/member_illust")});
+			});
 	}
 }
 
