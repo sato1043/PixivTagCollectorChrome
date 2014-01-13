@@ -94,6 +94,7 @@ Chromeを起動して、メニューから[ツール]-[機能拡張]を開き、
 
 
 ## 履歴
+* 2014/01/13 - 0.8.3 (aka. 1.0alpha)
 * 2014/01/13 - 0.8.2 (aka. 1.0alpha)
 	- 自動アップデートのURLを修正
 	http://developer.chrome.com/extensions/autoupdate.html
