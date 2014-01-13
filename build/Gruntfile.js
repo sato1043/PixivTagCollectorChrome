@@ -25,7 +25,8 @@ module.exports = function(grunt) {
 					unsafeWindow: false,
 					XPathResult: false,
 					close: false,
-					JSON: false
+					JSON: false,
+					location: false
 				}
 			}
 		},

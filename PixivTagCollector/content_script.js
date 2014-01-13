@@ -9,6 +9,8 @@ style.type = 'text/css';
 style.href = chrome.extension.getURL('css/style_ptc.css');
 (document.head || document.documentElement).appendChild(style);
 
+// 現在のURLを取得
+var url = location.href;
 
 //PixivTagCollectorのタグ一覧表示を Ctrl+Q でトグルできるように。
 document.addEventListener("keydown", function (e) {
@@ -89,6 +91,8 @@ function collectPixivTags(node) {
 
 		if (o.pixivOpenInNewTab)
 			forceMemberIllustPageOpenInNewTab(node);
+		if (o.pixivBookmarkLink)
+			forceBookmarkDetailLink(node);
 	});
 }
 
@@ -218,10 +222,10 @@ function showAreaTitleParent(node, href, siblingIndex, on)
 // ページ中から追加場所を見つけてDOMを追加する
 function addToPixivPages(node, options, func) {
 	var xpath = null;
-	var m = (document.URL).match(/pixiv\.net\/(.*)\.php/);
+	var m = url.match(/pixiv\.net\/(.*)\.php/);
 	if (m === null) {
-		if ((document.URL).match(/pixiv\.net\/novel\//)) m = ['','novel/']; // 小説
-		else if ((document.URL).match(/pixiv\.net\/stacc\//)) m = ['','stacc/']; // フィード(スタック)
+		if (url.match(/pixiv\.net\/novel\//)) m = ['','novel/']; // 小説
+		else if (url.match(/pixiv\.net\/stacc\//)) m = ['','stacc/']; // フィード(スタック)
 		else m = ['',''];
 	}
 	//alert(m[1]);//Debug
@@ -492,8 +496,11 @@ function deadLines(node, options, targetNode) {
 
 // 検索結果からNGワードを探して画像を非表示
 // ページ中から追加場所を見つけてリストを追加する
+String.prototype.replaceAll = function (org, dest){
+  return this.split(org).join(dest);
+};
 function applySearchNGWords(node, options) {
-	var m = (document.URL).match(/pixiv\.net\/(.*)\.php/);
+	var m = url.match(/pixiv\.net\/(.*)\.php/);
 	if (m === null || m[1] !== 'search') return;
 	var xpath = './/*[contains(concat(" ",normalize-space(@class)," "), " image-item ")]';
 	var targetNode = document.evaluate(xpath, node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
@@ -503,9 +510,6 @@ function applySearchNGWords(node, options) {
 		var w;
 		for (w = 0; w < options.pixivSearchNGWords.length; ++w) {
 			if (text.match(options.pixivSearchNGWords[w])){
-				String.prototype.replaceAll = function (org, dest){
-          return this.split(org).join(dest);
-        }
 				targetNode.snapshotItem(i).innerHTML =
 					targetNode.snapshotItem(i).innerHTML.replaceAll(options.pixivSearchNGWords[w],'***');
 				targetNode.snapshotItem(i).firstChild.firstChild.style.display = 'none';
@@ -524,6 +528,18 @@ function forceMemberIllustPageOpenInNewTab(node) {
 		for (var i = 0; i < memberIllustPageAnchors.snapshotLength; i++) {
 			memberIllustPageAnchors.snapshotItem(i).target = "_blank";
 		}
+	}	
+}
+
+
+// ブックマーク詳細ページのブックマークしているユーザのリンク先をそのユーザの作品一覧に変更する
+function forceBookmarkDetailLink(node) {
+	var m = url.indexOf('bookmark_detail');
+	if (m != -1) {
+			$('.bookmark-item').find('a.user').each(function(){
+				var a = $(this).attr('href');
+				$(this).attr({href: a.replace(/\/bookmark/, "/member_illust")});
+			});
 	}
 }
 
