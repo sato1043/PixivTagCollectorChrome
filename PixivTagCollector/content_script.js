@@ -496,6 +496,9 @@ function deadLines(node, options, targetNode) {
 
 // 検索結果からNGワードを探して画像を非表示
 // ページ中から追加場所を見つけてリストを追加する
+String.prototype.replaceAll = function (org, dest){
+  return this.split(org).join(dest);
+};
 function applySearchNGWords(node, options) {
 	var m = url.match(/pixiv\.net\/(.*)\.php/);
 	if (m === null || m[1] !== 'search') return;
@@ -507,9 +510,6 @@ function applySearchNGWords(node, options) {
 		var w;
 		for (w = 0; w < options.pixivSearchNGWords.length; ++w) {
 			if (text.match(options.pixivSearchNGWords[w])){
-				String.prototype.replaceAll = function (org, dest){
-          return this.split(org).join(dest);
-        }
 				targetNode.snapshotItem(i).innerHTML =
 					targetNode.snapshotItem(i).innerHTML.replaceAll(options.pixivSearchNGWords[w],'***');
 				targetNode.snapshotItem(i).firstChild.firstChild.style.display = 'none';
