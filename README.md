@@ -3,9 +3,12 @@ pixivTagCollectorChrome
 
 pixiv Tag Collector for Chrome extentions Version 1.0alpha
 
+Home:
+  https://github.com/sato1043/PixivTagCollectorChrome
 Authers:
   sato1043 and monsier-oui
 
+  
 はじめまして。
 pixiv Tag Collector Chrome拡張版のリリースをご案内します。
 
@@ -87,6 +90,9 @@ Chromeを起動して、メニューから[ツール]-[機能拡張]を開き、
 
 
 ## 履歴
+* 2014/01/13 - 0.8.1 (aka. 1.0alpha)
+	- 拡張機能ページに"ウェブサイトにアクセスする"を表示
+
 * 2014/01/13 - 0.8 (aka. 1.0alpha)
 	- ブックマーク詳細ページのブックマークしているユーザのリンクを
 	  作品一覧ページに変更する オプションを追加
