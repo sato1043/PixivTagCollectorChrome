@@ -5,6 +5,7 @@ pixiv Tag Collector for Chrome extentions Version 1.0alpha
 
 Home:
   https://github.com/sato1043/PixivTagCollectorChrome
+
 Authers:
   sato1043 and monsier-oui
 
@@ -51,7 +52,10 @@ pixivTagCollector行の右端にあるゴミ箱アイコンをクリックして
 
 
 ## アップデート
-まず、以前のバージョンのオプションをどこかにコピペしてバックアップしておいてください。
+機能拡張の新しいリリースがあると自動アップデートされます。
+更新の確認はデフォルトでは数時間おきです。
+
+手動の場合、まず、以前のバージョンのオプションをどこかにコピペしてバックアップしておいてください。
 それと、現状のバージョン番号を控えておいて下さい。
 
 Chromeを起動して、メニューから[ツール]-[機能拡張]を開き、
@@ -90,6 +94,10 @@ Chromeを起動して、メニューから[ツール]-[機能拡張]を開き、
 
 
 ## 履歴
+* 2014/01/13 - 0.8.2 (aka. 1.0alpha)
+	- 自動アップデートのURLを修正
+	http://developer.chrome.com/extensions/autoupdate.html
+
 * 2014/01/13 - 0.8.1 (aka. 1.0alpha)
 	- 拡張機能ページに"ウェブサイトにアクセスする"を表示
 
