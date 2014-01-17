@@ -12,6 +12,10 @@ if (!localStorage.options) {
 		, pixivPartialTags      : []
 		, pixivShowCompleteTags : true
 		, pixivShowPartialTags  : true
+		
+		, pixivCaptionSearchName : ['','','']
+		, pixivCaptionSearchWord : ['','','']
+		, pixivShowCaptionTags : true
 
 		, pixivSearchNGWords    : []
 
@@ -67,6 +71,9 @@ if (!localStorage.options) {
 // "showPartialTags" 部分一致タグ一覧を表示する
 // "hidePartialTags" 部分一致タグ一覧を隠す
 //
+// "showCaptionTags" キャプション検索一覧を表示する
+// "hideCaptionTags" キャプション検索一覧を隠す
+//
 // "showTagList" タグ一覧を表示する
 // "hideTagList" タグ一覧を隠す
 //
@@ -82,6 +89,8 @@ chrome.extension.onRequest.addListener(
 		case "hideComplateTags": options.pixivShowCompleteTags = false; break;
 		case "showPartialTags" : options.pixivShowPartialTags  = true ; break;
 		case "hidePartialTags" : options.pixivShowPartialTags  = false; break;
+		case "showCaptionTags" : options.pixivShowCaptionTags = true ; break;
+		case "hideCaptionTags" : options.pixivShowCaptionTags = false; break;
 		case "showTagList"     : options.pixivShowTagList      = true ; break;
 		case "hideTagList"     : options.pixivShowTagList      = false; break;
 	}
