@@ -3,6 +3,9 @@
 //デッドラインの数
 var DEADLINES_NUM = 3;
 
+//キャプション検索の数
+var CAPTIONS_NUM = 3;
+
 // ロード時動作
 $(document).ready(function(){
 	// タグを表示するチェック中だけ、すべてのページにチェックを入れられるようにした。
@@ -36,6 +39,21 @@ $(document).ready(function(){
 		});
 	// デッドラインをクリアするボタン
 	$('.deadline-clear').click(function(){
+		$(this).closest('tr').find('input[type="text"]').val('');
+	});
+
+	// キャプション検索フォームを生成
+	for( i = 0; i < CAPTIONS_NUM; i++){
+		$('table#caption-search-list').append(
+				  '<tr>\n'
+				+ '<td>' + (i+1) + '</td>\n'
+				+ '<td><input type="text" id="pixivCaptionSearchName' + i + '" class="caption-search-name"/></td>\n'
+				+ '<td><input type="text" id="pixivCaptionSearchWord' + i + '" class="caption-search-word"/></td>\n'
+				+ '<td><button type="button" class="caption-search-clear">削除</button></td>\n'
+				+ '</tr>\n');
+	}
+	// キャプション検索をクリアするボタン
+	$('.caption-search-clear').click(function(){
 		$(this).closest('tr').find('input[type="text"]').val('');
 	});
 
@@ -77,13 +95,18 @@ function showOptions(){
 	} else {
 		$("#pixivShowPartialTags").prop('checked', false);
 	}
+	if (options.pixivShowCaptionTags) {
+		$("#pixivShowCaptionTags").prop('checked', true);
+	} else {
+		$("#pixivShowCaptionTags").prop('checked', false);
+	}
 	if (options.pixivShowTagList) {
 		$("#pixivShowTagList").prop('checked', true);
 	} else {
 		$("#pixivShowTagList").prop('checked', false);
 		$('#pixivApplyToAll').attr("disabled", "disabled");
 	}
-
+	
 	if (options.pixivShowLogo){
 		$("#pixivShowLogo").prop('checked', true);
 	} else {
@@ -232,6 +255,15 @@ function showOptions(){
 		$('#pixivDeadLineUrl'+i).val(options.pixivDeadLineUrl[i]);
 	}
 
+	for (var i = 0; i < CAPTIONS_NUM; ++i ){
+		$('#pixivCaptionSearchName'+i).val(
+			(options.pixivCaptionSearchName[i] !== undefined)
+				? options.pixivCaptionSearchName[i] : '');
+		$('#pixivCaptionSearchWord'+i).val(
+			(options.pixivCaptionSearchWord[i] !== undefined)
+				? options.pixivCaptionSearchWord[i] : '');
+	}
+
 	if (options.pixivSearchNGWords) {
 		$("#pixivSearchNGWords").val(options.pixivSearchNGWords.join('\n'));
 	}
@@ -261,6 +293,7 @@ function saveOptions(){
 	}
 	options.pixivShowCompleteTags	= $("#pixivShowCompleteTags").is(':checked');
 	options.pixivShowPartialTags	= $("#pixivShowPartialTags").is(':checked');
+	options.pixivShowCaptionTags	= $("#pixivShowCaptionTags").is(':checked');
 	options.pixivShowTagList	    = $("#pixivShowTagList").is(':checked');
 	options.pixivApplyToAll			= $("#pixivApplyToAll").is(':checked');
 
@@ -337,6 +370,45 @@ function saveOptions(){
 				options.pixivDeadLineDate[i] = $('#pixivDeadLineDate' + i).val();
 				options.pixivDeadLineTime[i] = $('#pixivDeadLineTime' + i).val();
 				options.pixivDeadLineUrl[i] = $('#pixivDeadLineUrl'  + i).val();
+			}
+		}
+	}
+
+	options.pixivCaptionSearchName = [];
+	options.pixivCaptionSearchWord = [];
+
+	for (var i = 0; i < CAPTIONS_NUM; ++i ){
+		// まず値をすべて得ておいて、それからその日時について消去or登録をする
+		options.pixivCaptionSearchName[i] = $('#pixivCaptionSearchName' + i).val();
+		options.pixivCaptionSearchWord[i] = $('#pixivCaptionSearchWord' + i).val();
+
+		// 名前が入っていないキャプション検索について、内容を消去する
+		if (options.pixivCaptionSearchName[i] === ""){
+			// ワードが入っていたら、本当に消していいのか尋ねる
+			if(options.pixivCaptionSearchWord[i] !== "") {
+				if (window.confirm((i+1)+'番目のキャプション検索は名前が入力されていません。\n'
+						+'名前のない設定は保存されませんが、続けてよろしいですか?')){
+				} else { // Cancel
+					return;
+				}
+			}
+			// キャプション検索が消去される
+			options.pixivCaptionSearchName[i] = "";
+			options.pixivCaptionSearchWord[i] = "";
+		}
+		// 名前が入っているキャプション検索について、内容を登録する
+		else {
+			// ワードが未入力ならエラー扱い
+			if(options.pixivCaptionSearchWord[i] === ""){
+				if(window.alert((i+1)+'番目のキャプション検索設定 「'
+						+options.pixivCaptionSearchName[i]
+						+'」 はワードが設定されていません。')){
+				} else { // Cancel
+					return;
+				}
+				// キャプション検索が保存される
+				options.pixivCaptionSearchName[i] = $('#pixivCaptionSearchName' + i).val();
+				options.pixivCaptionSearchWord[i] = $('#pixivCaptionSearchWord' + i).val();
 			}
 		}
 	}

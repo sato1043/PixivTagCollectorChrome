@@ -300,6 +300,7 @@ function tagLists(node, options, targetNode) {
 
 	var completeDiv = completeTags(options);
 	var partialDiv = partialTags(options);
+	var captionDiv = captionTags(options);
 
 	var tagListsDiv = document.createElement('div');
 	tagListsDiv.className = 'pixiv_tag_collector';
@@ -307,6 +308,7 @@ function tagLists(node, options, targetNode) {
 
 	tagListsDiv.appendChild(completeDiv);
 	tagListsDiv.appendChild(partialDiv);
+	tagListsDiv.appendChild(captionDiv);
 
 	targetNode.snapshotItem(0).parentNode
 		.insertBefore(tagListsDiv, targetNode.snapshotItem(0));
@@ -334,6 +336,19 @@ function tagLists(node, options, targetNode) {
 		} else {
 			tags.hide();
 			chrome.extension.sendRequest({ action : "hidePartialTags" }, function (response) {});
+			onoff.html('+');
+		}
+	});
+	$('#captionTagsOnOff').click(function(){
+		var tags = $('#captionTags');
+		var onoff = $('#captionTagsOnOff');
+		if (tags.is(':hidden')) {
+			tags.css('display', 'inline');
+			chrome.extension.sendRequest({ action : "showCaptionTags" }, function (response) {});
+			$('#captionTagsOnOff').html('-');
+		} else {
+			tags.hide();
+			chrome.extension.sendRequest({ action : "hideCaptionTags" }, function (response) {});
 			onoff.html('+');
 		}
 	});
@@ -423,6 +438,58 @@ function partialTags(options){
 			newA.appendChild(document.createTextNode(partword));
 		} else {
 			newA.appendChild(document.createTextNode(word));
+		}
+		node.appendChild(newA);
+	}
+	taglist.appendChild(node);
+
+	taglist_outer.appendChild(onoff);
+	taglist_outer.appendChild(taglist);
+
+	return taglist_outer;
+}
+
+// キャプション検索用のタグリストをDOM作成
+function captionTags(options){
+	var taglist_outer = document.createElement('div');
+	var onoff = document.createElement('div');
+	var taglist = document.createElement('div');
+
+	taglist_outer.id = 'pixiv_tag_collector_caption_tags';
+	taglist_outer.className = 'taglist';
+
+	onoff.id = 'captionTagsOnOff';
+	onoff.className = 'taglistOnOff';
+	onoff.innerText = (options.pixivShowCaptionTags) ? '-':'+';
+
+	taglist.id = 'captionTags';
+
+	if ( ! options.pixivShowCaptionTags) { taglist.style.display = 'none'; }
+
+	var pattern = /(-{2,})+(\d{1,})$/;
+	var node = document.createDocumentFragment();
+
+	for (var i = 0; i < options.pixivCaptionSearchName.length; i++) {
+		var name = options.pixivCaptionSearchName[i];
+		var word = options.pixivCaptionSearchWord[i];
+
+		var newA = document.createElement('a');
+		newA.title = name; // title属性付与(マウスオンで省略前の検索キーワードが見える)
+		newA.href = 'http://www.pixiv.net/search.php?s_mode=s_tc&word='
+				+ encodeURIComponent(word)
+					.replace(/%20/g, '+')
+					.replace(pattern, '')
+					.replace(/[+-]$/, '')
+				;
+
+		if (name.match(pattern)) {
+			var partword
+				= RegExp.$2 < (name.length - RegExp.lastMatch.length + 1)
+					? name.slice(0,   RegExp.$2) + '...'
+					: name.slice(0, - RegExp.lastMatch.length - 1) ;
+			newA.appendChild(document.createTextNode(partword));
+		} else {
+			newA.appendChild(document.createTextNode(name));
 		}
 		node.appendChild(newA);
 	}
