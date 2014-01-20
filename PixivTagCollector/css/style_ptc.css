@@ -21,7 +21,7 @@
 	font-weight: bold;
 	display: inline-block;
 }
-#pixiv_tag_collector_complete_tags {
+#pixiv_tag_collector_complete_tags, #pixiv_tag_collector_partial_tags {
 	margin: 0;
 	border-bottom-width: 1px;
 	border-bottom-style: dotted;
@@ -30,12 +30,15 @@
 #pixiv_tag_collector_complete_tags:before {
 	content: "完全一致検索";
 }
-#pixiv_tag_collector_partial_tags {
-}
 #pixiv_tag_collector_partial_tags:before {
 	content: "部分一致検索";
 }
-#completeTags, #partialTags {
+#pixiv_tag_collector_caption_tags:before {
+	content: "キャプション検索";
+}
+#pixiv_tag_collector_caption_tags {
+}
+#completeTags, #partialTags, #captionTags {
 	display: inline;
 	line-height: 1.5em;
 }

@@ -470,10 +470,11 @@ function captionTags(options){
 	var node = document.createDocumentFragment();
 
 	for (var i = 0; i < options.pixivCaptionSearchName.length; i++) {
-		var word = options.pixivCaptionSearchName[i];
+		var name = options.pixivCaptionSearchName[i];
+		var word = options.pixivCaptionSearchWord[i];
 
 		var newA = document.createElement('a');
-		newA.title = word; // title属性付与(マウスオンで省略前の検索キーワードが見える)
+		newA.title = name; // title属性付与(マウスオンで省略前の検索キーワードが見える)
 		newA.href = 'http://www.pixiv.net/search.php?s_mode=s_tc&word='
 				+ encodeURIComponent(word)
 					.replace(/%20/g, '+')
@@ -481,14 +482,14 @@ function captionTags(options){
 					.replace(/[+-]$/, '')
 				;
 
-		if (word.match(pattern)) {
+		if (name.match(pattern)) {
 			var partword
-				= RegExp.$2 < (word.length - RegExp.lastMatch.length + 1)
-					? word.slice(0,   RegExp.$2) + '...'
-					: word.slice(0, - RegExp.lastMatch.length - 1) ;
+				= RegExp.$2 < (name.length - RegExp.lastMatch.length + 1)
+					? name.slice(0,   RegExp.$2) + '...'
+					: name.slice(0, - RegExp.lastMatch.length - 1) ;
 			newA.appendChild(document.createTextNode(partword));
 		} else {
-			newA.appendChild(document.createTextNode(word));
+			newA.appendChild(document.createTextNode(name));
 		}
 		node.appendChild(newA);
 	}
