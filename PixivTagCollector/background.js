@@ -13,8 +13,8 @@ if (!localStorage.options) {
 		, pixivShowCompleteTags : true
 		, pixivShowPartialTags  : true
 		
-		, pixivCaptionSearchName : ['','','']
-		, pixivCaptionSearchWord : ['','','']
+		, pixivCaptionSearchName : []
+		, pixivCaptionSearchWord : []
 		, pixivShowCaptionTags : true
 
 		, pixivSearchNGWords    : []
@@ -46,10 +46,10 @@ if (!localStorage.options) {
 		, pixivShowOriginalRank : true
 		, pixivShowNovelRank    : true
 		
-		, pixivDeadLineName     : ['','','']
-		, pixivDeadLineDate     : ['','','']
-		, pixivDeadLineTime     : ['','','']
-		, pixivDeadLineUrl      : ['','','']
+		, pixivDeadLineName     : []
+		, pixivDeadLineDate     : []
+		, pixivDeadLineTime     : []
+		, pixivDeadLineUrl      : []
 
 		, pixivOpenInNewTab     : false
 		, pixivReloadPage       : false

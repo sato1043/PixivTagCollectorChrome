@@ -34,7 +34,7 @@ vim: ts=2 sw=2 expandtab fenc=utf8 :
   	<li><a href="#visibility">表示設定</a></li>
   	<li><a href="#other-option">その他</a></li>
   </ul>
-  <button type="button" id="saveOptions" title="※設定を反映するには、pixivを開いているタブを&#10;再読み込みしてください。">SAVE</button>
+  <button type="button" id="saveOptions" title="※設定を反映するには、pixivを開いているタブを&#10;再読み込みしてください。">保存</button>
 </div>
 
 <div id="wrapper">
@@ -73,9 +73,8 @@ vim: ts=2 sw=2 expandtab fenc=utf8 :
 		
 		<h2 id="deadline">〆切タイマー</h2>
 		<p>イベント原稿や企画の〆切を表示します。</p>
-		<table id="deadLines">
+		<table id="deadLines" class="table-setting">
 			<tr>
-				<th></th>
 				<th>タイトル</th>
 				<th>日付</th>
 				<th>時刻</th>
@@ -83,18 +82,21 @@ vim: ts=2 sw=2 expandtab fenc=utf8 :
 				<th></th>
 			</tr>
 		</table>
+		<button type="button" id="deadline-add">追加</button>
 		
 		<h2 id="caption-search">キャプション検索</h2>
-		<p>キャプションを検索します。</p>
-		<table id="caption-search-list">
+		<p>キャプションを検索します（条件で単語を" or "で繋げばいずれかを検索できます。）</p>
+		<table id="caption-search-list" class="table-setting">
 			<tr>
-				<th></th>
 				<th>名称</th>
-				<th>キャプション検索条件</th>
+				<th>検索条件</th>
 				<th></th>
 			</tr>
 		</table>
+		<button type="button" id="cation-search-add">追加</button>
+		<div style="margin-top:20px">
 		<label><input type="checkbox" id="pixivShowCaptionTags" />開いておく</label>
+		</div>
 
 		<h2 id="visibility">表示設定</h2>
 		<p>pixiv内各パーツの表示・非表示を設定できます。表示したくないものはチェックを外してください。<p>

@@ -170,8 +170,7 @@ function showDicRank     (node, on) { showWhereId(node, 'dic_ranking', 1, on); }
 function showOriginalRank(node, on) { showWhereClass(node, 'original', 1, on); }
 function showNovelRank   (node, on) { showWhereClass(node, 'daily-novel', 1, on); }
 
-function showWhereClass(node, where, siblingIndex, on)
-{
+function showWhereClass(node, where, siblingIndex, on) {
 	if (on) return;
 
 	var xpath = '//*[contains(concat(" ",normalize-space(@class)," "), " '+where+' ")]['+siblingIndex+']';
@@ -180,8 +179,7 @@ function showWhereClass(node, where, siblingIndex, on)
 		targetNode.snapshotItem(0).style.display = 'none';
 	}
 }
-function showWhereClassParent(node, where, siblingIndex, on)
-{
+function showWhereClassParent(node, where, siblingIndex, on) {
 	if (on) return;
 
 	var xpath = '//*[contains(concat(" ",normalize-space(@class)," "), " '+where+' ")]['+siblingIndex+']';
@@ -190,8 +188,7 @@ function showWhereClassParent(node, where, siblingIndex, on)
 		targetNode.snapshotItem(0).parentNode.style.display = 'none';
 	}
 }
-function showWhereId(node, where, siblingIndex, on)
-{
+function showWhereId(node, where, siblingIndex, on) {
 	if (on) return;
 
 	var xpath = '//*[@id="'+where+'"]['+siblingIndex+']';
@@ -200,16 +197,14 @@ function showWhereId(node, where, siblingIndex, on)
 		targetNode.snapshotItem(0).style.display = 'none';
 	}
 }
-function showWhereHasLinkContainer(node, href, on)
-{
+function showWhereHasLinkContainer(node, href, on) {
 	var xpath = '//*[@id="item-container"]/section/header/h1/a[@href="'+href+'"]';
 	var targetNode = document.evaluate(xpath, node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
 	if (targetNode.snapshotLength > 0) {
 		targetNode.snapshotItem(0).parentNode.parentNode.parentNode.style.display = on?'block':'none';
 	}
 }
-function showAreaTitleParent(node, href, siblingIndex, on)
-{
+function showAreaTitleParent(node, href, siblingIndex, on) {
 	if (on) return;
 
 	var xpath = '//*[@class="area_title"]/a[@href="'+href+'"]['+siblingIndex+']';
@@ -503,7 +498,9 @@ function captionTags(options){
 
 // デッドラインを表示する
 function addDeadLineList(node, options) {
-	addToPixivPages(node,options,deadLines);
+	if(options.pixivDeadLineName.length !== 0){
+		addToPixivPages(node,options,deadLines);
+	}
 }
 
 // デッドラインリストをDOM作成
