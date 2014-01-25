@@ -186,8 +186,7 @@ button, label, input[type="checkbox"] {
 table#deadLines {
 	margin: 10px 0 0 -20px;
 	padding: 0;
-	width: 880px;
-	min-width: 50em;
+	min-width: 30em;
 	border-collapse: collapse;
 }
 table#deadLines tr {
@@ -205,14 +204,12 @@ table#deadLines td {
 .deadline-name {
 	width: 15em;
 }
-.datepicker {
+.deadline-datepicker {
 	width: 6em;
+	text-align: center;
 }
-.timepicker {
+.deadline-timepicker {
 	width: 3em;
-}
-.datepicker,
-.timepicker  {
 	text-align: center;
 }
 .deadline-url {
@@ -226,6 +223,40 @@ table#deadLines td {
 .deadline-clear:hover {
   background: #ff4040;
 }
+
+table#caption-search-list {
+	margin: 10px 0 0 -20px;
+	padding: 0;
+	min-width: 30em;
+	border-collapse: collapse;
+}
+table#caption-search-list th {
+	padding: 3px;
+	border-top: 1px solid #bbb;
+	background: #CCCCCC;
+}
+table#caption-search-list tr {
+	border-bottom: 1px solid #bbb;
+}
+table#caption-search-list td {
+	padding: 8px 5px;
+	text-align: center;
+}
+.caption-search-name {
+	width: 15em;
+}
+.caption-search-word {
+	width: 25em;
+}
+.caption-search-clear {
+	padding: 5px 8px;
+	background: #bbb;
+	font-weight: normal;
+}
+.caption-search-clear:hover {
+  background: #ff4040;
+}
+
 
 #ng-words {
 	width: ;
