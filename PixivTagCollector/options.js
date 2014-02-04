@@ -367,18 +367,21 @@ function saveOptions(){
 		options.pixivDeadLineUrl [i] = line.find('.deadline-url').val();
 		
 		// 入力されていない項目があったらエラーにする
-		if (options.pixivDeadLineName[i] === "") {
-			window.alert((i+1)+'番目の〆切に名前が入力されていません。');
-			return;
+		if(dl_num > 1){ //1行目はスルー
+			if (options.pixivDeadLineName[i] === "") {
+				window.alert((i+1)+'番目の〆切に名前が入力されていません。');
+				return;
+			}
+			if (options.pixivDeadLineDate[i] === "") {
+				window.alert((i+1)+'番目の〆切に日付が入力されていません。');
+				return;
+			}
+			if (options.pixivDeadLineTime[i] === "") {
+				window.alert((i+1)+'番目の〆切に時刻が入力されていません。');
+				return;
+			}
 		}
-		if (options.pixivDeadLineDate[i] === "") {
-			window.alert((i+1)+'番目の〆切に日付が入力されていません。');
-			return;
-		}
-		if (options.pixivDeadLineTime[i] === "") {
-			window.alert((i+1)+'番目の〆切に時刻が入力されていません。');
-			return;
-		}
+		
 	}
 
 	options.pixivCaptionSearchName = [];
@@ -390,13 +393,15 @@ function saveOptions(){
 		options.pixivCaptionSearchWord[i] = line.find('.caption-search-word').val();
 		
 		// 入力されていない項目があったらエラーにする
-		if (options.pixivCaptionSearchName[i] === "") {
-			window.alert((i+1)+'番目のキャプション検索に名前が入力されていません。');
-			return;
-		}
-		if (options.pixivCaptionSearchWord[i] === "") {
-			window.alert((i+1)+'番目のキャプション検索に検索条件が入力されていません。');
-			return;
+		if(cap_num > 1){ //1行目はスルー
+			if (options.pixivCaptionSearchName[i] === "") {
+				window.alert((i+1)+'番目のキャプション検索に名前が入力されていません。');
+				return;
+			}
+			if (options.pixivCaptionSearchWord[i] === "") {
+				window.alert((i+1)+'番目のキャプション検索に検索条件が入力されていません。');
+				return;
+			}
 		}
 	}
 
