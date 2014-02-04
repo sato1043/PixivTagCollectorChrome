@@ -35,10 +35,10 @@
 #pixiv_tag_collector_partial_tags:before {
 	content: "部分一致検索";
 }
-#pixiv_tag_collector_caption_list:before {
+#pixiv_tag_collector_caption_tags:before {
 	content: "キャプション検索";
 }
-#pixiv_tag_collector_caption_list {
+#pixiv_tag_collector_caption_tags {
 }
 #completeTags, #partialTags, #captionTags {
 	display: inline;
