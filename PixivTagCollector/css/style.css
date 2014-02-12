@@ -58,9 +58,6 @@ ul {
 #navigation li {
 	display: inline-block;
 }
-#navigation li:not(:last-child) {
-	margin-right: 10px;
-}
 #navigation li a {
 	margin: 0;
 	padding: 0 15px;
@@ -70,9 +67,11 @@ ul {
 }
 #navigation li a:hover {
 	background: #eee;
+	text-decoration: none;
 }
 #saveOptions {
 	margin-left: 30px;
+	padding: 8px 25px;
 }
 h1 {
 	font-size: 18pt;
@@ -164,13 +163,13 @@ input:focus {
 	outline: none;
 }
 button {
-	padding: 8px 25px;
+	padding: 7px 10px;
 	color: #fff;
 	background: #0096db;
 	border: none;
 	border-radius: 5px;
 	font-weight: bold;
-	letter-spacing: 2px;
+	letter-spacing: 3px;
 	position: relative;
 	outline: none;
 }
@@ -183,21 +182,27 @@ input[type="checkbox"] {
 button, label, input[type="checkbox"] {
 	cursor: pointer;
 }
-table#deadLines {
-	margin: 10px 0 0 -20px;
+table.table-setting {
+	margin: 10px 0 10px -20px;
 	padding: 0;
-	min-width: 30em;
+	width: 880px;
+	min-width: 50em;
 	border-collapse: collapse;
 }
-table#deadLines tr {
+table.table-setting tr {
 	border-bottom: 1px solid #bbb;
 }
-table#deadLines th {
-	padding: 3px;
-	border-top: 1px solid #bbb;
-	background: #CCCCCC;
+table.table-setting tr:nth-child(odd) {
+	background: #efefef;
 }
-table#deadLines td {
+table.table-setting th {
+	line-height: 1.3em;
+	padding: 3px;
+	border-top: 0px solid #bbb;
+	background: #004983;
+	color: #fff;
+}
+table.table-setting td {
 	padding: 8px 5px;
 	text-align: center;
 }
@@ -215,48 +220,16 @@ table#deadLines td {
 .deadline-url {
 	width: 25em;
 }
-.deadline-clear {
-	padding: 5px 8px;
-	background: #bbb;
-	font-weight: normal;
-}
-.deadline-clear:hover {
-  background: #ff4040;
-}
-
-table#caption-search-list {
-	margin: 10px 0 0 -20px;
-	padding: 0;
-	min-width: 30em;
-	border-collapse: collapse;
-}
-table#caption-search-list th {
-	padding: 3px;
-	border-top: 1px solid #bbb;
-	background: #CCCCCC;
-}
-table#caption-search-list tr {
-	border-bottom: 1px solid #bbb;
-}
-table#caption-search-list td {
-	padding: 8px 5px;
-	text-align: center;
-}
-.caption-search-name {
-	width: 15em;
-}
 .caption-search-word {
-	width: 25em;
+	width: 42em;
 }
-.caption-search-clear {
-	padding: 5px 8px;
+.button-clear {
 	background: #bbb;
 	font-weight: normal;
 }
-.caption-search-clear:hover {
+.button-clear:hover {
   background: #ff4040;
 }
-
 
 #ng-words {
 	width: ;
