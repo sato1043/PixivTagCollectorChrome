@@ -30,18 +30,29 @@ $(document).ready(function(){
 		return false;
 	});
 
+	// 設定のインポート、エクスポート
+	$('#settings-export').click(function(){
+		$('#settings-import-export').val(JSON.stringify(localStorage.options).replace(/\\/g, '').slice(1).slice(0,-1));
+	});
+	$('#settings-import').click(function(){
+		$('#deadLines, #caption-search-list').find('tr').not(':first-child').remove();
+		var options = JSON.parse($('#settings-import-export').val());
+		showOptions(options);
+	});
+
 	// SAVEボタン押下で saveOptions を呼び出すように設定
 	$('#saveOptions').click(function(){ saveOptions(); });
 
-	showOptions();
+	// 保存済み設定を取得して表示
+	var options = JSON.parse(localStorage.options);
+	showOptions(options);
 });
 
 // オプションを表示する
-function showOptions(){
+function showOptions(options){
 	var i;
 	
-	// 保存済み設定を取得
-	var options = JSON.parse(localStorage.options);
+	var options = options;
 
 	// 以下、画面の初期表示を設定
 	
