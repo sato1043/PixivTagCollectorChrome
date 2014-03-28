@@ -32,12 +32,21 @@ $(document).ready(function(){
 
 	// 設定のインポート、エクスポート
 	$('#settings-export').click(function(){
+        if (window.confirm("入力中の設定を保存しますか？\n（保存した設定のみエクスポートされます）"))
+            saveOptions(false);
 		$('#settings-import-export').val(JSON.stringify(localStorage.options).replace(/\\/g, '').slice(1).slice(0,-1));
 	});
 	$('#settings-import').click(function(){
-		$('#deadLines, #caption-search-list').find('tr').not(':first-child').remove();
-		var options = JSON.parse($('#settings-import-export').val());
-		showOptions(options);
+        if ( ! window.confirm("設定を上書きインポートします。よろしいですか？\n（入力した設定のみインポートされます）"))
+            return;
+        if ($('#settings-import-export').val() === "")
+            return;
+        try{
+            showOptions(JSON.parse($('#settings-import-export').val()));
+            if (window.confirm("インポート後の設定を今すぐ保存しますか？\n（インポート内容は保存した場合のみ有効になります）"))
+                saveOptions(false);
+        }
+        catch (e) { alert(e); }
 	});
 
 	// SAVEボタン押下で saveOptions を呼び出すように設定
@@ -54,8 +63,6 @@ $(document).ready(function(){
 function showOptions(options){
 	var i;
 	
-	var options = options;
-
 	// 以下、画面の初期表示を設定
 	
 	if (options.pixivCompleteTags) {
@@ -228,6 +235,7 @@ function showOptions(options){
 	}
 	*/
 	// デッドラインテーブルを生成・設定呼び出し
+    $('#deadLines').find('tr').not(':first-child').remove();
 	for (i = 0; i < options.pixivDeadLineName.length; ++i ){
 		addInputDeadLine(
 			  options.pixivDeadLineName[i]
@@ -237,6 +245,7 @@ function showOptions(options){
 		);
 	}
 	// キャプション検索テーブルを生成・設定呼び出し
+    $('#caption-search-list').find('tr').not(':first-child').remove();
 	for(i = 0; i < options.pixivCaptionSearchName.length; ++i ) {
 		addInputCaptionSearch(
 			  options.pixivCaptionSearchName[i]
@@ -302,11 +311,14 @@ function addInputCaptionSearch(name,word){
 }
 
 // オプションを保存する
-function saveOptions(){
-	var i;
+function saveOptions(closingForm){
+    if (closingForm === undefined)
+        closingForm = true;
+
+    var i;
 	var line;
 	
-	// 保存するオプションハッシュをoptionsに新しく作り直す。最終的にこれを保存する.。
+	// 保存するオプションハッシュをoptionsに新しく作り直す。最終的にこれを保存する。
 	var options = {};
 
 	// 以下、保存する値を準備
@@ -427,5 +439,6 @@ function saveOptions(){
 	localStorage.options = JSON.stringify(options);
 
 	// 設定タブを閉じる
-	close();
+    if (closingForm === true)
+    	close();
 }

@@ -6,7 +6,7 @@
 	"description" : "pivivのタグ巡回を快適にするChrome拡張です。",
 	"homepage_url": "https://github.com/sato1043/PixivTagCollectorChrome",
 
-	"version" : "0.9.4",
+	"version" : "0.9.5",
 	"update_url": "https://github.com/sato1043/PixivTagCollectorChrome/raw/master/updates.xml",
 
 	"icons": {

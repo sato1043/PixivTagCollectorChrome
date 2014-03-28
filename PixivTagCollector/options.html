@@ -193,16 +193,26 @@ vim: ts=2 sw=2 expandtab fenc=utf8 :
 				<label><input type="checkbox" id="pixivReloadPage"/>このダイアログを閉じたとき、ページを再読み込みする（新しい設定をすぐに反映させる）</label>
 			</li>
 			-->
-			<h3>設定をバックアップする</h3>
+            </p>
+        </ul>
+
+
+        <h2>設定をバックアップする</h2>
+        <ul id="import-export">
 			<textarea id="settings-import-export"></textarea>
 			<button type="button" id="settings-import">インポート</button>
 			<button type="button" id="settings-export">エクスポート</button>
-			<h3>この拡張について</h3>
-			<p>Githubにて開発しています。<br>
-				詳しくはこちらへどうぞ。 URL: <a href="https://github.com/sato1043/PixivTagCollectorChrome" target="_blank">https://github.com/sato1043/PixivTagCollectorChrome</a>
-			</p>
+            <small><br>
+            インポート・エクスポートは保存してある設定に対して処理が行われます。<br>
+            インポートの場合、保存していない設定は破棄・上書きされます。<br>
+            エクスポートの場合、保存していない設定は無視されて結果に反映されません。</small>
 		</ul>
-		
+
+        <h2>この機能拡張について</h2>
+        <p>Githubにて開発しています。<br>
+            詳しくはこちらへどうぞ。 URL: <a href="https://github.com/sato1043/PixivTagCollectorChrome" target="_blank">https://github.com/sato1043/PixivTagCollectorChrome</a>
+        </p>
+
 	</div>
 </div>
 
