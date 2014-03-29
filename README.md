@@ -6,10 +6,13 @@ pixiv Tag Collector for Chrome extentions Version 1.0alpha
 Home:
   https://github.com/sato1043/PixivTagCollectorChrome
 
-Authers:
+Authors:
   sato1043 and monsier-oui
 
-  
+License:
+  MIT
+
+
 はじめまして。
 pixiv Tag Collector Chrome拡張版のリリースをご案内します。
 
@@ -32,6 +35,9 @@ pixivの普段使いの検索リンクをクリックしやすい位置に常に
 
 ただし、このChrome拡張はオリジナルの作者様とは関わりがありませんので、
 このChrome拡張へのお問い合わせは私(sato1043@gmail.com)にお願い致します。
+
+なお、このソフトウェアはMITライセンスに基づきオープンソースソフトウェアとして配布いたします。
+商用・非商用に関わらず自己責任でご自由にお使いください。
 
 
 ## ダウンロード
@@ -88,12 +94,23 @@ Chromeを起動して、メニューから[ツール]-[機能拡張]を開き、
   * それからいつも応援してくれる私のメインユーザに。いつもありがとう。
   * それと最後にpixivに。
 
+  * tags icon, a part of Elegant Icon Font, was created by Elegant Themes, Inc.(TM)
+	these icons are dual licensed under the GPL 2.0 and MIT.
+    http://www.elegantthemes.com/
+	i use this icon under the MIT license.
+
 
 ## TODO
   * pixivを開いているタブ(ウィンドウ?)のリロード
 
+  このソフトウェアに対するあらゆる前向きなご提案を喜んでお伺いいたします。
+  （個人の余力の範囲ですので難しいこともありますが、その節はどうぞご理解ください）
+
 
 ## 履歴
+* 2014/03/29 - 0.10 (aka. 1.0alpha)
+	- Chrome WebStoreに登録するために小修正(仮)
+
 * 2014/03/29 - 0.9.5 (aka. 1.0alpha)
 	- 設定のインポート・エクスポートを追加(oui)
 	- JetBrains WebStormをエディタに採用
@@ -152,5 +169,55 @@ Chromeを起動して、メニューから[ツール]-[機能拡張]を開き、
 
 * 2012/05/03 - 0.1 
     - created
+
+
+## 本ソフトウェアの配布条項
+
+The MIT License (MIT)
+
+Copyright (c) <2013-2014> <PixivTagCollectorChrome Authors>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+
+## Elegant Icon Font の配布条項
+
+The MIT License (MIT)
+
+Copyright (c) <2013> <Elegant Themes, Inc.>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
 
 __END__
