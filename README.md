@@ -6,10 +6,10 @@ pixiv Tag Collector for Chrome extentions Version 1.0alpha
 Home:
   https://github.com/sato1043/PixivTagCollectorChrome
 
-Authers:
+Authors:
   sato1043 and monsier-oui
 
-  
+
 はじめまして。
 pixiv Tag Collector Chrome拡張版のリリースをご案内します。
 
@@ -34,15 +34,11 @@ pixivの普段使いの検索リンクをクリックしやすい位置に常に
 このChrome拡張へのお問い合わせは私(sato1043@gmail.com)にお願い致します。
 
 
-## ダウンロード
-* pixivTagCollector.crx ... Chrome拡張。これだけです。
-https://github.com/sato1043/PixivTagCollectorChrome/raw/master/PixivTagCollector.crx
-
 
 ## インストール
 Chromeを起動して、メニューから[ツール]-[機能拡張]を開きます。
-その中へ pixivTagCollector.crx をドロップしてください。
-機能拡張の問題が指摘されますが、それに同意頂ければインストールは完了です。
+画面を一番下へスクロールして「他の拡張機能を見る」をクリックします。
+Chromeウェブストアが開きますので「PixivTagCollectorChrome」で検索します。
 
 
 ## アンインストール
@@ -88,12 +84,25 @@ Chromeを起動して、メニューから[ツール]-[機能拡張]を開き、
   * それからいつも応援してくれる私のメインユーザに。いつもありがとう。
   * それと最後にpixivに。
 
+  * tags icon, a part of Elegant Icon Font, was created by Elegant Themes, Inc.(TM)
+	these icons are dual licensed under the GPL 2.0 and MIT.
+    http://www.elegantthemes.com/
+	i use this icon under the MIT license.
+
 
 ## TODO
   * pixivを開いているタブ(ウィンドウ?)のリロード
 
+  このソフトウェアに対するあらゆる前向きなご提案を喜んでお伺いいたします。
+  （個人の余力の範囲ですので難しいこともありますが、その節はどうぞご理解ください）
+
 
 ## 履歴
+* 2014/04/11 - 0.10.2 (aka. 1.0alpha)
+* 2014/04/11 - 0.10.1 (aka. 1.0alpha)
+* 2014/03/29 - 0.10   (aka. 1.0alpha)
+	- Chrome WebStoreに登録するために小修正(仮)
+
 * 2014/03/29 - 0.9.5 (aka. 1.0alpha)
 	- 設定のインポート・エクスポートを追加(oui)
 	- JetBrains WebStormをエディタに採用
@@ -152,5 +161,32 @@ Chromeを起動して、メニューから[ツール]-[機能拡張]を開き、
 
 * 2012/05/03 - 0.1 
     - created
+
+
+
+
+## Elegant Icon Font(本ソフト使用のアイコン) の配布条項
+
+The MIT License (MIT)
+
+Copyright (c) <2013> <Elegant Themes, Inc.>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
 
 __END__
