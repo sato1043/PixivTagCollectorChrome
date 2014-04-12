@@ -1,7 +1,7 @@
-pixivTagCollectorChrome
+﻿pixivTagCollectorChrome
 =======================
 
-pixiv Tag Collector for Chrome extentions Version 1.0alpha
+Pixiv Tag Collector for Chrome Version 1.0alpha
 
 Home:
   https://github.com/sato1043/PixivTagCollectorChrome
@@ -11,7 +11,7 @@ Authors:
 
 
 はじめまして。
-pixiv Tag Collector Chrome拡張版のリリースをご案内します。
+Pixiv Tag Collector for Chromeのリリースをご案内します。
 
 これはpivivのタグ巡回を快適にするChrome拡張です。
 pixivの普段使いの検索リンクをクリックしやすい位置に常に表示します。
@@ -27,7 +27,8 @@ pixivの普段使いの検索リンクをクリックしやすい位置に常に
 * ブックマーク詳細ページのブックマークしているユーザのリンクを作品一覧ページに変更
 
 この拡張のオリジナルはGreasemonkeyスクリプトの pixiv tag collector for Greasemonkey です。  
-(オリジナル版: http://wazly.blog87.fc2.com/blog-entry-199.html )  
+(オリジナル版: http://wazly.blog87.fc2.com/blog-entry-199.html
+            http://wazly.blog87.fc2.com/blog-entry-336.html )
 これが使えなくて Chrome が不便だった方にどうぞ。
 
 ただし、このChrome拡張はオリジナルの作者様とは関わりがありませんので、
@@ -38,7 +39,7 @@ pixivの普段使いの検索リンクをクリックしやすい位置に常に
 ## インストール
 Chromeを起動して、メニューから[ツール]-[機能拡張]を開きます。
 画面を一番下へスクロールして「他の拡張機能を見る」をクリックします。
-Chromeウェブストアが開きますので「PixivTagCollectorChrome」で検索します。
+Chromeウェブストアが開きますので「Pixiv Tag Collector for Chrome」で検索します。
 
 
 ## アンインストール
@@ -51,17 +52,10 @@ pixivTagCollector行の右端にあるゴミ箱アイコンをクリックして
 機能拡張の新しいリリースがあると自動アップデートされます。
 更新の確認はデフォルトでは数時間おきです。
 
-手動の場合、まず、以前のバージョンのオプションをどこかにコピペしてバックアップしておいてください。
-それと、現状のバージョン番号を控えておいて下さい。
-
-Chromeを起動して、メニューから[ツール]-[機能拡張]を開き、
-その中へ pixivTagCollector.crx をドロップしてください。
-バージョン番号が上がっていれば成功です。設定を確認したらバックアップや控えは破棄できます。
-
 
 ## 設定
 インストール後にツールバーにボタンが増えます。それをクリックしてください。
-メニューが現れますので、設定を開き、ご自分用のタグを追加して下さい。
+メニューが現れますので、PixivTagCollector設定を開き、ご自分用のタグを追加して下さい。
 （もしくは以前の設定をコピペしてください。）
 
 左のテキストエリアが「一文字たがわず同じタグの絵の検索」を書き込むところ、
