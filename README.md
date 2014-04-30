@@ -166,7 +166,7 @@ pixivTagCollector行の右端にあるゴミ箱アイコンをクリックして
 
 The MIT License (MIT)
 
-Copyright (c) <2012-2014> <Pixiv Tag Collector for Chrome Authors.>
+Copyright (c) \<2012-2014\> \<Pixiv Tag Collector for Chrome Authors.\>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -191,7 +191,7 @@ THE SOFTWARE.
 
 The MIT License (MIT)
 
-Copyright (c) <2013> <Elegant Themes, Inc.>
+Copyright (c) \<2013\> \<Elegant Themes, Inc.\>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
