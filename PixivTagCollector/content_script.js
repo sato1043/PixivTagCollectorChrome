@@ -168,7 +168,7 @@ function showOtherRank   (node, on) { showWhereClass(node, 'other-ranking', 1, o
 function showMaleRank    (node, on) { showWhereClass(node, 'male', 1, on); }
 function showFemaleRank  (node, on) { showWhereClass(node, 'female', 1, on); }
 function showRookieRank  (node, on) { showWhereClass(node, 'rookie', 1, on); }
-function showDicRank     (node, on) { showWhereId(node, 'dic_ranking', 1, on); }
+function showDicRank     (node, on) { showWhereClass(node, 'dic-ranking', 1, on); }
 function showOriginalRank(node, on) { showWhereClass(node, 'original', 1, on); }
 function showNovelRank   (node, on) { showWhereClass(node, 'daily-novel', 1, on); }
 function showUgoiraRank  (node, on) { showWhereClass(node, 'daily', 2, on); }
