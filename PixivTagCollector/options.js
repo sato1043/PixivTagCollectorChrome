@@ -212,6 +212,8 @@ function showOptions(options){
 		$("#pixivShowNovelRank").prop('checked', false);
 	}
 
+    $("#pixivShowUgoiraRank").prop('checked', options.pixivShowUgoiraRank);
+
 	if (options.pixivApplyToAll){
 		$("#pixivApplyToAll").prop('checked', true);
 	} else {
@@ -373,6 +375,7 @@ function saveOptions(closingForm){
 	options.pixivShowDicRank		= $("#pixivShowDicRank").is(':checked');
 	options.pixivShowOriginalRank	= $("#pixivShowOriginalRank").is(':checked');
 	options.pixivShowNovelRank		= $("#pixivShowNovelRank").is(':checked');
+    options.pixivShowUgoiraRank     = $("#pixivShowUgoiraRank").is(':checked');
 
 	options.pixivListHide			= $("#pixivListHide").is(':checked');
 	options.pixivOpenInNewTab		= $("#pixivOpenInNewTab").is(':checked');

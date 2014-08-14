@@ -1,3 +1,4 @@
+
 // vim: ts=2 sw=2 expandtab fenc=utf8 :
 // tagCollector がpixiv.netドメイン以下のページの表示毎に実行する処理
 'use strict';
@@ -88,6 +89,7 @@ function collectPixivTags(node) {
 		showDicRank(node, o.pixivShowDicRank);
 		showOriginalRank(node, o.pixivShowOriginalRank);
 		showNovelRank(node, o.pixivShowNovelRank);
+        showUgoiraRank(node, o.pixivShowUgoiraRank);
 
 		if (o.pixivOpenInNewTab)
 			forceMemberIllustPageOpenInNewTab(node);
@@ -169,6 +171,7 @@ function showRookieRank  (node, on) { showWhereClass(node, 'rookie', 1, on); }
 function showDicRank     (node, on) { showWhereId(node, 'dic_ranking', 1, on); }
 function showOriginalRank(node, on) { showWhereClass(node, 'original', 1, on); }
 function showNovelRank   (node, on) { showWhereClass(node, 'daily-novel', 1, on); }
+function showUgoiraRank  (node, on) { showWhereClass(node, 'daily', 2, on); }
 
 function showWhereClass(node, where, siblingIndex, on) {
 	if (on) return;

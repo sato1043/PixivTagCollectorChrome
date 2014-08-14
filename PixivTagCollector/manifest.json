@@ -3,10 +3,10 @@
 
 	"name" : "Pixiv Tag Collector for Chrome",
 	"short_name": "PixivTagCollectorChrome",
-	"description" : "pivivのタグ巡回を快適にするChrome拡張です。",
+	"description" : "pixivのタグ巡回を快適にするChrome拡張です。",
 	"homepage_url": "https://github.com/sato1043/PixivTagCollectorChrome",
 
-	"version" : "0.10.2",
+	"version" : "0.11",
 
 	"icons": {
 		"48": "img/Tag48x48.png",
