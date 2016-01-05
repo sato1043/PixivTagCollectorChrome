@@ -6,7 +6,7 @@
 	"description" : "pixivのタグ巡回を快適にするChrome拡張です。",
 	"homepage_url": "https://github.com/sato1043/PixivTagCollectorChrome",
 
-	"version" : "0.15",
+	"version" : "0.16",
 
 	"icons": {
 		"48": "img/Tag48x48.png",

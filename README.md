@@ -94,6 +94,13 @@ pixivTagCollector行の右端にあるゴミ箱アイコンをクリックして
 
 
 ## 履歴
+* 2015/01/06 - 0.13 〜 0.16
+  - pixivの仕様変更に対応し、タグリストの表示位置を調整
+  - バグ取り
+  - fix) autoPatchWorkの２ページ目以降でもNGワードがかかるように
+  - fix) マイページでタグリストが表示できるように訂正
+  - fix) copyrightの年号を更新など
+
 * 2014/08/14 - 0.12
 	- 百科事典の人気記事の表示ON/OFFが動かなくなっていたので修正
 
@@ -172,7 +179,7 @@ pixivTagCollector行の右端にあるゴミ箱アイコンをクリックして
 
 The MIT License (MIT)
 
-Copyright (c) \<2012-2014\> \<Pixiv Tag Collector for Chrome Authors.\>
+Copyright (c) \<2012-2016\> \<Pixiv Tag Collector for Chrome Authors.\>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
