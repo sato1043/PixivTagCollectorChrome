@@ -10,8 +10,10 @@ style.type = 'text/css';
 style.href = chrome.extension.getURL('css/style_ptc.css');
 (document.head || document.documentElement).appendChild(style);
 
-// 現在のURLを取得
-var url = location.href;
+// 現在地パスを取得して前後のスラッシュと.phpを削除
+var pathname = location.pathname.replace(/(\.php|^\/|\/$)/g, '');
+if(pathname.length === 0) pathname = 'mypage';
+// console.log('pathname='+pathname); // debug
 
 //PixivTagCollectorのタグ一覧表示を Ctrl+Q でトグルできるように。
 document.addEventListener("keydown", function (e) {
@@ -89,7 +91,7 @@ function collectPixivTags(node) {
 		showDicRank(node, o.pixivShowDicRank);
 		showOriginalRank(node, o.pixivShowOriginalRank);
 		showNovelRank(node, o.pixivShowNovelRank);
-        showUgoiraRank(node, o.pixivShowUgoiraRank);
+		showUgoiraRank(node, o.pixivShowUgoiraRank);
 
 		if (o.pixivOpenInNewTab)
 			forceMemberIllustPageOpenInNewTab(node);
@@ -220,14 +222,7 @@ function showAreaTitleParent(node, href, siblingIndex, on) {
 // ページ中から追加場所を見つけてDOMを追加する
 function addToPixivPages(node, options, func) {
 	var xpath = null;
-	var m = url.match(/pixiv\.net\/(.*)\.php/);
-	if (m === null) {
-		if (url.match(/pixiv\.net\/novel\//)) m = ['','novel/']; // 小説
-		else if (url.match(/pixiv\.net\/stacc\//)) m = ['','stacc/']; // フィード(スタック)
-		else m = ['',''];
-	}
-	//alert(m[1]);//Debug
-	switch(m[1]) {
+	switch(pathname) {
 		case 'search':
 		case 'ranking':
 		case 'novel/tags':
@@ -236,49 +231,29 @@ function addToPixivPages(node, options, func) {
 				: './/li[contains(concat(" ",normalize-space(@class)," "), " image-item ")]'
 				;
 			break;
-		case 'member': // プロフィール
-			xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " _unit ")]';
-			break;
 		case 'mypage': // マイページ
-			xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " contents-east ")]';
+			xpath = './/div[contains(concat(" ",normalize-space(@id)," "), " page-mypage ")]';
 			break;
-		case 'content_upload': // イラストの投稿
-		case 'manga_upload': // マンガの投稿
-		case 'novel/upload': // 小説の投稿
-		case 'print/service': // 印刷所に入稿
-			xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " layout-body ")]';
-			break;
-		case 'member_illust': // 作品管理
-			xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " _unit ")]';
-			break;
-		case 'novel/member': // 小説の作品管理
-			xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " _unit ")]';
-			break;
-		case 'bookmark': // ブックマークページ
-			xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " action-unit ")]';
-			break;
+		case 'member': // プロフィール
+		case 'member_illust': // 作品管理、作品詳細
+		case 'bookmark': // ブックマーク
+		case 'novel/member': // 小説作品詳細
 		case 'novel/bookmark': // 小説のブックマーク
-			xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " _unit ")]';
+			xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " layout-a ")]';
 			break;
+		case 'novel': // 小説(トップ)
 		case 'event': // イベント一覧
-			xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " two_column ")]';
+		case 'stacc': // フィード(スタック)
+		case 'event_detail': // イベント詳細
+			xpath = './/div[contains(concat(" ",normalize-space(@id)," "), " contents ")]';
 			break;
 		case 'profile_event': // イベント管理
-			xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " one_column ")]';
-			break;
-		case 'novel/': // 小説(トップ)
-			xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " contents-main ")]';
-			break;
-		case 'stacc/': // フィード(スタック)
-			xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " stacc_east_area ")]';
-			break;
-		case 'market/search': // マーケット
-			xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " _unit-search-booth ")]';
+			xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " eventHeader ")]';
 			break;
 		case 'cate_r18':
-			xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " ui-layout-east ")]';
+			xpath = './/div[contains(concat(" ",normalize-space(@id)," "), " page-mypage-r18 ")]';
 			break;
-		default: // URLが不明なとき
+		default: // いずれにも当てはまらないとき
 			xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " layout-body ")]';
 	}
 	var targetNode = document.evaluate(xpath, node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
@@ -567,8 +542,7 @@ String.prototype.replaceAll = function (org, dest){
   return this.split(org).join(dest);
 };
 function applySearchNGWords(node, options) {
-	var m = url.match(/pixiv\.net\/(.*)\.php/);
-	if (m === null || m[1] !== 'search') return;
+	if (pathname === null || pathname !== 'search') return;
 	var xpath = './/*[contains(concat(" ",normalize-space(@class)," "), " image-item ")]';
 	var targetNode = document.evaluate(xpath, node, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
 	var i;
@@ -601,8 +575,7 @@ function forceMemberIllustPageOpenInNewTab(node) {
 
 // ブックマーク詳細ページのブックマークしているユーザのリンク先をそのユーザの作品一覧に変更する
 function forceBookmarkDetailLink(node) {
-	var m = url.indexOf('bookmark_detail');
-	if (m != -1) {
+	if (pathname.indexOf('bookmark_detail') > -1) {
 			$('.bookmark-item').find('a.user').each(function(){
 				var a = $(this).attr('href');
 				$(this).attr({href: a.replace(/\/bookmark/, "/member_illust")});
