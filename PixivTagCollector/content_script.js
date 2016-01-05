@@ -30,14 +30,29 @@ document.addEventListener("keydown", function (e) {
 }, true);
 
 
-// AutoPagerize対応
-document.body.addEventListener('AutoPagerize_DOMNodeInserted', function (e) {
-	collectPixivTags(e.target);
-}, false);
-// AutoPatchwork対応
-document.body.addEventListener('AutoPatchWork.DOMNodeInserted', function (e) {
-	collectPixivTags(e.target);
-}, false);
+var autopageCallback = function(e) {
+	chrome.extension.sendRequest({
+		action : "getOptions"
+	}, function (response) {
+
+		var o = response.resultOptions;
+		if (o === null)
+			return;
+
+		//sendRequestのcallbackがまとめて来るようなのでdocumentから探します。
+		var node = document;
+
+		//autoページャーなのでタグリストなんかはすでに表示されているものと想定します。
+		applySearchNGWords(node,o);
+
+		if (o.pixivOpenInNewTab)
+			forceMemberIllustPageOpenInNewTab(node);
+		if (o.pixivBookmarkLink)
+			forceBookmarkDetailLink(node);
+  });
+};
+document.body.addEventListener('AutoPagerize_DOMNodeInserted', autopageCallback, false); // AutoPagerize対応
+document.body.addEventListener('AutoPatchWork.DOMNodeInserted', autopageCallback, false); // AutoPatchwork対応
 
 
 // 画面にタグ一覧を追加する（これがメインの処理）
