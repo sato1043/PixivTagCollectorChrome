@@ -10,3 +10,4 @@ _note
 /assets/Thumbs.db
 .project
 .DS_Store
+*.csv
