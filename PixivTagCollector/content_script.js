@@ -232,7 +232,7 @@ function addToPixivPages(node, options, func) {
 				;
 			break;
 		case 'mypage': // マイページ
-			xpath = './/div[contains(concat(" ",normalize-space(@id)," "), " page-mypage ")]';
+			xpath = './/div[contains(concat(" ",normalize-space(@class)," "), " contents-east ")]';
 			break;
 		case 'member': // プロフィール
 		case 'member_illust': // 作品管理、作品詳細
