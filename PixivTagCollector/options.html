@@ -28,8 +28,7 @@ vim: ts=2 sw=2 expandtab fenc=utf8 :
 <div id="navigation">
 	<ul>
 		<li><a href="#taglist">タグリスト</a></li>
-		<li><a href="#caption-search">キャプション検索</a></li>
-		<li><a href="#ngword">NGワード</a></li>
+		<li><a href="#ngword">検索結果NGワード</a></li>
 		<li><a href="#deadline">〆切タイマー</a></li>
 		<li><a href="#visibility">表示設定</a></li>
 		<li><a href="#other-option">その他</a></li>
@@ -67,10 +66,12 @@ vim: ts=2 sw=2 expandtab fenc=utf8 :
 				<textarea id="pixivPartialTags"></textarea><br>
 				<label><input type="checkbox" id="pixivShowPartialTags" />開いておく</label>
 			</div>
-		</section>
-		
-		<section id="caption-search">
-			<h2>キャプション検索</h2>
+			
+			<h3>常に追加する条件</h3>
+			<p>常に絞り込み、または除外したい条件を設定できます。</p>
+			<input type="text" id="pixivFilterAlways">
+			
+			<h3>キャプション検索</h3>
 			<p>キャプションを検索します（条件で単語を" or "で繋げばいずれかを検索できます。）</p>
 			<table id="caption-search-list" class="table-setting">
 				<tr>

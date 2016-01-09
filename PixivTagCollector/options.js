@@ -76,6 +76,9 @@ function showOptions(options){
 	if(options.pixivPartialTags){
 		$('#pixivPartialTags').val(options.pixivPartialTags.join('\n'));
 	}
+	if(options.pixivFilterAlways){
+		$('#pixivFilterAlways').val(options.pixivFilterAlways);
+	}
 	$('#pixivShowCompleteTags').prop('checked', options.pixivShowCompleteTags);
 	$('#pixivShowPartialTags').prop('checked', options.pixivShowPartialTags);
 	$('#pixivShowCaptionTags').prop('checked', options.pixivShowCaptionTags);
@@ -222,6 +225,8 @@ function saveOptions(closingForm){
 		partialTagsText = partialTagsText.replace(/^\n|\n$/g, '');
 		options.pixivPartialTags = partialTagsText.split('\n');
 	}
+	
+	options.pixivFilterAlways = $('#pixivFilterAlways').val();
 	
 	options.pixivShowCompleteTags  = $('#pixivShowCompleteTags').is(':checked');
 	options.pixivShowPartialTags   = $('#pixivShowPartialTags').is(':checked');
