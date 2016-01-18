@@ -8,10 +8,11 @@ body {
 	padding: 0;
 	background: #eee;
 	color: #333;
+	line-height: 1.8;
 }
 p {
-	margin: 5px 0;
-	font-size: 0.9em;
+	margin: .5em 0;
+	font-size: .9em;
 }
 a {
 	color: #258fb8;
@@ -49,10 +50,10 @@ ul {
 	z-index: 9999;
 }
 #navigation ul {
-  margin: 0;
-  height: 40px;
-  width: auto;
-  line-height: 40px;
+	margin: 0;
+	height: 40px;
+	width: auto;
+	line-height: 40px;
 	display: inline-block;
 }
 #navigation li {
@@ -73,6 +74,12 @@ ul {
 	margin-left: 30px;
 	padding: 8px 25px;
 }
+section {
+	margin: 40px 0;
+}
+section:first-child {
+	margin-top: 0;
+}
 h1 {
 	font-size: 18pt;
 	margin: 50px 20px 20px 20px;
@@ -80,7 +87,7 @@ h1 {
 }
 h2 {
 	position: relative;
-	margin: 0 -30px 20px -30px;
+	margin: 20px -30px;
 	padding: 10px 30px;
 	background: #69afca;
 	color: #fff;
@@ -110,16 +117,12 @@ h2:after {
 	border-color: transparent;
 	border-top-color: #498faa;
 }
-
 h2:not(:first-child) {
 	margin-top: 80px;
 }
 h3 {
-	margin-left: -20px;
-	padding-left: 20px;
-	width: 860px;
+	margin-bottom: 0;
 	font-size: 11pt;
-	border-bottom: 1px dotted #ddd;
 }
 #cont-comp,
 #cont-part {
@@ -182,6 +185,10 @@ input[type="checkbox"] {
 button, label, input[type="checkbox"] {
 	cursor: pointer;
 }
+input[type="text"] {
+	width: 90%;
+	display: block;
+}
 table.table-setting {
 	margin: 10px 0 10px -20px;
 	padding: 0;
@@ -228,9 +235,8 @@ table.table-setting td {
 	font-weight: normal;
 }
 .button-clear:hover {
-  background: #ff4040;
+	background: #ff4040;
 }
-
 #ng-words {
 	width: ;
 }
@@ -256,7 +262,6 @@ table.table-setting td {
 	background: #258fb8;
 	color: #fff;
 }
-
 .aa {
 	font-size: 10pt;
 	font-family: monospace;

@@ -49,7 +49,7 @@ var autopageCallback = function(e) {
 			forceMemberIllustPageOpenInNewTab(node);
 		if (o.pixivBookmarkLink)
 			forceBookmarkDetailLink(node);
-  });
+	});
 };
 document.body.addEventListener('AutoPagerize_DOMNodeInserted', autopageCallback, false); // AutoPagerize対応
 document.body.addEventListener('AutoPatchWork.DOMNodeInserted', autopageCallback, false); // AutoPatchwork対応
@@ -112,6 +112,39 @@ function collectPixivTags(node) {
 			forceMemberIllustPageOpenInNewTab(node);
 		if (o.pixivBookmarkLink)
 			forceBookmarkDetailLink(node);
+		
+		var flt = o.pixivFilterAlways;
+		if(flt.length > 0){
+			// 検索ボックスsubmitイベント発火時に検索条件を追加
+			$('#suggest-container').submit(function(e){
+				var box = $('#suggest-input');
+				var q = box.val();
+				if(q.indexOf(flt) < 0){
+					if(q.match(/[ 　]/)){
+						q = '('+q+')';
+					}
+					q += ' '+flt;
+					// alert(q);
+					box.val(q);
+				}
+			});
+			
+			// 作品ページタグ一覧と検索結果関連タグのリンク先に検索条件を追加
+			var parent = '';
+			if(pathname == 'search'){
+				parent = '.column-related';
+			}else if(pathname == 'member_illust'){
+				parent = '.tags-container';
+			}
+			if(parent.length > 0){
+				var tags = $(parent).find('a.text');
+				if(tags.length > 0){
+					tags.each(function(i, e){
+						e.setAttribute('href', '/search.php?s_mode=s_tag&word='+encodeURI(e.innerText+' '+flt));
+					});
+				}
+			}
+		}
 	});
 }
 
@@ -554,7 +587,7 @@ function deadLines(node, options, targetNode) {
 // 検索結果からNGワードを探して画像を非表示
 // ページ中から追加場所を見つけてリストを追加する
 String.prototype.replaceAll = function (org, dest){
-  return this.split(org).join(dest);
+	return this.split(org).join(dest);
 };
 function applySearchNGWords(node, options) {
 	if (pathname === null || pathname !== 'search') return;

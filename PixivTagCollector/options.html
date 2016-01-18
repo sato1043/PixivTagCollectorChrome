@@ -26,15 +26,16 @@ vim: ts=2 sw=2 expandtab fenc=utf8 :
 <body>
 
 <div id="navigation">
-  <ul>
-  	<li><a href="#taglist">タグリスト</a></li>
-  	<li><a href="#ngword">検索結果NGワード</a></li>
-  	<li><a href="#deadline">〆切タイマー</a></li>
-  	<li><a href="#caption-search">キャプション検索</a></li>
-  	<li><a href="#visibility">表示設定</a></li>
-  	<li><a href="#other-option">その他</a></li>
-  </ul>
-  <button type="button" id="saveOptions" title="※設定を反映するには、pixivを開いているタブを&#10;再読み込みしてください。">保存</button>
+	<ul>
+		<li><a href="#taglist">タグリスト</a></li>
+		<li><a href="#ngword">検索結果NGワード</a></li>
+		<li><a href="#deadline">〆切タイマー</a></li>
+		<li><a href="#visibility">表示設定</a></li>
+		<li><a href="#other-option">その他</a></li>
+		<li><a href="#import-export">設定をバックアップ</a></li>
+		<li><a href="#about">この機能拡張について</a></li>
+	</ul>
+	<button type="button" id="saveOptions" title="※設定を反映するには、pixivを開いているタブを&#10;再読み込みしてください。">保存</button>
 </div>
 
 <div id="wrapper">
@@ -43,186 +44,202 @@ vim: ts=2 sw=2 expandtab fenc=utf8 :
 
 	<div id="options">
 
-		<h2 id="taglist">タグリスト</h2>
-
-		<div>
-			<ul>
-				<li><label><input type="checkbox" id="pixivShowTagList" />pixivにタグリストを表示する</label></li>
+		<section id="taglist">
+			<h2>タグリスト</h2>
+			
+			<div>
 				<ul>
-					<li><label><input type="checkbox" id="pixivApplyToAll" />pixiv内のあらゆるページにタグリストを表示する</label></li>
+					<li><label><input type="checkbox" id="pixivShowTagList" />pixivにタグリストを表示する</label></li>
+					<ul>
+						<li><label><input type="checkbox" id="pixivApplyToAll" />pixiv内のあらゆるページにタグリストを表示する</label></li>
+					</ul>
 				</ul>
+			</div>
+			
+			<div id="cont-comp">
+				<h3>完全一致検索用</h3>
+				<textarea id="pixivCompleteTags"></textarea><br>
+				<label><input type="checkbox" id="pixivShowCompleteTags" />開いておく</label>
+			</div>
+			<div id="cont-part" class="clearfix">
+				<h3>部分一致/AND/OR/マイナス検索用 <a href="http://www.pixiv.net/help.php?c=4&p=8#4-8" target="_blank">→ヘルプを見る</a></h3>
+				<textarea id="pixivPartialTags"></textarea><br>
+				<label><input type="checkbox" id="pixivShowPartialTags" />開いておく</label>
+			</div>
+			
+			<h3>常に追加する条件</h3>
+			<p>常に絞り込み、または除外したい条件を設定できます。</p>
+			<input type="text" id="pixivFilterAlways">
+			
+			<h3>キャプション検索</h3>
+			<p>キャプションを検索します（条件で単語を" or "で繋げばいずれかを検索できます。）</p>
+			<table id="caption-search-list" class="table-setting">
+				<tr>
+					<th>名称</th>
+					<th>検索条件</th>
+					<th></th>
+				</tr>
+			</table>
+			<button type="button" id="cation-search-add">追加</button>
+			<div style="margin-top:20px">
+				<label><input type="checkbox" id="pixivShowCaptionTags" />開いておく</label>
+			</div>
+		</section>
+
+		<section id="ngword">
+			<h2>検索結果NGワード</h2>
+			<p>検索結果画面でサムネイル画像に蓋をします。</p>
+			<div id="ng-words">
+				<textarea id="pixivSearchNGWords"></textarea><br>
+			</div>
+		</section>
+		
+		<section id="deadline">
+			<h2>〆切タイマー</h2>
+			<p>イベント原稿や企画の〆切を表示します。</p>
+			<table id="deadLines" class="table-setting">
+				<tr>
+					<th>タイトル</th>
+					<th>日付</th>
+					<th>時刻</th>
+					<th>関連URL(任意)</th>
+					<th></th>
+				</tr>
+			</table>
+			<button type="button" id="deadline-add">追加</button>
+		</section>
+
+		<section id="visibility">
+			<h2>表示設定</h2>
+			<p>pixiv内各パーツの表示・非表示を設定できます。表示したくないものはチェックを外してください。</p>
+			<h3>ヘッダー</h3>
+			<ul class="showhide">
+				<li>
+					<label><input type="checkbox" id="pixivShowLogo" />pixivロゴ</label>
+				</li>
 			</ul>
-		</div>
+			<h3>メインページ</h3>
+			<ul class="showhide">
+				<li>
+					<label><input type="checkbox" id="pixivShowMyProfile" checked />マイプロフィール</label>
+				</li>
+				<li>
+					<label><input type="checkbox" id="pixivShowMyMenu" checked />メニュー</label>
+				</li>
+				<li>
+					<label><input type="checkbox" id="pixivShowMyGroup" checked />マイグループ</label>
+				</li>
+				<li>
+					<label><input type="checkbox" id="pixivShowOfficialGroup" checked />公式グループ</label>
+				</li>
+				<li>
+					<label><input type="checkbox" id="pixivShowFollowing" checked />フォロー中</label>
+				</li>
+				<li>
+					<label><input type="checkbox" id="pixivShowMyPixiv" checked />マイピク</label>
+				</li>
+				<li>
+					<label><input type="checkbox" id="pixivShowRecommendUser" checked />おすすめユーザー</label>
+				</li>
+				<li>
+					<label><input type="checkbox" id="pixivShowEvents" checked />イベント</label>
+				</li>
+				<li>
+					<label><input type="checkbox" id="pixivShowNewsTop" checked />お知らせ</label>
+				</li>
+				<li>
+					<label><input type="checkbox" id="pixivShowNewIllust" checked />みんなの新着</label>
+				</li>
+				<li>
+					<label><input type="checkbox" id="pixivShowPopularTags" checked />注目のタグ</label>
+				</li>
+				<li>
+					<label><input type="checkbox" id="pixivShowUserEvent" checked />企画目録</label>
+				</li>
+				<li>
+					<label><input type="checkbox" id="pixivShowBookmarkNews" checked />フォロー新着作品</label>
+				</li>
+				<li>
+					<label><input type="checkbox" id="pixivShowMyPixivNews" checked />マイピク新着作品</label>
+				</li>
+				<li>
+					<label><input type="checkbox" id="pixivShowComicRank" checked />pixivコミック</label>
+				</li>
+				<li>
+					<label><input type="checkbox" id="pixivShowDicRank" checked />ピクシブ百科事典の人気記事</label>
+				</li>
+			</ul>
+			<h3>ランキング</h3>
+			<ul class="showhide">
+				<li>
+					<label><input type="checkbox" id="pixivShowDailyRank" checked />デイリー</label>
+				</li>
+				<li>
+					<label><input type="checkbox" id="pixivShowOtherRank" checked />過去・地域別</label>
+				</li>
+				<li>
+					<label><input type="checkbox" id="pixivShowMaleRank" checked />男女別</label>
+				</li>
+				<li>
+					<label><input type="checkbox" id="pixivShowRookieRank" checked />ルーキー</label>
+				</li>
+				<li>
+					<label><input type="checkbox" id="pixivShowOriginalRank" checked />オリジナル</label>
+				</li>
+				<li>
+					<label><input type="checkbox" id="pixivShowNovelRank" checked />小説デイリー</label>
+				</li>
+				<li>
+					<label><input type="checkbox" id="pixivShowUgoiraRank" checked />うごイラデイリー</label>
+				</li>
+			</ul>
+		</section>
 
-		<div id="cont-comp">
-			<p>完全一致検索用</p>
-			<textarea id="pixivCompleteTags"></textarea><br>
-			<label><input type="checkbox" id="pixivShowCompleteTags" />開いておく</label>
-		</div>
-		<div id="cont-part" class="clearfix">
-			<p>部分一致/AND/OR/マイナス検索用 <a href="http://www.pixiv.net/help.php?c=4&p=8#4-8" target="_blank">→ヘルプを見る</a></p>
-			<textarea id="pixivPartialTags"></textarea><br>
-			<label><input type="checkbox" id="pixivShowPartialTags" />開いておく</label>
-		</div>
+		<section id="other-option">
+			<h2>その他</h2>
+			<ul id="other">
+				<h3>その他オプション</h3>
+				<li>
+					<label><input type="checkbox" id="pixivOpenInNewTab" />個別イラストページへのリンクは常に新しいタブで開く</label>
+				</li>
+				<li>
+					<label><input type="checkbox" id="pixivBookmarkLink" />ブックマーク詳細ページのブックマークしているユーザのリンクを作品一覧ページに変更する</label>
+				</li>
+				<!--
+				<li>
+					<label><input type="checkbox" id="pixivReloadPage"/>このダイアログを閉じたとき、ページを再読み込みする（新しい設定をすぐに反映させる）</label>
+				</li>
+				-->
+			</ul>
+		</section>
 
-		<h2 id="ngword">検索結果NGワード</h2>
-		<p>検索結果画面でサムネイル画像に蓋をします。</p>
-		<div id="ng-words">
-			<textarea id="pixivSearchNGWords"></textarea><br>
-		</div>
-		
-		<h2 id="deadline">〆切タイマー</h2>
-		<p>イベント原稿や企画の〆切を表示します。</p>
-		<table id="deadLines" class="table-setting">
-			<tr>
-				<th>タイトル</th>
-				<th>日付</th>
-				<th>時刻</th>
-				<th>関連URL(任意)</th>
-				<th></th>
-			</tr>
-		</table>
-		<button type="button" id="deadline-add">追加</button>
-		
-		<h2 id="caption-search">キャプション検索</h2>
-		<p>キャプションを検索します（条件で単語を" or "で繋げばいずれかを検索できます。）</p>
-		<table id="caption-search-list" class="table-setting">
-			<tr>
-				<th>名称</th>
-				<th>検索条件</th>
-				<th></th>
-			</tr>
-		</table>
-		<button type="button" id="cation-search-add">追加</button>
-		<div style="margin-top:20px">
-		<label><input type="checkbox" id="pixivShowCaptionTags" />開いておく</label>
-		</div>
-
-		<h2 id="visibility">表示設定</h2>
-		<p>pixiv内各パーツの表示・非表示を設定できます。表示したくないものはチェックを外してください。<p>
-		<h3>ヘッダー</h3>
-		<ul class="showhide">
-			<li>
-				<label><input type="checkbox" id="pixivShowLogo" />pixivロゴ</label>
-			</li>
-		</ul>
-		<h3>メインページ</h3>
-		<ul class="showhide">
-			<li>
-				<label><input type="checkbox" id="pixivShowMyProfile" checked />マイプロフィール</label>
-			</li>
-			<li>
-				<label><input type="checkbox" id="pixivShowMyMenu" checked />メニュー</label>
-			</li>
-			<li>
-				<label><input type="checkbox" id="pixivShowMyGroup" checked />マイグループ</label>
-			</li>
-			<li>
-				<label><input type="checkbox" id="pixivShowOfficialGroup" checked />公式グループ</label>
-			</li>
-			<li>
-				<label><input type="checkbox" id="pixivShowFollowing" checked />フォロー中</label>
-			</li>
-			<li>
-				<label><input type="checkbox" id="pixivShowMyPixiv" checked />マイピク</label>
-			</li>
-			<li>
-				<label><input type="checkbox" id="pixivShowRecommendUser" checked />おすすめユーザー</label>
-			</li>
-			<li>
-				<label><input type="checkbox" id="pixivShowEvents" checked />イベント</label>
-			</li>
-			<li>
-				<label><input type="checkbox" id="pixivShowNewsTop" checked />お知らせ</label>
-			</li>
-			<li>
-				<label><input type="checkbox" id="pixivShowNewIllust" checked />みんなの新着</label>
-			</li>
-			<li>
-				<label><input type="checkbox" id="pixivShowPopularTags" checked />注目のタグ</label>
-			</li>
-			<li>
-				<label><input type="checkbox" id="pixivShowUserEvent" checked />企画目録</label>
-			</li>
-			<li>
-				<label><input type="checkbox" id="pixivShowBookmarkNews" checked />フォロー新着作品</label>
-			</li>
-			<li>
-				<label><input type="checkbox" id="pixivShowMyPixivNews" checked />マイピク新着作品</label>
-			</li>
-			<li>
-				<label><input type="checkbox" id="pixivShowComicRank" checked />pixivコミック</label>
-			</li>
-			<li>
-				<label><input type="checkbox" id="pixivShowDicRank" checked />ピクシブ百科事典の人気記事</label>
-			</li>
-		</ul>
-		<h3>ランキング</h3>
-		<ul class="showhide">
-			<li>
-				<label><input type="checkbox" id="pixivShowDailyRank" checked />デイリー</label>
-			</li>
-			<li>
-				<label><input type="checkbox" id="pixivShowOtherRank" checked />過去・地域別</label>
-			</li>
-			<li>
-				<label><input type="checkbox" id="pixivShowMaleRank" checked />男女別</label>
-			</li>
-			<li>
-				<label><input type="checkbox" id="pixivShowRookieRank" checked />ルーキー</label>
-			</li>
-			<li>
-				<label><input type="checkbox" id="pixivShowOriginalRank" checked />オリジナル</label>
-			</li>
-			<li>
-				<label><input type="checkbox" id="pixivShowNovelRank" checked />小説デイリー</label>
-			</li>
-            <li>
-                <label><input type="checkbox" id="pixivShowUgoiraRank" checked />うごイラデイリー</label>
-            </li>
-		</ul>
-
-		<h2 id="other-option">その他</h2>
-		<ul id="other">
-			<h3>その他オプション</h3>
-			<li>
-				<label><input type="checkbox" id="pixivOpenInNewTab" />個別イラストページへのリンクは常に新しいタブで開く</label>
-			</li>
-			<li>
-				<label><input type="checkbox" id="pixivBookmarkLink" />ブックマーク詳細ページのブックマークしているユーザのリンクを作品一覧ページに変更する</label>
-			</li>
-			<!--
-			<li>
-				<label><input type="checkbox" id="pixivReloadPage"/>このダイアログを閉じたとき、ページを再読み込みする（新しい設定をすぐに反映させる）</label>
-			</li>
-			-->
-            </p>
-        </ul>
-
-
-        <h2>設定をバックアップする</h2>
-        <ul id="import-export">
+		<section id="import-export">
+			<h2>設定をバックアップ</h2>
 			<textarea id="settings-import-export"></textarea>
 			<button type="button" id="settings-import">インポート</button>
 			<button type="button" id="settings-export">エクスポート</button>
-            <small><br>
-            インポート・エクスポートは保存してある設定に対して処理が行われます。<br>
-            インポートの場合、保存していない設定は破棄・上書きされます。<br>
-            エクスポートの場合、保存していない設定は無視されて結果に反映されません。</small>
-		</ul>
+			<p>
+				インポート・エクスポートは保存してある設定に対して処理が行われます。<br>
+				インポートの場合、保存していない設定は破棄・上書きされます。<br>
+				エクスポートの場合、保存していない設定は無視されて結果に反映されません。
+			</p>
+		</section>
 
-        <h2>この機能拡張について</h2>
-        <p>Githubにて開発しています。<br>
-            詳しくはこちらへどうぞ。READMEもこちらです。 URL: <a href="https://github.com/sato1043/PixivTagCollectorChrome" target="_blank">https://github.com/sato1043/PixivTagCollectorChrome</a><br>
-            <br>
-            Pixiv Tag Collector for Chrome - Copyright (c) 2012-2016 Pixiv Tag Collector for Chrome Authors. <br>
-			This software is distributed under MIT license.
-        </p>
-        <br>
-        <p>
-            Tags icon, a part of Elegant Icon Font, was created by <a href="http://www.elegantthemes.com/">Elegant Themes, Inc.(TM)</a><br>
-            These icons are dual licensed under the GPL 2.0 and MIT.  I use this icon under the MIT license.
-        </p>
+		<section id="about">
+			<h2>この機能拡張について</h2>
+			<p>
+				Githubにて開発しています。<br>
+				詳しくはこちらへどうぞ。READMEもこちらです。 URL: <a href="https://github.com/sato1043/PixivTagCollectorChrome" target="_blank">https://github.com/sato1043/PixivTagCollectorChrome</a>
+			</p>
+			<p>
+				Pixiv Tag Collector for Chrome - Copyright (c) 2012-2016 Pixiv Tag Collector for Chrome Authors. <br>
+				This software is distributed under MIT license.
+			</p>
+			<p>
+				Tags icon, a part of Elegant Icon Font, was created by <a href="http://www.elegantthemes.com/">Elegant Themes, Inc.(TM)</a><br>
+				These icons are dual licensed under the GPL 2.0 and MIT.  I use this icon under the MIT license.
+			</p>
+		</section>
 
 	</div>
 </div>
