@@ -1,5 +1,4 @@
 
-// vim: ts=2 sw=2 expandtab fenc=utf8 :
 // tagCollector がpixiv.netドメイン以下のページの表示毎に実行する処理
 'use strict';
 
