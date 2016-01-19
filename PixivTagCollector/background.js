@@ -44,7 +44,7 @@ if (!localStorage.options) {
 		, pixivShowDicRank      : true
 		, pixivShowOriginalRank : true
 		, pixivShowNovelRank    : true
-        , pixivShowUgoiraRank   : true
+		, pixivShowUgoiraRank   : true
 		
 		, pixivDeadLineName     : []
 		, pixivDeadLineDate     : []
