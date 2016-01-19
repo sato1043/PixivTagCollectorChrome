@@ -1,7 +1,17 @@
 'use strict';
 
+// 思い出しリスト；設定を追加した時すること
+//  - optionsPage_onLoad()で、オプションページ内のclickイベントなどbind
+//	- showOptions
+//	- saveOptions
+//	- background.js で初期値設定
+
+$(optionsPage_onLoad);
+
+
 // ロード時動作
-$(document).ready(function(){
+function optionsPage_onLoad(){
+
 	// タグを表示するチェック中だけ、すべてのページにチェックを入れられるようにした。
 	$('#pixivShowTagList').click(function(){
 		if($('#pixivShowTagList').is(':checked')){
@@ -55,16 +65,16 @@ $(document).ready(function(){
 	});
 
 	// SAVEボタン押下で saveOptions を呼び出すように設定
-	$('#saveOptions').click(function(){ saveOptions(); });
+	$('#saveOptions').click(function(){ saveOptions() });
 
 	// 保存済み設定を取得して表示
 	if(localStorage.options){
-		var options = JSON.parse(localStorage.options);
-		showOptions(options);
+		showOptions(JSON.parse(localStorage.options));
 	}
-});
+}
 
-// オプションを表示する
+
+// optionsPage_onLoad()から呼ばれてオプションを表示する
 function showOptions(options){
 	var i;
 	
@@ -76,16 +86,18 @@ function showOptions(options){
 	if(options.pixivPartialTags){
 		$('#pixivPartialTags').val(options.pixivPartialTags.join('\n'));
 	}
-	if(options.pixivFilterAlways){
-		$('#pixivFilterAlways').val(options.pixivFilterAlways);
-	}
 	$('#pixivShowCompleteTags').prop('checked', options.pixivShowCompleteTags);
 	$('#pixivShowPartialTags').prop('checked', options.pixivShowPartialTags);
 	$('#pixivShowCaptionTags').prop('checked', options.pixivShowCaptionTags);
 	$('#pixivShowTagList').prop('checked', options.pixivShowTagList);
 	$('#pixivApplyToAll').attr('disabled', !options.pixivShowTagList);
 	$('#pixivApplyToAll').prop('checked', options.pixivApplyToAll);
-	
+
+	$('#pixivDoFilterAlways').prop('checked', options.pixivDoFilterAlways);
+	if(options.pixivFilterAlways){
+		$('#pixivFilterAlways').val(options.pixivFilterAlways);
+	}
+
 	$('#pixivShowLogo').prop('checked', options.pixivShowLogo);
 
 	$('#pixivShowMyProfile').prop('checked', options.pixivShowMyProfile);
@@ -147,6 +159,7 @@ function showOptions(options){
 	}
 }
 
+// optionsPage_onLoad()から呼ばれて'デッドラインを追加するボタン'を作る
 function addInputDeadLine(name,date,time,url){
 	
 	var line = $('table#deadLines').append(
@@ -180,6 +193,7 @@ function addInputDeadLine(name,date,time,url){
 	
 }
 
+// optionsPage_onLoad()から呼ばれて'キャプション検索を追加するボタン'を作る
 function addInputCaptionSearch(name,word){
 	var line = $('table#caption-search-list').append(
 		  '<tr>\n'
@@ -194,7 +208,8 @@ function addInputCaptionSearch(name,word){
 	});
 }
 
-// オプションを保存する
+
+// clickイベントから呼ばれてオプションを保存する
 function saveOptions(closingForm){
 	if(closingForm === undefined){
 		closingForm = true;
@@ -209,12 +224,12 @@ function saveOptions(closingForm){
 	// 以下、保存する値を準備
 	
 	options.pixivCompleteTags = [];
-	var complateTagsText = $('#pixivCompleteTags').val();
-	if(complateTagsText){
-		complateTagsText = complateTagsText.replace(/[ 　]/g, '');
-		complateTagsText = complateTagsText.replace(/\n{2,}/g, '\n');
-		complateTagsText = complateTagsText.replace(/^\n|\n$/g, '');
-		options.pixivCompleteTags = complateTagsText.split('\n');
+	var completeTagsText = $('#pixivCompleteTags').val();
+	if(completeTagsText){
+		completeTagsText = completeTagsText.replace(/[ 　]/g, '');
+		completeTagsText = completeTagsText.replace(/\n{2,}/g, '\n');
+		completeTagsText = completeTagsText.replace(/^\n|\n$/g, '');
+		options.pixivCompleteTags = completeTagsText.split('\n');
 	}
 	
 	options.pixivPartialTags = [];
@@ -225,14 +240,15 @@ function saveOptions(closingForm){
 		partialTagsText = partialTagsText.replace(/^\n|\n$/g, '');
 		options.pixivPartialTags = partialTagsText.split('\n');
 	}
-	
-	options.pixivFilterAlways = $('#pixivFilterAlways').val();
-	
+
 	options.pixivShowCompleteTags  = $('#pixivShowCompleteTags').is(':checked');
 	options.pixivShowPartialTags   = $('#pixivShowPartialTags').is(':checked');
 	options.pixivShowCaptionTags   = $('#pixivShowCaptionTags').is(':checked');
 	options.pixivShowTagList       = $('#pixivShowTagList').is(':checked');
 	options.pixivApplyToAll        = $('#pixivApplyToAll').is(':checked');
+
+	options.pixivDoFilterAlways    = $('#pixivDoFilterAlways').is(':checked');
+	options.pixivFilterAlways      = $('#pixivFilterAlways').val();
 
 	options.pixivShowLogo          = $('#pixivShowLogo').is(':checked');
 
@@ -322,7 +338,7 @@ function saveOptions(closingForm){
 		options.pixivSearchNGWords = ngwordsText.split('\n');
 	}
 
-	// localstorageに設定を保存
+	// localStorageに設定を保存
 	localStorage.options = JSON.stringify(options);
 
 	// 設定タブを閉じる
@@ -330,3 +346,6 @@ function saveOptions(closingForm){
 		close();
 	}
 }
+
+
+//__END__

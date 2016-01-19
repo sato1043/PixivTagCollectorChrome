@@ -11,7 +11,10 @@ if (!localStorage.options) {
 		, pixivPartialTags      : []
 		, pixivShowCompleteTags : true
 		, pixivShowPartialTags  : true
-		
+
+		, pixivDoFilterAlways   : true
+		, pixivFilterAlways     : ''
+
 		, pixivCaptionSearchName : []
 		, pixivCaptionSearchWord : []
 		, pixivShowCaptionTags : true

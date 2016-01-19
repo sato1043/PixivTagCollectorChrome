@@ -113,7 +113,7 @@ function collectPixivTags(node) {
 			forceBookmarkDetailLink(node);
 		
 		var flt = o.pixivFilterAlways;
-		if(flt.length > 0){
+		if(o.pixivDoFilterAlways && flt.length > 0){
 			// 検索ボックスsubmitイベント発火時に検索条件を追加
 			$('#suggest-container').submit(function(e){
 				var box = $('#suggest-input');
@@ -222,6 +222,7 @@ function showOriginalRank(node, on) { showWhereClass(node, 'original', 1, on); }
 function showNovelRank   (node, on) { showWhereClass(node, 'daily-novel', 1, on); }
 function showUgoiraRank  (node, on) { showWhereClass(node, 'daily', 2, on); }
 
+// 表示ON/OFFのためのユーティリティ
 function showWhereClass(node, where, siblingIndex, on) {
 	if (on) return;
 
