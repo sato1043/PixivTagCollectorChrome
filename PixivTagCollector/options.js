@@ -83,7 +83,7 @@ function showOptions(options){
 	$('#pixivShowPartialTags').prop('checked', options.pixivShowPartialTags);
 	$('#pixivShowCaptionTags').prop('checked', options.pixivShowCaptionTags);
 	$('#pixivShowTagList').prop('checked', options.pixivShowTagList);
-	$('#pixivApplyToAll').attr('disabled', !options.pixivShowTagList ? true : false);
+	$('#pixivApplyToAll').attr('disabled', !options.pixivShowTagList);
 	$('#pixivApplyToAll').prop('checked', options.pixivApplyToAll);
 	
 	$('#pixivShowLogo').prop('checked', options.pixivShowLogo);
