@@ -1,0 +1,73 @@
+{
+  "name": "pixiv-tag-collector-chrome",
+  "version": "1.0.0",
+  "description": "これはpivivのタグ巡回を快適にするChrome拡張です。",
+  "license": "MIT",
+  "author": {
+    "name": "sato1043 and monsier-oui",
+    "email": "sato1043@gmail.com"
+  },
+  "homepage": "https://github.com/sato1043/PixivTagCollectorChrome#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sato1043/PixivTagCollectorChrome.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sato1043/PixivTagCollectorChrome/issues"
+  },
+  "scripts": {
+    "start-test-server": "NODE_ENV=test BLUEBIRD_WARNINGS=0 ./node_modules/.bin/karma start ./karma.conf.js --no-single-run",
+    "stop-test-server": "NODE_ENV=test BLUEBIRD_WARNINGS=0 ./node_modules/.bin/karma stop",
+    "test-by-server": "NODE_ENV=test BLUEBIRD_WARNINGS=0 ./node_modules/.bin/karma run ./karma.conf.js",
+    "test": "NODE_ENV=test BLUEBIRD_WARNINGS=0 ./node_modules/.bin/karma start ./karma.conf.js --single-run --coverage",
+    "watch": "NODE_ENV=development webpack --watch",
+    "start": "NODE_ENV=production webpack && zip -r PixivTagCollector.zip PixivTagCollector",
+    "build": "npm test && npm start"
+  },
+  "devDependencies": {
+    "babel-core": "^6.18.0",
+    "babel-loader": "^6.2.7",
+    "babel-plugin-transform-object-assign": "^6.22.0",
+    "babel-polyfill": "^6.16.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-stage-2": "^6.18.0",
+    "clean-webpack-plugin": "^0.1.13",
+    "copy-webpack-plugin": "^4.0.0",
+    "css-loader": "^0.25.0",
+    "debug": "^2.2.0",
+    "eslint": "^3.8.1",
+    "eslint-loader": "^1.6.0",
+    "exports-loader": "^0.6.3",
+    "expose-loader": "^0.7.1",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "file-loader": "^0.9.0",
+    "html-webpack-plugin": "^2.24.0",
+    "http-server": "^0.9.0",
+    "isparta-loader": "^2.0.0",
+    "jasmine-core": "^2.5.2",
+    "jasmine-jquery": "^2.1.1",
+    "jquery": "^1.12.4",
+    "jquery-timepicker": "^1.3.3",
+    "jquery-ui": "^1.12.1",
+    "json-loader": "^0.5.4",
+    "karma": "^1.3.0",
+    "karma-coverage": "^1.1.1",
+    "karma-html-reporter": "^0.2.7",
+    "karma-jasmine": "^1.0.2",
+    "karma-phantomjs-launcher": "^1.0.2",
+    "karma-sourcemap-loader": "^0.3.7",
+    "karma-spec-reporter": "0.0.26",
+    "karma-webpack": "^1.8.0",
+    "lodash": "^4.16.4",
+    "moment": "^2.15.2",
+    "phantomjs-prebuilt": "^2.1.13",
+    "pickadate": "^3.5.6",
+    "style-loader": "^0.13.2",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^2.3.1",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.13.3",
+    "webpack-dev-server": "^1.16.2",
+    "yargs": "^6.3.0"
+  }
+}
